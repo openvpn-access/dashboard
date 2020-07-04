@@ -1,0 +1,30 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "strict": true,
+        "noImplicitAny": true,
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "lib": ["esnext", "dom"],
+        "module": "ESNext",
+        "target": "ES2019",
+        "jsx": "react",
+        "jsxFactory": "h",
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
+        "paths": {
+            "@state/*": ["./src/state/*"],
+            "@utils/*": ["./src/utils/*"],
+            "@components/*": ["./src/app/components/*"],
+            "*": ["./node_modules/*"]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

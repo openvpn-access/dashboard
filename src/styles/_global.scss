@@ -1,0 +1,102 @@
+@import '~normalize.css';
+@import './variables';
+@import 'globals/custom-elements';
+@import 'globals/standards';
+@import 'globals/fonts';
+@import 'globals/theme';
+
+::-webkit-scrollbar {
+    width: 14px;
+
+    @include mq-phones {
+        display: none;
+        width: 10px;
+    }
+}
+
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-track {
+    background-clip: padding-box;
+    border: 4px solid transparent;
+    border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(black, 0.3);
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--c-background-secondary);
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background: var(--c-background-secondary);
+    user-select: none;
+
+    // Light theme is base and gets extended by the dark one
+    @include light_theme;
+
+    &.light {
+        @include light_theme;
+    }
+
+    &.dark {
+        @include dark_theme;
+    }
+
+    // TODO: Transitioning does not work in chrome:
+    // see https://stackoverflow.com/questions/61483591/strange-color-transition-behavior-in-chrome
+    &.theme-transition * {
+        transition: all 0.3s !important;
+    }
+}
+
+#app {
+    @include width(75vw, 15em, 80em);
+    @include height(85vh, 30em, 55em);
+    @include position(0, 0, 0, 0);
+    @include flex(column);
+    font-family: $font-family;
+    background: var(--c-background-primary);
+    box-shadow: 0 0.25em 1.5em rgba(#000, 0.025);
+    border-radius: 0.5em;
+    margin: auto;
+    position: fixed;
+    overflow: hidden;
+
+    // Entrance animation
+    @include animate('0.45s ease-in-out') {
+        from {
+            transform: translateY(-3vh) scale(0.97);
+            opacity: 0;
+        }
+        to {
+            transform: none;
+            opacity: 1;
+        }
+    }
+
+    @include mq-tablet {
+        min-width: 100%;
+        min-height: 100%;
+        border-radius: 0;
+    }
+}
+
+// Prevent flashing during js-execution
+@media screen and (prefers-color-scheme: dark) {
+    body {
+        @include dark_theme;
+    }
+}

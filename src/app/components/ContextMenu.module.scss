@@ -1,0 +1,29 @@
+.buttonList {
+    @include flex(column);
+    background: var(--c-background-primary);
+    border-radius: 0.25em;
+    overflow: hidden;
+
+    > button {
+        @include flex(row, center);
+        @include hover_effect(--c-background-primary);
+        transition: all 0.3s;
+        color: var(--c-text-primary);
+        position: relative;
+        pointer-events: all;
+        padding: 0.85em 1.25em;
+
+        bc-icon {
+            @include size(16px);
+            margin-right: 0.85em;
+        }
+
+        > span {
+            white-space: nowrap;
+        }
+
+        &:not(:first-child) {
+            margin-top: 0.25em;
+        }
+    }
+}
