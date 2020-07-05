@@ -1,0 +1,65 @@
+.navBar {
+    @include flex(row);
+    @include size(100%);
+}
+
+.tabButtons {
+    @include flex(column);
+    padding: 1em 1em 1em 0;
+    border-right: 2px solid var(--c-background-secondary);
+    flex-shrink: 0;
+}
+
+.tabButton {
+    @include flex(row, center);
+    padding: 0.5em 1em 0.5em 1em;
+    border-radius: 0 10em 10em 0;
+    color: var(--c-text-primary);
+    margin: 0.5em 0;
+    transition: all 0.3s;
+
+    > span {
+        @include font(600, 0.9em);
+        margin-left: 0.5em;
+    }
+
+    > bc-icon {
+        @include size(20px)
+    }
+
+    &.active {
+        color: var(--c-text-secondary);
+        background: var(--c-primary);
+    }
+
+    &:not(.active):hover {
+        color: var(--c-primary);
+    }
+
+    &.logout {
+        margin-top: auto;
+
+        &:hover {
+            color: var(--c-red);
+        }
+    }
+}
+
+.tabContaiers {
+    @include size(100%);
+    position: relative;
+}
+
+.tabContainer {
+    @include position(0, 0, 0, 0);
+    padding: 1em;
+    position: absolute;
+    transition: all 0.3s;
+    transform: scale(0.99);
+    opacity: 0;
+
+    &.active {
+        transform: none;
+        opacity: 1;
+    }
+}
