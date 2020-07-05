@@ -1,23 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type Method = 'addEventListener' | 'removeEventListener';
-
-export type EventContainer = {
-    on(args: EventBindingArgs): void;
-    onMany(args: Array<EventBindingArgs>): void;
-    clear(): void;
-};
+type AnyFunction = (...args: Array<any>) => any;
+type AnyObject = Record<string | number | symbol, any>;
 
 export type EventBindingArgs = [
     EventTarget | Array<EventTarget>,
     string | Array<string>,
-    Function,
-    object?
+    AnyFunction,
+    AnyObject?
 ];
 
 interface EventBinding {
     (
         elements: EventTarget | Array<EventTarget>,
         events: string | Array<string>,
-        fn: Function, options?: object
+        fn: AnyFunction, options?: AnyObject
     ): EventBindingArgs;
 }
 
@@ -26,7 +23,7 @@ function eventListener(method: Method): EventBinding {
     return (
         items: EventTarget | Array<EventTarget>,
         events: string | Array<string>,
-        fn: Function, options = {}
+        fn: AnyFunction, options = {}
     ): EventBindingArgs => {
 
         // Normalize array
@@ -69,44 +66,3 @@ export const on = eventListener('addEventListener');
  * @return Array passed arguments
  */
 export const off = eventListener('removeEventListener');
-
-/**
- * Clean up utility function.
- */
-export const createNativeEventContainer = () => {
-    let listeners: Array<EventBindingArgs> = [];
-
-    return {
-        unbind(): void {
-            for (const args of listeners) {
-                off(...args);
-            }
-
-            listeners = [];
-        },
-
-        onMany(args: Array<EventBindingArgs>): void {
-            for (const set of args) {
-                listeners.push(on(...set));
-            }
-        },
-
-        on(...args: EventBindingArgs): void {
-            listeners.push(on(...args));
-        }
-    };
-};
-
-/**
- * Simplifies a touch / mouse-event
- * @param evt
- */
-export const simplifyEvent = (evt: TouchEvent) => {
-    const tap = (evt.touches && evt.touches[0] || evt);
-    return {
-        tap,
-        x: tap.clientX,
-        y: tap.clientY,
-        target: tap.target
-    };
-};

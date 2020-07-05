@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return*/
+
 /**
  * Utility to create a single class-name based on an object or array.
  * @param values
@@ -33,8 +36,6 @@ export function cn(...values: Array<string | {[key: string]: boolean}>): string 
  * @param propertyKey
  * @param descriptor
  */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export function bind(target: Record<string, any>, propertyKey: string, descriptor: PropertyDescriptor): any {
     return {
 
