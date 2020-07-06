@@ -11,10 +11,12 @@ export const Login = () => {
     const session = useStore(sessionStore);
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState<null | string>(null);
 
     const login = () => {
 
         // TODO: Validate and login
+        setErrorMessage('Not implemented yet');
     };
 
     return (
@@ -42,9 +44,13 @@ export const Login = () => {
                             value={password}
                             onChange={setPassword}/>
 
-                <Button text="Submit"
-                        disabled={!password || !id}
-                        onClick={login}/>
+                <div className={styles.formFooter}>
+                    <p className={styles.errorMessage}>{errorMessage}</p>
+
+                    <Button text="Submit"
+                            disabled={!password || !id}
+                            onClick={login}/>
+                </div>
             </div>
 
         </div>

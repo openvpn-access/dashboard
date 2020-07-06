@@ -1,14 +1,27 @@
 .button {
     @include inline-flex(row, center);
-    border-radius: 0.25em;
+    border-radius: 0.2em;
     padding: 0.5em 1em;
     transition: all 0.3s;
-    background: var(--c-primary);
+    background: var(--c-color);
     color: var(--c-text-secondary);
+
+    $types: ('primary', 'red', 'yellow');
+    @each $type in $types {
+        &[data-type=#{$type}] {
+            --c-color: var(#{'--c-' + $type});
+            --c-accent: var(#{'--c-' + $type+ '-accent'});
+            --c-focus: var(#{'--c-' + $type + '-focus'});
+        }
+    }
 
     @include disabled {
         background: var(--c-background-secondary-accent);
         cursor: not-allowed;
+
+        > span {
+            color: var(--c-text-disabled);
+        }
     }
 
     > bc-icon {
@@ -19,7 +32,7 @@
         @include font(600, 0.9em);
     }
 
-    &:focus{
-        @include focus_border(--c-primary-focus)
+    &:focus {
+        @include focus_border(--c-focus)
     }
 }

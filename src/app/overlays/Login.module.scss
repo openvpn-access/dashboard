@@ -9,7 +9,7 @@
     visibility: hidden;
 
     > svg {
-        @include size(30vmin);
+        @include size(13.5em);
         fill: var(--c-primary);
         transition: all 0.3s;
         transform: translateY(-2em);
@@ -42,6 +42,7 @@
 
 .form {
     @include flex(column, flex-end);
+    width: 16em;
 
     > * {
         margin-bottom: 0.75em;
@@ -56,4 +57,15 @@
             transition-delay: $i * 75ms;
         }
     }
+}
+
+.formFooter {
+    @include flex(row, flex-start, space-between);
+    width: 100%;
+}
+
+.errorMessage {
+    @include font(600, 0.75em);
+    color: var(--c-red);
+    align-self: flex-start;
 }
