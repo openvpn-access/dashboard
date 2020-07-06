@@ -1,0 +1,25 @@
+.button {
+    @include inline-flex(row, center);
+    border-radius: 0.25em;
+    padding: 0.5em 1em;
+    transition: all 0.3s;
+    background: var(--c-primary);
+    color: var(--c-text-secondary);
+
+    @include disabled {
+        background: var(--c-background-secondary-accent);
+        cursor: not-allowed;
+    }
+
+    > bc-icon {
+        margin-right: 0.5em;
+    }
+
+    > span {
+        @include font(600, 0.9em);
+    }
+
+    &:focus{
+        @include focus_border(--c-primary-focus)
+    }
+}

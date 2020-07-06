@@ -1,4 +1,5 @@
 @import '~sassyfication';
-@import 'utility/breakpoints';
+@import 'local/breakpoints';
+@import 'local/mixins';
 
 $font-family: 'Nunito', 'Open Sans', Arial, Helvetica, sans-serif;

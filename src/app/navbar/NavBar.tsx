@@ -1,4 +1,6 @@
+import {session, sessionStore} from '@state/session';
 import {cn} from '@utils/preact-utils';
+import {useStore} from 'effector-react';
 import {FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
 import {Settings} from '../tabs/settings/Settings';
@@ -46,11 +48,6 @@ export const NavBar: FunctionalComponent = () => {
         );
     }
 
-    const logout = () => {
-
-        // TODO: Add logout functionality
-    };
-
     return (
         <div className={styles.navBar}>
             <div className={styles.tabButtons}>
@@ -58,7 +55,7 @@ export const NavBar: FunctionalComponent = () => {
 
                 <button className={cn(styles.tabButton, styles.logout)}
                         aria-label="Logout"
-                        onClick={logout}>
+                        onClick={() => session.logout()}>
                     <bc-icon name="logout"/>
                     <span>Logout</span>
                 </button>

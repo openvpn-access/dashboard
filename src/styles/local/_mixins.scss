@@ -1,0 +1,11 @@
+@mixin disabled {
+    &[disabled],
+    &[disabled]:active,
+    &[disabled]:hover {
+        @content;
+    }
+}
+
+@mixin focus_border($var) {
+    box-shadow: 0 0 0 2px var($var);
+}

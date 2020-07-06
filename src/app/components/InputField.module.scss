@@ -1,0 +1,31 @@
+.inputField {
+    @include flex(row, center);
+    border-radius: 0.25em;
+    padding: 0.5em 0.75em;
+    transition: all 0.3s;
+    border: 1.5px solid var(--c-background-secondary-accent);
+
+    > bc-icon {
+        margin-right: 0.5em;
+        color: var(--c-background-secondary-accent);
+        transition: all 0.3s;
+    }
+
+    > input {
+        @include font(600, 0.85em);
+        color: var(--c-text-primary);
+
+        &::placeholder {
+            color: var(--c-background-secondary-accent);
+        }
+    }
+
+    &:focus-within {
+        @include focus_border(--c-primary-focus);
+        border-color: var(--c-primary);
+
+        > bc-icon {
+            color: var(--c-primary);
+        }
+    }
+}
