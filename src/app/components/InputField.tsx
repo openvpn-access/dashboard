@@ -7,6 +7,7 @@ type Props = {
     className?: string;
     password?: boolean;
     icon?: string;
+    disabled?: boolean;
     placeholder: string;
     value: string;
     onChange: (v: string) => void;
@@ -23,7 +24,8 @@ export const InputField: FunctionalComponent<Props> = props => {
             <input type={props.password ? 'password' : 'text'}
                    placeholder={props.placeholder}
                    aria-label={props.ariaLabel}
-                   onInput={changeProxy}/>
+                   onInput={changeProxy}
+                   disabled={props.disabled}/>
         </div>
     );
 };

@@ -2,6 +2,7 @@ import {Button} from '@components/Button';
 import {InputField} from '@components/InputField';
 import {sessionStore, session} from '@state/session';
 import {cn} from '@utils/preact-utils';
+import {delay, delayPromise} from '@utils/promises';
 import {useStore} from 'effector-react';
 import {h} from 'preact';
 import {useState} from 'preact/hooks';
@@ -9,17 +10,35 @@ import styles from './Login.module.scss';
 
 export const Login = () => {
     const sessionState = useStore(sessionStore);
-    const [id, setId] = useState('');
-    const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState<null | string>(null);
+    const [state, setState] = useState({
+        loading: false,
+        password: '',
+        id: '',
+        errorMessage: ''
+    });
+
+    const setId = (id: string) => setState({...state, id});
+    const setPassword = (password: string) => setState({...state, password});
 
     const login = () => {
-        session.login({id, password})
-            .then(() => setTimeout(() => {
-                setId('');
-                setPassword('');
-            }, 2000))
-            .catch(setErrorMessage);
+        setState({
+            ...state,
+            loading: true,
+            errorMessage: ''
+        });
+
+        delayPromise(1000, session.login({id: state.id, password: state.password}))
+            .then(() => setState({
+                ...state,
+                loading: false,
+                id: '',
+                password: ''
+            }))
+            .catch(msg => setState({
+                ...state,
+                loading: false,
+                errorMessage: msg
+            }));
     };
 
     return (
@@ -35,23 +54,26 @@ export const Login = () => {
 
             <div className={styles.form}>
                 <InputField placeholder="Username / E-Mail"
+                            disabled={state.loading}
                             icon="user"
                             ariaLabel="Username or email address"
-                            value={id}
+                            value={state.id}
                             onChange={setId}/>
 
                 <InputField placeholder="Password"
                             icon="lock"
+                            disabled={state.loading}
                             password={true}
                             ariaLabel="Password"
-                            value={password}
+                            value={state.password}
                             onChange={setPassword}/>
 
                 <div className={styles.formFooter}>
-                    <p className={styles.errorMessage}>{errorMessage}</p>
+                    <p className={styles.errorMessage}>{state.errorMessage}</p>
 
                     <Button text="Submit"
-                            disabled={!password || !id}
+                            loading={state.loading}
+                            disabled={!state.password || !state.id}
                             onClick={login}/>
                 </div>
             </div>

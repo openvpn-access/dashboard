@@ -8,6 +8,7 @@ type Props = {
     className?: string;
     icon?: string;
     type?: 'primary' | 'red' | 'yellow';
+    loading?: boolean;
     onClick: () => void;
     text: string;
 };
@@ -21,6 +22,12 @@ export const Button: FunctionalComponent<Props> = props => {
                 onClick={() => !props.disabled && props.onClick()}>
             {props.icon && <bc-icon name={props.icon}/>}
             <span>{props.text}</span>
+
+            {props.loading && <div className={styles.loadingIndicator}>
+                <div/>
+                <div/>
+                <div/>
+            </div>}
         </button>
     );
 };

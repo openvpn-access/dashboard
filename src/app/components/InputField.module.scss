@@ -19,6 +19,10 @@
         &::placeholder {
             color: var(--c-background-secondary-accent);
         }
+
+        &[disabled] {
+            color: var(--c-text-disabled);
+        }
     }
 
     &:focus-within {
