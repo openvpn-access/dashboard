@@ -2,7 +2,7 @@ import {Button} from '@components/Button';
 import {InputField} from '@components/InputField';
 import {sessionStore, session} from '@state/session';
 import {cn} from '@utils/preact-utils';
-import {delay, delayPromise} from '@utils/promises';
+import {delayPromise} from '@utils/promises';
 import {useStore} from 'effector-react';
 import {h} from 'preact';
 import {useState} from 'preact/hooks';
@@ -66,6 +66,7 @@ export const Login = () => {
                             password={true}
                             ariaLabel="Password"
                             value={state.password}
+                            onSubmit={login}
                             onChange={setPassword}/>
 
                 <div className={styles.formFooter}>
