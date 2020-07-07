@@ -1,6 +1,6 @@
 import {Button} from '@components/Button';
 import {InputField} from '@components/InputField';
-import {sessionStore} from '@state/session';
+import {sessionStore, session} from '@state/session';
 import {cn} from '@utils/preact-utils';
 import {useStore} from 'effector-react';
 import {h} from 'preact';
@@ -8,20 +8,23 @@ import {useState} from 'preact/hooks';
 import styles from './Login.module.scss';
 
 export const Login = () => {
-    const session = useStore(sessionStore);
+    const sessionState = useStore(sessionStore);
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState<null | string>(null);
 
     const login = () => {
-
-        // TODO: Validate and login
-        setErrorMessage('Not implemented yet');
+        session.login({id, password})
+            .then(() => setTimeout(() => {
+                setId('');
+                setPassword('');
+            }, 2000))
+            .catch(setErrorMessage);
     };
 
     return (
         <div className={cn(styles.login, {
-            [styles.visible]: session.sessionKey === null
+            [styles.visible]: sessionState.key === null
         })}>
 
             <svg version="1.1" viewBox="0 0 50 50">

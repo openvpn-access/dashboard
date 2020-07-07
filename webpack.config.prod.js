@@ -121,8 +121,8 @@ module.exports = {
                 'NODE_ENV': JSON.stringify('production'),
                 'VERSION': JSON.stringify(resolveAppVersion()),
                 'BUILD_DATE': JSON.stringify(Date.now()),
-                'WS_ENDPOINT': JSON.stringify('wss://beam.cafe/ws'),
-                'HTTPS_ENDPOINT': JSON.stringify('https://beam.cafe')
+                'WS_ENDPOINT': JSON.stringify('???'),
+                'API_ENDPOINT': JSON.stringify('???')
             }
         }),
 

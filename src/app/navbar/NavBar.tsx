@@ -1,6 +1,5 @@
-import {session, sessionStore} from '@state/session';
+import {session} from '@state/session';
 import {cn} from '@utils/preact-utils';
-import {useStore} from 'effector-react';
 import {FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
 import {Settings} from '../tabs/settings/Settings';

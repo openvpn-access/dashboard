@@ -13,5 +13,5 @@ declare const env: {
     BUILD_DATE: number;
     VERSION: string;
     HTTPS_ENDPOINT: string;
-    WS_ENDPOINT: string;
+    API_ENDPOINT: string;
 };
