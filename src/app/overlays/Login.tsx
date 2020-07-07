@@ -43,7 +43,7 @@ export const Login = () => {
 
     return (
         <div className={cn(styles.login, {
-            [styles.visible]: sessionState.key === null
+            [styles.visible]: sessionState.token === null
         })}>
 
             <svg version="1.1" viewBox="0 0 50 50">

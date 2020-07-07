@@ -7,7 +7,7 @@ export type User = {
 };
 
 export type Session = {
-    key: string | null;
+    token: string | null;
     user: User | null;
 };
 
@@ -32,14 +32,14 @@ export const session = {
 
 // Create store
 export const sessionStore = createStore<Session>({
-    key: null,
+    token: null,
     user: null
 });
 
 // Bind events
 sessionStore.on(session.logout, state => {
     const newState = {...state};
-    newState.key = null;
+    newState.token = null;
     newState.user = null;
     return newState;
 });
