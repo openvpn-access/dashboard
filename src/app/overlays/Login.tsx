@@ -1,11 +1,12 @@
 import {Button} from '@components/Button';
 import {InputField} from '@components/InputField';
 import {sessionStore, session} from '@state/session';
+import {staticStore} from '@utils/static-store';
 import {cn} from '@utils/preact-utils';
-import {delayPromise} from '@utils/promises';
+import {delay, delayPromise} from '@utils/promises';
 import {useStore} from 'effector-react';
 import {h} from 'preact';
-import {useState} from 'preact/hooks';
+import {useEffect, useState} from 'preact/hooks';
 import styles from './Login.module.scss';
 
 export const Login = () => {
@@ -32,7 +33,8 @@ export const Login = () => {
                 ...state,
                 loading: false,
                 id: '',
-                password: ''
+                password: '',
+                errorMessage: ''
             }))
             .catch(msg => setState({
                 ...state,
@@ -40,6 +42,35 @@ export const Login = () => {
                 errorMessage: msg
             }));
     };
+
+    useEffect(() => {
+        const token = staticStore.getJSON<string>('token');
+
+        if (token) {
+            setState({
+                ...state,
+                loading: true,
+                id: 'hidden',
+                password: 'password'
+            });
+
+            delayPromise(1000, session.login({token}))
+                .then(() => setState({
+                    ...state,
+                    loading: false,
+                    id: '',
+                    password: '',
+                    errorMessage: ''
+                }))
+                .catch(() => setState({
+                    ...state,
+                    loading: false,
+                    id: '',
+                    password: '',
+                    errorMessage: 'Please login again.' // I assume the token was invalid
+                }));
+        }
+    }, []);
 
     return (
         <div className={cn(styles.login, {

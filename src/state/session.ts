@@ -1,4 +1,5 @@
 import {blankRequest} from '@state/api';
+import {staticStore} from '@utils/static-store';
 import {createStore, createEvent, createEffect} from 'effector';
 
 export type User = {
@@ -14,7 +15,7 @@ export type Session = {
 export type LoginEvent = {
     id: string;
     password: string;
-};
+} | {token: string};
 
 // Export events
 export const session = {
@@ -23,9 +24,7 @@ export const session = {
         async handler(params) {
             return blankRequest('/login', params)
                 .then(res => res as Session)
-                .catch(err => {
-                    throw err.message;
-                });
+                .catch(err => Promise.reject(err.message));
         }
     })
 };
@@ -45,5 +44,6 @@ sessionStore.on(session.logout, state => {
 });
 
 sessionStore.on(session.login.done, (_, payload) => {
+    staticStore.setJSON('token', payload.result.token);
     return payload.result;
 });

@@ -2,8 +2,8 @@
  * Returns a promise which resolves after a specified amount of time in milliseconds
  * @param t
  */
-export const delay = async (t: number) =>
-    new Promise(resolve => setTimeout(resolve, t));
+export const delay = async <T>(t: number) =>
+    new Promise<T>(resolve => setTimeout(resolve, t));
 
 /**
  * Waits at least t milliseconds and returns the result of promise p
