@@ -1,20 +1,28 @@
 .inputField {
+    @include flex(column);
+}
+
+.main {
     @include flex(row, center);
     border-radius: 0.25em;
     padding: 0.5em 0.75em;
     transition: all 0.3s;
-    border: 1.5px solid var(--c-background-secondary-accent);
+    border: 1.5px solid var(--com-color);
     width: 100%;
+    position: relative;
+    --com-color: var(--c-background-secondary-accent);
+    --com-color-focus: var(--c-primary-focus);
 
     > bc-icon {
         margin-right: 0.5em;
-        color: var(--c-background-secondary-accent);
+        color: var(--com-color);
         transition: all 0.3s;
     }
 
     > input {
         @include font(600, 0.85em);
         color: var(--c-text-primary);
+        width: 100%;
 
         &::placeholder {
             color: var(--c-background-secondary-accent);
@@ -25,12 +33,50 @@
         }
     }
 
-    &:focus-within {
-        @include focus_border(--c-primary-focus);
-        border-color: var(--c-primary);
+    &:hover:not(:focus-within):not([data-errored]):not([disabled]) {
+        --com-color: var(--c-background-secondary-hover);
+    }
 
-        > bc-icon {
-            color: var(--c-primary);
+    &:focus-within {
+        @include focus_border(--com-color-focus);
+        --com-color: var(--c-primary);
+    }
+
+    &[data-errored] {
+        --com-color: var(--c-red);
+        --c-primary-focus: var(--c-red-focus);
+    }
+}
+
+.required {
+    @include position(3px, 3px, auto, auto);
+    @include font(600, 14px);
+    position: absolute;
+    color: var(--c-red);
+    transition: all 0.3s;
+    user-select: none;
+    opacity: 0;
+
+    &[data-visible] {
+        opacity: 1;
+    }
+}
+
+.error {
+    @include font(600, 12px);
+    line-height: 16px;
+    margin-top: 0.2em;
+    height: 1em;
+    color: var(--c-red);
+
+    @include animate('0.3s ease') {
+        from {
+            margin-top: -1em;
+            opacity: 0;
+        }
+        to {
+            margin-top: 0.2em;
+            opacity: 1;
         }
     }
 }

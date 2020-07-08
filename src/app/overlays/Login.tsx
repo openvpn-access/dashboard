@@ -1,21 +1,29 @@
 import {Button} from '@components/Button';
 import {InputField} from '@components/InputField';
+import {APIError} from '@state/api';
 import {sessionStore, session} from '@state/session';
 import {staticStore} from '@utils/static-store';
 import {cn} from '@utils/preact-utils';
-import {delay, delayPromise} from '@utils/promises';
+import {delayPromise} from '@utils/promises';
 import {useStore} from 'effector-react';
 import {h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 import styles from './Login.module.scss';
 
+type State = {
+    loading: boolean;
+    password: string;
+    id: string;
+    error: APIError | null;
+}
+
 export const Login = () => {
     const sessionState = useStore(sessionStore);
-    const [state, setState] = useState({
+    const [state, setState] = useState<State>({
         loading: false,
         password: '',
         id: '',
-        errorMessage: ''
+        error: null
     });
 
     const setId = (id: string) => setState({...state, id});
@@ -25,7 +33,7 @@ export const Login = () => {
         setState({
             ...state,
             loading: true,
-            errorMessage: ''
+            error: null
         });
 
         delayPromise(1000, session.login({id: state.id, password: state.password}))
@@ -34,12 +42,12 @@ export const Login = () => {
                 loading: false,
                 id: '',
                 password: '',
-                errorMessage: ''
+                error: null
             }))
             .catch(msg => setState({
                 ...state,
                 loading: false,
-                errorMessage: msg
+                error: msg
             }));
     };
 
@@ -60,14 +68,14 @@ export const Login = () => {
                     loading: false,
                     id: '',
                     password: '',
-                    errorMessage: ''
+                    error: null
                 }))
                 .catch(() => setState({
                     ...state,
                     loading: false,
                     id: '',
                     password: '',
-                    errorMessage: 'Please login again.' // I assume the token was invalid
+                    error: {error: '', statusCode: -1, message: 'Please login again'}
                 }));
         }
     }, []);
@@ -88,6 +96,7 @@ export const Login = () => {
                             disabled={state.loading}
                             icon="user"
                             ariaLabel="Username or email address"
+                            error={state.error?.statusCode === 404 ? state.error.message : null}
                             value={state.id}
                             onChange={setId}/>
 
@@ -96,12 +105,15 @@ export const Login = () => {
                             disabled={state.loading}
                             password={true}
                             ariaLabel="Password"
+                            error={state.error?.statusCode === 403 ? state.error.message : null}
                             value={state.password}
                             onSubmit={login}
                             onChange={setPassword}/>
 
                 <div className={styles.formFooter}>
-                    <p className={styles.errorMessage}>{state.errorMessage}</p>
+                    <p className={styles.errorMessage}>{
+                        ![404, 403].includes(state.error?.statusCode || 0) && state.error?.message
+                    }</p>
 
                     <Button text="Submit"
                             loading={state.loading}

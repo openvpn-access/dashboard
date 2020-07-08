@@ -3,8 +3,12 @@ import {staticStore} from '@utils/static-store';
 import {createStore, createEvent, createEffect} from 'effector';
 
 export type User = {
-    id: string;
+    created_at: Date;
+    updated_at: Date;
+    type: 'admin' | 'user';
+    state: 'activated' | 'pending' | 'deactivated';
     email: string;
+    username: string;
 };
 
 export type Session = {
@@ -23,8 +27,7 @@ export const session = {
     login: createEffect<LoginEvent, Session>('login', {
         async handler(params) {
             return api('/login', params)
-                .then(res => res as Session)
-                .catch(err => Promise.reject(err.message));
+                .then(res => res as Session);
         }
     })
 };

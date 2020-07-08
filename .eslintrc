@@ -41,6 +41,7 @@
         "react/prop-types": "off",
         "react/jsx-indent": [2, 4, {"checkAttributes": true, "indentLogicalExpressions": true}],
         "no-unused-vars": "off",
-        "indent": "off"
+        "indent": "off",
+        "camelcase": "off"
     }
 }

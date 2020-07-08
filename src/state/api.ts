@@ -2,6 +2,12 @@
 
 import {sessionStore} from '@state/session';
 
+export type APIError = {
+    statusCode: number;
+    message: string;
+    error: string;
+}
+
 export const api = <T>(route: string, data: unknown): Promise<T> => {
     const {token} = sessionStore.getState();
 
