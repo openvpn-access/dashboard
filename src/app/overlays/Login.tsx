@@ -46,7 +46,7 @@ export const Login = () => {
     useEffect(() => {
         const token = staticStore.getJSON<string>('token');
 
-        if (token) {
+        if (token && sessionState.token === null) {
             setState({
                 ...state,
                 loading: true,

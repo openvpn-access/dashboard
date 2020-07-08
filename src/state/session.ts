@@ -1,4 +1,4 @@
-import {blankRequest} from '@state/api';
+import {api} from '@state/api';
 import {staticStore} from '@utils/static-store';
 import {createStore, createEvent, createEffect} from 'effector';
 
@@ -22,7 +22,7 @@ export const session = {
     logout: createEvent('logout'),
     login: createEffect<LoginEvent, Session>('login', {
         async handler(params) {
-            return blankRequest('/login', params)
+            return api('/login', params)
                 .then(res => res as Session)
                 .catch(err => Promise.reject(err.message));
         }
@@ -37,6 +37,7 @@ export const sessionStore = createStore<Session>({
 
 // Bind events
 sessionStore.on(session.logout, state => {
+    staticStore.delete('token');
     const newState = {...state};
     newState.token = null;
     newState.user = null;
