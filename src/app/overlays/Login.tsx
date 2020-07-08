@@ -1,6 +1,6 @@
 import {Button} from '@components/Button';
 import {InputField} from '@components/InputField';
-import {APIError} from '@state/api';
+import {APIError, extractAPIError} from '@state/api';
 import {sessionStore, session} from '@state/session';
 import {staticStore} from '@utils/static-store';
 import {cn} from '@utils/preact-utils';
@@ -96,7 +96,7 @@ export const Login = () => {
                             disabled={state.loading}
                             icon="user"
                             ariaLabel="Username or email address"
-                            error={state.error?.statusCode === 404 ? state.error.message : null}
+                            error={extractAPIError(state.error, 2, 3)}
                             value={state.id}
                             onChange={setId}/>
 
@@ -105,15 +105,13 @@ export const Login = () => {
                             disabled={state.loading}
                             password={true}
                             ariaLabel="Password"
-                            error={state.error?.statusCode === 403 ? state.error.message : null}
+                            error={extractAPIError(state.error, 4)}
                             value={state.password}
                             onSubmit={login}
                             onChange={setPassword}/>
 
                 <div className={styles.formFooter}>
-                    <p className={styles.errorMessage}>{
-                        ![404, 403].includes(state.error?.statusCode || 0) && state.error?.message
-                    }</p>
+                    <p className={styles.errorMessage}>{extractAPIError(state.error, 1)}</p>
 
                     <Button text="Submit"
                             loading={state.loading}

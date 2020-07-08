@@ -1,6 +1,6 @@
 import {Button} from '@components/Button';
 import {InputField} from '@components/InputField';
-import {api, APIError} from '@state/api';
+import {api, extractAPIError, APIError} from '@state/api';
 import {sessionStore} from '@state/session';
 import {FunctionalComponent, h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
@@ -10,7 +10,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
     const [changePassword, setChangePassword] = useState(false);
     const [newUsername, setUsername] = useState('');
     const [newEmail, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [error, setError] = useState<APIError | null>(null);
 
@@ -26,11 +26,13 @@ export const UpdateCredentials: FunctionalComponent = () => {
     const submit = () => api('PUT', '/user/admin', {
         email: newEmail,
         username: newUsername,
-        currentPassword: password,
+        currentPassword,
         ...(changePassword && {password: newPassword})
     }).then(() => {
-        setPassword('');
+        setChangePassword(false);
+        setCurrentPassword('');
         setNewPassword('');
+        setError(null);
     }).catch(setError);
 
     return (
@@ -42,7 +44,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
                             required={true}
                             placeholder="Username"
                             icon="user"
-                            error={error?.id === 1 && error.message}
+                            error={extractAPIError(error, 1, 3)}
                             onChange={setUsername}
                             ariaLabel="New username"/>
 
@@ -50,22 +52,26 @@ export const UpdateCredentials: FunctionalComponent = () => {
                             required={true}
                             placeholder="E-Mail"
                             icon="envelope"
+                            error={extractAPIError(error, 3)}
                             onChange={setEmail}
                             ariaLabel="New e-mail"/>
 
-                <InputField value={password}
+                <InputField value={currentPassword}
                             required={true}
+                            password={true}
                             placeholder="Password"
                             icon="lock"
-                            error={error?.id === 2 && error.message}
-                            onChange={setPassword}
+                            error={extractAPIError(error, 2)}
+                            onChange={setCurrentPassword}
                             ariaLabel="Current password"
                             onSubmit={submit}/>
 
                 {changePassword && <InputField value={newPassword}
                                                required={true}
+                                               password={true}
                                                placeholder="New password"
                                                icon="lock"
+                                               error={extractAPIError(error, 5)}
                                                onChange={setNewPassword}
                                                ariaLabel="New password"
                                                onSubmit={submit}/>}
@@ -80,7 +86,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
 
                     <Button className={styles.submitBtn}
                             text="Submit"
-                            disabled={!password || !newEmail || !newUsername}
+                            disabled={!currentPassword || !newEmail || !newUsername}
                             onClick={submit}/>
                 </div>
             </div>

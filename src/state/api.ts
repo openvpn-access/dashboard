@@ -31,3 +31,7 @@ export const api = <T>(
 
     });
 };
+
+export const extractAPIError = (err: null | APIError, ...codes: Array<number>): string | null => {
+    return err && codes.includes(err.id) ? err.message : null;
+};
