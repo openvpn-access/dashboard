@@ -26,7 +26,7 @@ export const session = {
     logout: createEvent('logout'),
     login: createEffect<LoginEvent, Session>('login', {
         async handler(params) {
-            return api('/login', params)
+            return api('POST', '/login', params)
                 .then(res => res as Session);
         }
     })

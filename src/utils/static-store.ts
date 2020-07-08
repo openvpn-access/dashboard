@@ -15,5 +15,9 @@ export const staticStore = {
 
     setJSON(key: string, value: unknown): void {
         localStorage.setItem(key, JSON.stringify(value));
+    },
+
+    delete(key: string): void {
+        localStorage.removeItem(key);
     }
 };

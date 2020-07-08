@@ -6,19 +6,28 @@ export type APIError = {
     statusCode: number;
     message: string;
     error: string;
-}
+    id: number;
+};
 
-export const api = <T>(route: string, data: unknown): Promise<T> => {
+export const api = <T>(
+    method: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH',
+    route: string,
+    data?: unknown
+): Promise<T> => {
     const {token} = sessionStore.getState();
 
     return fetch(env.API_ENDPOINT + route, {
-        method: 'POST',
-        body: JSON.stringify(data),
+        method,
+        body: method !== 'GET' ? JSON.stringify(data) : undefined,
         headers: {
             'Content-Type': 'application/json',
-            ...(token && {'Authentication': `Baerer ${token}`})
+            ...(token && {'Authorization': `Bearer ${token}`})
         }
     }).then(async res => {
-        return res.ok ? res.json() : Promise.reject(await res.json());
+        if (res.headers.get('content-length') === '0') {
+            return res.status;
+        }
+            return res.ok ? res.json() : Promise.reject(await res.json());
+
     });
 };

@@ -1,9 +1,10 @@
 import {session} from '@state/session';
 import {cn} from '@utils/preact-utils';
+import {staticStore} from '@utils/static-store';
 import {FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
-import {Settings} from '../tabs/settings/Settings';
-import {Users} from '../tabs/users/Users';
+import {Settings} from './tabs/settings/Settings';
+import {Users} from './tabs/users/Users';
 import styles from './NavBar.module.scss';
 
 const tabs = [
@@ -20,9 +21,17 @@ const tabs = [
 ];
 
 export const NavBar: FunctionalComponent = () => {
-    const [activeTab, changeTab] = useState(0);
+    const [activeTab, changeTab] = useState(
+        env.NODE_ENV === 'development' ? staticStore.getJSON('--dev-') || 0 : 0
+    );
+
     const tabContainers = [];
     const tabButtons = [];
+
+    const changeTabTo = (index: number) => () => {
+        env.NODE_ENV === 'development' && staticStore.setJSON('--dev-', index);
+        changeTab(index);
+    };
 
     // Generate tabs and nav-buttons
     for (let i = 0; i < tabs.length; i++) {
@@ -40,7 +49,7 @@ export const NavBar: FunctionalComponent = () => {
                 [styles.active]: active
             })}
                     aria-label={`Switch to tab: ${name}`}
-                    onClick={changeTab.bind(null, i)}>
+                    onClick={changeTabTo(i)}>
                 <bc-icon name={icon}/>
                 <span>{name}</span>
             </button>

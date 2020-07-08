@@ -75,7 +75,7 @@ export const Login = () => {
                     loading: false,
                     id: '',
                     password: '',
-                    error: {error: '', statusCode: -1, message: 'Please login again'}
+                    error: {error: '', statusCode: -1, message: 'Please login again', id: -1}
                 }));
         }
     }, []);

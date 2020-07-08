@@ -1,0 +1,5 @@
+.settings {
+    @include flex(column, center);
+    @include size(100%);
+    padding: 5em 0;
+}

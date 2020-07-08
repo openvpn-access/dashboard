@@ -2,6 +2,8 @@ import {cn} from '@utils/preact-utils';
 import {createRef, FunctionalComponent, h} from 'preact';
 import styles from './InputField.module.scss';
 
+type Falsish = null | false | undefined;
+
 type Props = {
     ariaLabel?: string;
     className?: string;
@@ -10,7 +12,7 @@ type Props = {
     disabled?: boolean;
     placeholder: string;
     required?: boolean;
-    error?: string | null;
+    error?: string | Falsish;
     value: string;
     onSubmit?: (v: string) => void;
     onChange: (v: string) => void;
