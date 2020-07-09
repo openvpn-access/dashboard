@@ -10,7 +10,7 @@ export const Paginator: FunctionalComponent = () => {
 
     const jumpTo = (page: number) => () => {
         users.updateConfig({page});
-        void users.updateView();
+        void users.updateView(); // TODO: Show loading indicator?
     };
 
     const totalPages = Math.ceil(total_users_count / per_page);

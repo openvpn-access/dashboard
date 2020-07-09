@@ -7,6 +7,7 @@
     user-select: text;
     color: var(--c-text-primary);
     font-family: $font-family-code;
+    border-bottom: 1px solid var(--c-background-secondary);
 
     > p {
         @include font(400, 0.85em);
@@ -40,9 +41,5 @@
                 background: $color;
             }
         }
-    }
-
-    &:not(:last-child) {
-        border-bottom: 1px solid var(--c-background-secondary);
     }
 }

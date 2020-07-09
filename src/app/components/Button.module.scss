@@ -7,6 +7,8 @@
     color: var(--c-text-secondary);
     position: relative;
     overflow: hidden;
+    --loading-indicator-background: var(--c-color);
+    --loading-indicator-color: var(--c-text-secondary);
 
     $types: ('primary', 'red', 'yellow');
     @each $type in $types {
@@ -33,43 +35,5 @@
 
     &:focus {
         @include focus_border(--c-focus)
-    }
-}
-
-.loadingIndicator {
-    @include position(0, 0, 0, 0);
-    @include flex(row, center, center);
-    position: absolute;
-    background: var(--c-color);
-
-    @include animate('0.3s ease-in-out') {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
-
-    > div {
-        @include size(4px);
-        border-radius: 100%;
-        background: var(--c-text-secondary);
-        margin: 0.15em;
-
-        @for $i from 1 through 3 {
-            &:nth-child(#{$i}) {
-                animation-delay: $i * -300ms;
-            }
-        }
-
-        @include animate('0.6s linear infinite alternate') {
-            from {
-                transform: scale(0.5);
-            }
-            to {
-                transform: scale(1.5);
-            }
-        }
     }
 }

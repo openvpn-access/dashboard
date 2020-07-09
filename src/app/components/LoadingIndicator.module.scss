@@ -1,0 +1,40 @@
+.loadingIndicator {
+    @include position(0, 0, 0, 0);
+    @include flex(row, center, center);
+    position: absolute;
+    background: var(--loading-indicator-background, var(--c-background-primary));
+    pointer-events: none;
+    opacity: 0;
+    z-index: 10;
+    transition: all 0.3s;
+
+    &[data-visible] {
+        opacity: 1;
+
+        > div {
+            animation-play-state: running !important;
+        }
+    }
+
+    > div {
+        @include size(12px);
+        border-radius: 100%;
+        background: var(--loading-indicator-color, var(--c-primary));
+        animation-play-state: paused !important;
+
+        @for $i from 1 through 3 {
+            &:nth-child(#{$i}) {
+                animation-delay: $i * -300ms;
+            }
+        }
+
+        @include animate('0.6s linear infinite alternate') {
+            from {
+                transform: scale(0.1);
+            }
+            to {
+                transform: scale(0.5);
+            }
+        }
+    }
+}

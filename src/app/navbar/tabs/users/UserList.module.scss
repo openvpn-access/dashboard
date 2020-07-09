@@ -2,5 +2,10 @@
     @include size(100%);
     position: relative;
     overflow: auto;
-    padding-bottom: 3em; // Pagination button bar space
+
+    &::after {
+        display: block;
+        content: '';
+        height: 3em;
+    }
 }

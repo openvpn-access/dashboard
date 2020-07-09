@@ -1,3 +1,4 @@
+import {LoadingIndicator} from '@components/LoadingIndicator';
 import {cn} from '@utils/preact-utils';
 import {FunctionalComponent, h} from 'preact';
 import styles from './Button.module.scss';
@@ -23,11 +24,7 @@ export const Button: FunctionalComponent<Props> = props => {
             {props.icon && <bc-icon name={props.icon}/>}
             <span>{props.text}</span>
 
-            {props.loading && <div className={styles.loadingIndicator}>
-                <div/>
-                <div/>
-                <div/>
-            </div>}
+            {props.loading !== undefined && <LoadingIndicator visible={props.loading}/>}
         </button>
     );
 };
