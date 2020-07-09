@@ -35,11 +35,8 @@ export const session = {
     // Login effect using username / email and password
     login: domain.createEffect<LoginEvent, Session>('login', {
         async handler(params) {
-            return api({
-                method: 'POST',
-                route: '/login',
-                data: params
-            }).then(res => res as Session);
+            return api({method: 'POST', route: '/login', data: params})
+                .then(res => res as Session);
         }
     })
 };

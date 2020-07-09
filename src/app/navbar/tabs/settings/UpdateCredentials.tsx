@@ -24,11 +24,13 @@ export const UpdateCredentials: FunctionalComponent = () => {
         });
     }, []);
 
-    const submit = () => api('PUT', '/user/admin', {
-        email: newEmail,
-        username: newUsername,
-        currentPassword,
-        ...(changePassword && {password: newPassword})
+    const submit = () => api({
+        method: 'PUT', route: '/users/admin', data: {
+            email: newEmail,
+            username: newUsername,
+            currentPassword,
+            ...(changePassword && {password: newPassword})
+        }
     }).then(() => {
         setChangePassword(false);
         setCurrentPassword('');

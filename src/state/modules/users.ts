@@ -28,7 +28,7 @@ export const users = {
     updateView: domain.createEffect<void, UserList>('updateView', {
         async handler(): Promise<UserList> {
             return await api({
-                route: '/user',
+                route: '/users',
                 query: users.config.getState()
             });
         }
