@@ -43,7 +43,7 @@
 
         &.number:not([data-current]) {
             color: var(--c-text-disabled);
-            transition: all 0.3s;
+            transition: all 0.3s, visibility 0s 0s;
 
             &:hover {
                 color: var(--c-text-primary);

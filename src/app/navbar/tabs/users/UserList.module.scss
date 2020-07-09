@@ -2,6 +2,8 @@
     @include size(100%);
     position: relative;
     overflow: auto;
+    transition: all 0.3s;
+    will-change: transform;
 
     &::after {
         display: block;
