@@ -1,20 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import {sessionStore} from '@state/session';
-
-export type APIError = {
-    statusCode: number;
-    message: string;
-    error: string;
-    id: number;
-};
+import {session} from '@state/modules/session';
+import {APIError} from '@state/types';
 
 export const api = <T>(
     method: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH',
     route: string,
     data?: unknown
 ): Promise<T> => {
-    const {token} = sessionStore.getState();
+    const {token} = session.store.getState();
 
     return fetch(env.API_ENDPOINT + route, {
         method,
@@ -27,8 +21,8 @@ export const api = <T>(
         if (res.headers.get('content-length') === '0') {
             return res.status;
         }
-            return res.ok ? res.json() : Promise.reject(await res.json());
 
+        return res.ok ? res.json() : Promise.reject(await res.json());
     });
 };
 

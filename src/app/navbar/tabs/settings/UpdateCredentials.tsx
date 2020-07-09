@@ -1,7 +1,8 @@
 import {Button} from '@components/Button';
 import {InputField} from '@components/InputField';
-import {api, extractAPIError, APIError} from '@state/api';
-import {sessionStore} from '@state/session';
+import {api, extractAPIError} from '@state/api';
+import {session} from '@state/modules/session';
+import {APIError} from '@state/types';
 import {FunctionalComponent, h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 import styles from './UpdateCredentials.module.scss';
@@ -15,7 +16,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
     const [error, setError] = useState<APIError | null>(null);
 
     useEffect(() => {
-        sessionStore.watch(state => {
+        session.store.watch(state => {
             if (state.user) {
                 setUsername(state.user.username);
                 setEmail(state.user.email);

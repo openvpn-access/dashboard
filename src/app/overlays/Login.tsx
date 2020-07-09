@@ -1,7 +1,8 @@
 import {Button} from '@components/Button';
 import {InputField} from '@components/InputField';
-import {APIError, extractAPIError} from '@state/api';
-import {sessionStore, session} from '@state/session';
+import {extractAPIError} from '@state/api';
+import {session} from '@state/modules/session';
+import {APIError} from '@state/types';
 import {staticStore} from '@utils/static-store';
 import {cn} from '@utils/preact-utils';
 import {delayPromise} from '@utils/promises';
@@ -18,7 +19,7 @@ type State = {
 }
 
 export const Login = () => {
-    const sessionState = useStore(sessionStore);
+    const sessionState = useStore(session.store);
     const [state, setState] = useState<State>({
         loading: false,
         password: '',

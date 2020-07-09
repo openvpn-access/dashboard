@@ -1,4 +1,4 @@
-import {session} from '@state/session';
+import {session} from '@state/modules/session';
 import {cn} from '@utils/preact-utils';
 import {staticStore} from '@utils/static-store';
 import {FunctionalComponent, h} from 'preact';
