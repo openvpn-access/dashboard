@@ -1,0 +1,8 @@
+.users {
+    @include size(100%);
+    @include flex(column);
+}
+
+.table {
+    max-height: calc(100% - 2.5em - 2px);
+}

@@ -1,0 +1,21 @@
+.searchBar {
+    @include flex(row, center);
+    padding: 0 1em;
+    border-bottom: 2px solid var(--c-background-secondary);
+    height: 2.5em;
+
+    > bc-icon {
+        color: var(--c-text-disabled);
+        transition: all 0.3s;
+    }
+
+    > input {
+        @include font(400, 0.9em);
+        margin: 1px 0 0 0.75em;
+        color: var(--c-text-primary);
+    }
+
+    &:focus-within > bc-icon {
+        color: var(--c-text-primary)
+    }
+}

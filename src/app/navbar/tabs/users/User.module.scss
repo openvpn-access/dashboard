@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;500&display=swap');
+
+.user {
+    padding: 0.5em;
+    display: grid;
+    grid-template-columns: 1.5em 1.5em 1em 0.5fr 1fr 0.35fr 0.35fr;
+    grid-gap: 0.5em;
+    align-items: center;
+    user-select: text;
+    color: var(--c-text-primary);
+    font-family: "Source Sans Pro", Serif;
+
+    > p {
+        @include font(400, 0.85em);
+    }
+
+    .id {
+        font-weight: 500;
+        text-align: right;
+    }
+
+    .type {
+        @include flex(row, center, center);
+    }
+
+    .state {
+        @include flex(row, center, center);
+
+        > div {
+            @include size(8px);
+            border-radius: 100%;
+        }
+
+        $states: (
+            activated: var(--c-green),
+            deactivated: var(--c-red),
+            pending: var(--c-yellow),
+        );
+
+        @each $state, $color in $states {
+            &[data-state=#{$state}] > div {
+                background: $color;
+            }
+        }
+    }
+
+    &:not(:last-child) {
+        border-bottom: 1px solid var(--c-background-secondary);
+    }
+}

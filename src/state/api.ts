@@ -3,14 +3,36 @@
 import {session} from '@state/modules/session';
 import {APIError} from '@state/types';
 
+export type APICallConfig = {
+    method?: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
+    route: string;
+    data?: unknown;
+    query?: Record<string, string | number>
+};
+
 export const api = <T>(
-    method: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH',
-    route: string,
-    data?: unknown
+    {
+        method = 'GET',
+        route,
+        data,
+        query
+    }: APICallConfig
 ): Promise<T> => {
     const {token} = session.store.getState();
+    let queryString = '';
 
-    return fetch(env.API_ENDPOINT + route, {
+    if (query) {
+        const params = new URLSearchParams();
+
+        for (const [key, value] of Object.entries(query)) {
+            params.append(key, String(value));
+        }
+
+        queryString = `?${params.toString()}`;
+    }
+
+    const url = env.API_ENDPOINT + route + queryString;
+    return fetch(url, {
         method,
         body: method !== 'GET' ? JSON.stringify(data) : undefined,
         headers: {

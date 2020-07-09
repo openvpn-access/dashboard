@@ -42,6 +42,7 @@
         "react/jsx-indent": [2, 4, {"checkAttributes": true, "indentLogicalExpressions": true}],
         "no-unused-vars": "off",
         "indent": "off",
-        "camelcase": "off"
+        "camelcase": "off",
+        "no-void": "off"
     }
 }

@@ -1,3 +1,5 @@
+type DBEntry = {id: string};
+
 export type APIError = {
     statusCode: number;
     message: string;
@@ -5,7 +7,7 @@ export type APIError = {
     id: number;
 };
 
-export type DBUser = {
+export type DBUser = DBEntry & {
     created_at: Date;
     updated_at: Date;
     type: 'admin' | 'user';
