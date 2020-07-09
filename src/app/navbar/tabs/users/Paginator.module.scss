@@ -1,0 +1,96 @@
+.paginator {
+    @include position(auto, 0, 0, 0);
+    @include flex(row, center, center);
+    position: absolute;
+    pointer-events: none;
+}
+
+.controls {
+    @include flex(row, center);
+    border-radius: 10em;
+    background: var(--c-background-primary);
+    box-shadow: 0 3px 10px var(--c-background-tertiary);
+    margin-bottom: 0.5em;
+    padding: 0 0.75em;
+    height: 2.25em;
+
+    button {
+        @include font(600, 0.8em);
+        padding: 0.25em 0;
+        margin: 0 0.5em;
+        pointer-events: all;
+        min-width: 2.25em;
+        line-height: 1.5em;
+        transition: all 0.3s, visibility 0s 0s;
+        color: var(--c-text-primary);
+        position: relative;
+
+        &::before {
+            @include position(auto, 0, 0px, 0);
+            @include pseudo();
+            @include size(100%, 1px);
+            border-radius: 1em;
+            background: currentColor;
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(2px);
+        }
+
+        &[data-current] {
+            color: var(--c-text-primary);
+            pointer-events: none;
+            cursor: default;
+
+            &::before {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        &.number:not([data-current]) {
+            color: var(--c-text-disabled);
+
+            &:hover {
+                color: var(--c-text-primary);
+
+                &::before {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+        }
+
+        &.icon {
+            @include flex(row, center, center);
+            margin: 0;
+            padding: 0;
+            min-width: 0;
+
+            bc-icon {
+                font-size: 14px;
+            }
+        }
+
+        &[disabled] {
+            color: var(--c-text-disabled);
+            cursor: default;
+            pointer-events: none;
+        }
+
+        &[data-invisible] {
+            visibility: hidden;
+        }
+
+        &:first-child {
+            border-right: 2px solid var(--c-background-secondary);
+            padding-right: 0.75em;
+            margin-right: 0;
+        }
+
+        &:last-child {
+            border-left: 2px solid var(--c-background-secondary);
+            padding-left: 0.75em;
+            margin-left: 0;
+        }
+    }
+}
