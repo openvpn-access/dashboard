@@ -5,6 +5,7 @@ export type APIError = {
     message: string;
     error: string;
     id: number;
+    field?: string;
 };
 
 export type DBUser = DBEntry & {

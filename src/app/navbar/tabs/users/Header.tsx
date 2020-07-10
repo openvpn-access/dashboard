@@ -35,5 +35,6 @@ export const Header: FunctionalComponent = () => (
         <p>E-Mail Address</p>
         <p>Created </p>
         <p>Updated</p>
+        <p>Edit</p>
     </div>
 );

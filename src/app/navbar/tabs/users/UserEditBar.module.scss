@@ -1,0 +1,9 @@
+.userEditBar {
+    @include flex(row, flex-start);
+    padding: 0.5em;
+    border-top: 2px solid var(--c-background-secondary);
+
+    > *:not(:first-child) {
+        margin-left: 0.25em;
+    }
+}

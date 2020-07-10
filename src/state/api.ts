@@ -48,6 +48,6 @@ export const api = <T>(
     });
 };
 
-export const extractAPIError = (err: null | APIError, ...codes: Array<number>): string | null => {
-    return err && codes.includes(err.id) ? err.message : null;
+export const extractAPIError = (err: null | APIError, field: string): string | null => {
+    return err && err.field === field ? err.message : null;
 };

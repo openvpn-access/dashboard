@@ -97,7 +97,7 @@ export const Login = () => {
                             disabled={state.loading}
                             icon="user"
                             ariaLabel="Username or email address"
-                            error={extractAPIError(state.error, 2, 3)}
+                            error={extractAPIError(state.error, 'email')}
                             value={state.id}
                             onChange={setId}/>
 
@@ -106,13 +106,13 @@ export const Login = () => {
                             disabled={state.loading}
                             password={true}
                             ariaLabel="Password"
-                            error={extractAPIError(state.error, 4)}
+                            error={extractAPIError(state.error, 'password')}
                             value={state.password}
                             onSubmit={login}
                             onChange={setPassword}/>
 
                 <div className={styles.formFooter}>
-                    <p className={styles.errorMessage}>{extractAPIError(state.error, 1)}</p>
+                    <p className={styles.errorMessage}>{state.error?.message}</p>
 
                     <Button text="Submit"
                             loading={state.loading}

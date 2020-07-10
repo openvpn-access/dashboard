@@ -1,12 +1,13 @@
 .button {
     @include inline-flex(row, center);
     border-radius: 0.2em;
-    padding: 0.55em 1.25em 0.5em;
+    padding: 0.55em 1em 0.5em;
     transition: all 0.3s;
     background: var(--c-color);
     color: var(--c-text-secondary);
     position: relative;
     overflow: hidden;
+    flex-shrink: 0;
     --loading-indicator-background: var(--c-color);
     --loading-indicator-color: var(--c-text-secondary);
 
@@ -27,6 +28,7 @@
 
     > bc-icon {
         margin-right: 0.5em;
+        flex-shrink: 0;
     }
 
     > span {
@@ -35,5 +37,9 @@
 
     &:focus {
         @include focus_border(--c-focus)
+    }
+
+    &:hover {
+        background: var(--c-accent);
     }
 }

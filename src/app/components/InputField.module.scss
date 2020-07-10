@@ -1,5 +1,6 @@
 .inputField {
     @include flex(column);
+    flex-shrink: 1;
 }
 
 .main {
@@ -66,17 +67,8 @@
     @include font(600, 12px);
     line-height: 16px;
     margin-top: 0.2em;
-    height: 1em;
     color: var(--c-red);
-
-    @include animate('0.3s ease') {
-        from {
-            margin-top: -1em;
-            opacity: 0;
-        }
-        to {
-            margin-top: 0.2em;
-            opacity: 1;
-        }
-    }
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-width: inherit;
 }

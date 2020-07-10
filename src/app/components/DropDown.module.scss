@@ -1,13 +1,12 @@
 .button {
-    @include hover_effect(--c-background-secondary);
     @include flex(row, center);
-    @include font(600, 0.9em);
-    color: var(--c-text-primary);
-    padding: 0.35em 0.75em;
     border-radius: 0.25em;
-    border: 2px solid transparent;
+    padding: 0.5em 0.75em;
     transition: all 0.3s;
+    border: 1.5px solid var(--com-color);
     width: 100%;
+    --com-color: var(--c-background-secondary-accent);
+    --com-color-focus: var(--c-primary-focus);
 
     &.empty {
         pointer-events: none;
@@ -18,18 +17,27 @@
         }
     }
 
-    &.open > bc-icon {
-        transform: rotate(180deg);
+    &:hover {
+        --com-color: var(--c-background-secondary-hover);
     }
 
-    > span {
-        margin-right: auto;
+    &:focus-within {
+        @include focus_border(--com-color-focus);
+        --com-color: var(--c-primary);
+    }
+
+    > p {
+        @include font(600, 0.85em);
+        display: inline-block;
+        color: var(--c-text-primary);
+        text-align: left;
     }
 
     > bc-icon {
         font-size: 14px;
-        margin-left: 0.5em;
+        margin-right: 0.5em;
         transition: all 0.3s;
+        color: var(--com-color);
     }
 }
 
@@ -39,9 +47,10 @@
     padding: 0.25em 0;
 
     > button {
-        @include hover_effect(--c-background-primary);
         @include font(300, 0.9em);
         color: var(--c-text-primary);
+        background: var(--c-background-primary);
+        transition: all 0.3s;
         padding: 0.5em 1em;
         cursor: pointer;
         text-align: left;
@@ -49,6 +58,10 @@
         &:focus {
             z-index: 1;
             border-radius: 0.15em;
+        }
+
+        &:hover {
+            background: var(--c-background-secondary-accent);
         }
     }
 }

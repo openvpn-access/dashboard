@@ -1,13 +1,17 @@
+.container {
+    @include flex(column);
+    border-bottom: 1px solid var(--c-background-secondary);
+}
+
 .user {
     padding: 0.5em;
     display: grid;
-    grid-template-columns: 1.5em 1.5em 1em 0.5fr 1fr 0.35fr 0.35fr;
+    grid-template-columns: 1.5em 1.5em 1em 0.5fr 1fr 0.35fr 0.35fr 1.5em;
     grid-gap: 0.5em;
     align-items: center;
     user-select: text;
-    color: var(--c-text-primary);
+    color: var(--c-text-primary-accent);
     font-family: $font-family-code;
-    border-bottom: 1px solid var(--c-background-secondary);
 
     > p {
         @include font(400, 0.85em);
@@ -26,20 +30,30 @@
         @include flex(row, center, center);
 
         > div {
-            @include size(8px);
+            @include size(10px);
             border-radius: 100%;
         }
 
         $states: (
-            activated: var(--c-green),
-            deactivated: var(--c-red),
-            pending: var(--c-yellow),
+            activated: --c-green,
+            deactivated: --c-red,
+            pending: --c-yellow,
         );
 
         @each $state, $color in $states {
             &[data-state=#{$state}] > div {
-                background: $color;
+                background: var($color);
+                border: 1px solid var(#{$color + '-accent'});
             }
+        }
+    }
+
+    .edit {
+        color: currentColor;
+        transition: all 0.3s;
+
+        &:hover {
+            color: var(--c-primary);
         }
     }
 }

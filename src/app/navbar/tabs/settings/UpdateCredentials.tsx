@@ -47,7 +47,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
                             required={true}
                             placeholder="Username"
                             icon="user"
-                            error={extractAPIError(error, 1, 3)}
+                            error={extractAPIError(error, 'username')}
                             onChange={setUsername}
                             ariaLabel="New username"/>
 
@@ -55,7 +55,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
                             required={true}
                             placeholder="E-Mail"
                             icon="envelope"
-                            error={extractAPIError(error, 3)}
+                            error={extractAPIError(error, 'email')}
                             onChange={setEmail}
                             ariaLabel="New e-mail"/>
 
@@ -64,7 +64,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
                             password={true}
                             placeholder="Password"
                             icon="lock"
-                            error={extractAPIError(error, 2)}
+                            error={extractAPIError(error, 'currentPassword')}
                             onChange={setCurrentPassword}
                             ariaLabel="Current password"
                             onSubmit={submit}/>
@@ -74,7 +74,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
                                                password={true}
                                                placeholder="New password"
                                                icon="lock"
-                                               error={extractAPIError(error, 5)}
+                                               error={extractAPIError(error, 'password')}
                                                onChange={setNewPassword}
                                                ariaLabel="New password"
                                                onSubmit={submit}/>}
