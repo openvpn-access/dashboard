@@ -1,0 +1,12 @@
+.content {
+    padding: 0.75em 1em;
+}
+
+.btn {
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &[data-active] {
+        color: var(--c-primary);
+    }
+}

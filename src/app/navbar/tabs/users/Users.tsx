@@ -1,4 +1,5 @@
 import {FunctionalComponent, h} from 'preact';
+import {Header} from './Header';
 import {Paginator} from './Paginator';
 import {SearchBar} from './SearchBar';
 import {UserList} from './UserList';
@@ -9,6 +10,7 @@ export const Users: FunctionalComponent = () => (
         <SearchBar/>
 
         <div className={styles.table}>
+            <Header/>
             <UserList/>
         </div>
 

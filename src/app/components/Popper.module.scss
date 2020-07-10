@@ -2,6 +2,7 @@
 
     .btn {
         @include size(100%);
+        display: flex;
     }
 
     .container {

@@ -12,7 +12,6 @@ type UsersStats = {
     total_users_count: number;
 };
 
-
 // Session domain
 const domain = createDomain('users');
 export const users = {

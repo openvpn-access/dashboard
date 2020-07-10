@@ -3,6 +3,7 @@ import {useStore} from 'effector-react';
 import {FunctionalComponent, h} from 'preact';
 import styles from './Paginator.module.scss';
 
+// TODO: Pagination-spinner whatever animation?
 const PAD = 2;
 export const Paginator: FunctionalComponent = () => {
     const {page, per_page} = useStore(users.config);
@@ -22,7 +23,8 @@ export const Paginator: FunctionalComponent = () => {
 
     const pad = Math.max(2, String(buttons[buttons.length - 1]).length);
     return (
-        <div className={styles.paginator} data-visible={total_users_count !== -1}>
+        <div className={styles.paginator}
+             data-visible={per_page > total_users_count}>
             <div className={styles.controls}>
                 <button aria-label="Jump to first page"
                         disabled={page === 1}
