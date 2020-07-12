@@ -6,17 +6,24 @@ type FormFieldRegistration = {
     onChange: (v: string) => void;
 };
 
+type FieldValidator = [(v: string) => unknown, string];
+type RegisterOptions = {
+    validate?: Array<FieldValidator>;
+};
+
 /**
  * Form state manager with errors and such.
  * @param base Form fields with base values.
  */
 export const useForm = <T extends Record<string, string>>(base: T) => {
+    const validators = new Map<keyof T, Array<FieldValidator>>();
     const stateMap = new Map<keyof T, {
         val: [string, StateUpdater<string>];
         err: [string | null, StateUpdater<string | null>];
     }>();
 
     for (const [name, value] of Object.entries(base)) {
+        validators.set(name, []);
         stateMap.set(name, {
             val: useState(value),
             err: useState<string | null>(null)
@@ -26,16 +33,47 @@ export const useForm = <T extends Record<string, string>>(base: T) => {
     return {
 
         // Binds a new InputField to this form
-        register(name: keyof T): FormFieldRegistration {
+        register(name: keyof T, opt: RegisterOptions = {}): FormFieldRegistration {
             const set = stateMap.get(name);
             if (!set) {
                 throw new Error(`No field with name ${name}`);
+            }
+
+            if (opt.validate) {
+                validators.get(name)?.push(...opt.validate);
             }
 
             return {
                 error: set.err[0],
                 value: set.val[0],
                 onChange: set.val[1]
+            };
+        },
+
+        // Validates all fields
+        validate(): boolean {
+            let ok = true;
+            for (const [key, {val, err}] of stateMap.entries()) {
+                const value = val[0];
+                const checkers = validators.get(key) || [];
+
+                for (const [fn, msg] of checkers) {
+                    if (!fn(value)) {
+                        ok = false;
+                        err[1](msg);
+                    }
+                }
+            }
+
+            return ok;
+        },
+
+        // Validates all fields before calling the callback function
+        onSubmit(cb: (d: T) => void): () => void {
+            return () => {
+                if (this.validate()) {
+                    cb(this.values());
+                }
             };
         },
 
@@ -59,12 +97,16 @@ export const useForm = <T extends Record<string, string>>(base: T) => {
             stateMap.get(name)?.val[1](value);
         },
 
-        clearError(name: keyof T): void {
-            stateMap.get(name)?.err[1]('');
+        clearError(...names: Array<keyof T>): void {
+            for (const name of names) {
+                stateMap.get(name)?.err[1]('');
+            }
         },
 
-        clearValue(name: keyof T): void {
-            stateMap.get(name)?.val[1]('');
+        clearValue(...names: Array<keyof T>): void {
+            for (const name of names) {
+                stateMap.get(name)?.val[1]('');
+            }
         },
 
         clearErrors(): void {
@@ -79,7 +121,7 @@ export const useForm = <T extends Record<string, string>>(base: T) => {
             }
         },
 
-        empty(filter: Array<keyof T> = []): boolean {
+        empty(...filter: Array<keyof T>): boolean {
             for (const [key, {val}] of stateMap.entries()) {
                 if ((!filter.length || filter.includes(key)) && !val[0]) {
                     return true;
@@ -89,13 +131,13 @@ export const useForm = <T extends Record<string, string>>(base: T) => {
             return false;
         },
 
-        values(): Record<keyof T, string> {
+        values(): T {
             const obj = {} as Record<keyof T, string>;
             for (const [key, value] of stateMap.entries()) {
                 obj[key] = value.val[0];
             }
 
-            return obj;
+            return obj as T;
         }
     };
 };

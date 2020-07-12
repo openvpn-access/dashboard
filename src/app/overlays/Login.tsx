@@ -19,6 +19,7 @@ export const Login = () => {
         password: ''
     });
 
+    // TODO: Display server-side, non field-related errors too!
     const login = () => {
         setLoading(true);
         form.clearErrors();
@@ -33,6 +34,8 @@ export const Login = () => {
                         return form.setError('id', 'User not found');
                     case Status.UNAUTHORIZED:
                         return form.setError('password', 'Invalid password');
+                    case Status.LOCKED:
+                        return form.setError('id', 'This account is locked.');
                 }
             })
             .finally(() => setLoading(false));
