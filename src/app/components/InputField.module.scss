@@ -50,20 +50,6 @@
     }
 }
 
-.required {
-    @include position(3px, 3px, auto, auto);
-    @include font(600, 14px);
-    position: absolute;
-    color: var(--c-red);
-    transition: all 0.3s;
-    user-select: none;
-    opacity: 0;
-
-    &[data-visible] {
-        opacity: 1;
-    }
-}
-
 .error {
     @include font(600, 12px);
     line-height: 16px;

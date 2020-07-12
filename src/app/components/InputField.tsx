@@ -11,7 +11,6 @@ type Props = {
     icon?: string;
     disabled?: boolean;
     placeholder: string;
-    required?: boolean;
     error?: string | Falsish;
     value: string;
     onSubmit?: (v: string) => void;
@@ -36,8 +35,6 @@ export const InputField: FunctionalComponent<Props> = props => {
                        onInput={() => props.onChange(getValue())}
                        onKeyUp={e => e.key === 'Enter' && props.onSubmit?.(getValue())}
                        disabled={props.disabled}/>
-
-                {props.required && <span className={styles.required} data-visible={!props.value}>*</span>}
             </div>
 
             {props.error && <p className={styles.error}>{props.error}</p>}

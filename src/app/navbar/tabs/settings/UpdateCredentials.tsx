@@ -63,11 +63,11 @@ export const UpdateCredentials: FunctionalComponent = () => {
             <h3>Update Credentials</h3>
 
             <div className={styles.form}>
-                <InputField required={true}
-                            placeholder="Username"
+                <InputField placeholder="Username"
                             icon="user"
                             ariaLabel="New username"
                             {...form.register('username', {
+                                required: true,
                                 validate: [
                                     [v => v.length > 3, 'Must be longer than 3 characters'],
                                     [v => v.length < 50, 'Cannot be longer than 50 characters'],
@@ -75,26 +75,26 @@ export const UpdateCredentials: FunctionalComponent = () => {
                                 ]
                             })}/>
 
-                <InputField required={true}
-                            placeholder="E-Mail"
+                <InputField placeholder="E-Mail"
                             icon="envelope"
                             ariaLabel="New e-mail"
                             {...form.register('email', {
+                                required: true,
                                 validate: [
                                     [v => EMAIL_REGEX.exec(v), 'Please enter a valid email-address.']
                                 ]
                             })}/>
 
-                <InputField required={true}
-                            password={true}
+                <InputField password={true}
                             placeholder="Password"
                             icon="lock"
                             ariaLabel="Current password"
                             onSubmit={form.onSubmit(submit)}
-                            {...form.register('current_password')}/>
+                            {...form.register('current_password', {
+                                required: true
+                            })}/>
 
-                {changePassword && <InputField required={true}
-                                               password={true}
+                {changePassword && <InputField password={true}
                                                placeholder="New password"
                                                icon="lock"
                                                ariaLabel="New password"

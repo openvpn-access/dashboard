@@ -9,6 +9,7 @@ type FormFieldRegistration = {
 type FieldValidator = [(v: string) => unknown, string];
 type RegisterOptions = {
     validate?: Array<FieldValidator>;
+    required?: boolean;
 };
 
 /**
@@ -16,15 +17,15 @@ type RegisterOptions = {
  * @param base Form fields with base values.
  */
 export const useForm = <T extends Record<string, string>>(base: T) => {
-    const validators = new Map<keyof T, Array<FieldValidator>>();
     const stateMap = new Map<keyof T, {
+        opt: RegisterOptions | null,
         val: [string, StateUpdater<string>];
         err: [string | null, StateUpdater<string | null>];
     }>();
 
     for (const [name, value] of Object.entries(base)) {
-        validators.set(name, []);
         stateMap.set(name, {
+            opt: null,
             val: useState(value),
             err: useState<string | null>(null)
         });
@@ -39,10 +40,7 @@ export const useForm = <T extends Record<string, string>>(base: T) => {
                 throw new Error(`No field with name ${name}`);
             }
 
-            if (opt.validate) {
-                validators.get(name)?.push(...opt.validate);
-            }
-
+            set.opt = opt;
             return {
                 error: set.err[0],
                 value: set.val[0],
@@ -50,17 +48,27 @@ export const useForm = <T extends Record<string, string>>(base: T) => {
             };
         },
 
-        // Validates all fields
+        /**
+         * Validates this form
+         * @return True if this form is valid
+         */
         validate(): boolean {
             let ok = true;
-            for (const [key, {val, err}] of stateMap.entries()) {
-                const value = val[0];
-                const checkers = validators.get(key) || [];
+            for (const {val, err, opt} of stateMap.values()) {
+                if (!opt) {
+                    continue;
+                }
 
-                for (const [fn, msg] of checkers) {
-                    if (!fn(value)) {
-                        ok = false;
-                        err[1](msg);
+                const value = val[0];
+                if (opt.required && !value.length) {
+                    err[1]('Required');
+                    ok = false;
+                } else if (opt.validate) {
+                    for (const [fn, msg] of opt.validate) {
+                        if (!fn(value)) {
+                            err[1](msg);
+                            ok = false;
+                        }
                     }
                 }
             }
@@ -68,7 +76,10 @@ export const useForm = <T extends Record<string, string>>(base: T) => {
             return ok;
         },
 
-        // Validates all fields before calling the callback function
+        /**
+         * Takes a callback function which gets called if the form is valid.
+         * @param cb Function to be called if all fields are valid
+         */
         onSubmit(cb: (d: T) => void): () => void {
             return () => {
                 if (this.validate()) {
