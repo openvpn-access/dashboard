@@ -26,7 +26,7 @@ export const users = {
 
     // Search configuration
     config: domain.createStore<UsersConfig>({
-        page: 20,
+        page: 1,
         per_page: 25
     }),
 

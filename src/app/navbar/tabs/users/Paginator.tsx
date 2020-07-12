@@ -4,7 +4,6 @@ import {FunctionalComponent, h} from 'preact';
 import styles from './Paginator.module.scss';
 
 // TODO: Pagination-spinner whatever animation?
-const PAD = 2;
 export const Paginator: FunctionalComponent = () => {
     const {page, per_page} = useStore(users.config);
     const {total_users_count} = useStore(users.stats);
@@ -17,14 +16,15 @@ export const Paginator: FunctionalComponent = () => {
     const totalPages = Math.ceil(total_users_count / per_page);
     const buttons = [];
 
-    for (let i = page - PAD; i <= page + PAD; i++) {
+    const paginatorPadding = Math.min(2, Math.floor(totalPages / 2));
+    for (let i = page - paginatorPadding; i <= page + paginatorPadding; i++) {
         buttons.push(i);
     }
 
     const pad = Math.max(2, String(buttons[buttons.length - 1]).length);
     return (
         <div className={styles.paginator}
-             data-visible={per_page > total_users_count}>
+             data-visible={totalPages > 1}>
             <div className={styles.controls}>
                 <button aria-label="Jump to first page"
                         disabled={page === 1}

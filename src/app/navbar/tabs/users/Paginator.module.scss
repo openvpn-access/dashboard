@@ -3,6 +3,11 @@
     @include flex(row, center, center);
     position: absolute;
     pointer-events: none;
+    opacity: 0;
+
+    &[data-visible] {
+        opacity: 1;
+    }
 }
 
 .controls {
