@@ -1,6 +1,7 @@
 .inputField {
     @include flex(column);
     flex-shrink: 1;
+    width: 100%;
 }
 
 .main {

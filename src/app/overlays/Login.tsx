@@ -1,83 +1,60 @@
 import {Button} from '@components/Button';
 import {InputField} from '@components/InputField';
-import {extractAPIError} from '@state/api';
 import {session} from '@state/modules/session';
-import {APIError} from '@state/types';
+import {Status} from '@utils/enums/Status';
 import {staticStore} from '@utils/static-store';
 import {cn} from '@utils/preact-utils';
 import {delayPromise} from '@utils/promises';
+import {useForm} from '@utils/use-form';
 import {useStore} from 'effector-react';
 import {h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 import styles from './Login.module.scss';
 
-type State = {
-    loading: boolean;
-    password: string;
-    id: string;
-    error: APIError | null;
-}
-
 export const Login = () => {
     const sessionState = useStore(session.store);
-    const [state, setState] = useState<State>({
-        loading: false,
-        password: '',
+    const [loading, setLoading] = useState(false);
+    const form = useForm({
         id: '',
-        error: null
+        password: ''
     });
 
-    const setId = (id: string) => setState({...state, id});
-    const setPassword = (password: string) => setState({...state, password});
-
     const login = () => {
-        setState({
-            ...state,
-            loading: true,
-            error: null
-        });
+        setLoading(true);
+        form.clearErrors();
 
-        delayPromise(1000, session.login({id: state.id, password: state.password}))
-            .then(() => setState({
-                ...state,
-                loading: false,
-                id: '',
-                password: '',
-                error: null
-            }))
-            .catch(msg => setState({
-                ...state,
-                loading: false,
-                error: msg
-            }));
+        delayPromise(1000, session.login(form.values()))
+            .then(() => {
+                form.clearValues();
+            })
+            .catch(err => {
+                switch (err.status) {
+                    case Status.NOT_FOUND:
+                        return form.setError('id', 'User not found');
+                    case Status.UNAUTHORIZED:
+                        return form.setError('password', 'Invalid password');
+                }
+            })
+            .finally(() => setLoading(false));
     };
 
     useEffect(() => {
         const token = staticStore.getJSON<string>('token');
-
         if (token && sessionState.token === null) {
-            setState({
-                ...state,
-                loading: true,
-                id: 'hidden',
-                password: 'password'
+            setLoading(true);
+            form.setValues({
+                password: 'password',
+                id: 'hidden'
             });
 
             delayPromise(1000, session.login({token}))
-                .then(() => setState({
-                    ...state,
-                    loading: false,
-                    id: '',
-                    password: '',
-                    error: null
-                }))
-                .catch(() => setState({
-                    ...state,
-                    loading: false,
-                    id: '',
-                    password: '',
-                    error: {error: '', statusCode: -1, message: 'Please login again', id: -1}
-                }));
+                .catch(() => {
+                    staticStore.delete('token');
+                })
+                .finally(() => {
+                    form.clearValues();
+                    setLoading(false);
+                });
         }
     }, []);
 
@@ -94,31 +71,23 @@ export const Login = () => {
 
             <div className={styles.form}>
                 <InputField placeholder="Username / E-Mail"
-                            disabled={state.loading}
+                            disabled={loading}
                             icon="user"
                             ariaLabel="Username or email address"
-                            error={extractAPIError(state.error, 'email')}
-                            value={state.id}
-                            onChange={setId}/>
+                            {...form.register('id')}/>
 
                 <InputField placeholder="Password"
                             icon="lock"
-                            disabled={state.loading}
+                            disabled={loading}
                             password={true}
                             ariaLabel="Password"
-                            error={extractAPIError(state.error, 'password')}
-                            value={state.password}
                             onSubmit={login}
-                            onChange={setPassword}/>
+                            {...form.register('password')}/>
 
-                <div className={styles.formFooter}>
-                    <p className={styles.errorMessage}>{state.error?.message}</p>
-
-                    <Button text="Submit"
-                            loading={state.loading}
-                            disabled={!state.password || !state.id}
-                            onClick={login}/>
-                </div>
+                <Button text="Submit"
+                        loading={loading}
+                        disabled={form.empty()}
+                        onClick={login}/>
             </div>
 
         </div>

@@ -59,13 +59,3 @@
     }
 }
 
-.formFooter {
-    @include flex(row, flex-start, space-between);
-    width: 100%;
-}
-
-.errorMessage {
-    @include font(600, 0.75em);
-    color: var(--c-red);
-    align-self: flex-start;
-}

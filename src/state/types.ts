@@ -1,11 +1,9 @@
 type DBEntry = {id: string};
 
 export type APIError = {
-    statusCode: number;
+    status: number;
+    code: number;
     message: string;
-    error: string;
-    id: number;
-    field?: string;
 };
 
 export type DBUser = DBEntry & {
