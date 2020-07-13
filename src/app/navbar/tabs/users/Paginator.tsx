@@ -1,4 +1,4 @@
-import {users} from '@state/modules/users';
+import {users} from '@state/users';
 import {useStore} from 'effector-react';
 import {FunctionalComponent, h} from 'preact';
 import styles from './Paginator.module.scss';

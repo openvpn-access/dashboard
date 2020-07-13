@@ -1,16 +1,13 @@
+import {api, ErrorCode} from '@api/index';
+import {validation} from '@api/validation';
 import {Button} from '@components/Button';
 import {InputField} from '@components/InputField';
-import {api} from '@state/api';
-import {session} from '@state/modules/session';
-import {validation} from '@state/validation';
-import {ErrorCode} from '@utils/enums/ErrorCode';
-import {Status} from '@utils/enums/Status';
+import {session} from '@state/session';
 import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
 import {FunctionalComponent, h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 import styles from './UpdateCredentials.module.scss';
-
 
 export const UpdateCredentials: FunctionalComponent = () => {
     const [loading, setLoading] = useState(false);
@@ -53,7 +50,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
             switch (err.code) {
                 case ErrorCode.INVALID_PASSWORD:
                     return form.setError('current_password', 'Invalid password');
-                case ErrorCode.USERNAME_LOCKED:
+                case ErrorCode.LOCKED_USERNAME:
                     return form.setError('username', 'This user cannot change its username');
                 case ErrorCode.DUPLICATE_EMAIL:
                     return form.setError('email', 'This email is already in use.');

@@ -1,11 +1,10 @@
+import {DBUser} from '@api/types';
+import {validation} from '@api/validation';
 import {Button} from '@components/Button';
 import {DropDown} from '@components/DropDown';
 import {InputField} from '@components/InputField';
-import {api} from '@state/api';
-import {users} from '@state/modules/users';
-import {DBUser} from '@state/types';
-import {validation} from '@state/validation';
-import {ErrorCode} from '@utils/enums/ErrorCode';
+import {ErrorCode, api} from '@api/index';
+import {users} from '@state/users';
 import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
 import {FunctionalComponent, h} from 'preact';
@@ -32,12 +31,14 @@ export const UserEditBar: FunctionalComponent<Props> = ({user, onSave}) => {
             method: 'PATCH',
             route: `/users/${user.username}`,
             data: form.values()
-        })).then(() => {
-            void users.updateView();
+        })).then(newUser => {
+            users.updateUser(newUser as DBUser);
             setLoading(false);
             onSave(false);
         }).catch(err => {
             switch (err.code) {
+                case ErrorCode.LOCKED_USERNAME:
+                    return form.setError('username', 'This user cannot change its username');
                 case ErrorCode.DUPLICATE_EMAIL:
                     return form.setError('email', 'This email is already in use.');
                 case ErrorCode.DUPLICATE_USERNAME:

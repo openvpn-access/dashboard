@@ -7,7 +7,7 @@ export const validation = {
         username: [
             [v => v.length > 3, 'Must be longer than 3 characters'],
             [v => v.length < 50, 'Cannot be longer than 50 characters'],
-            [v => /^[\w]+$/.exec(v), 'Can only contain alphanumeric characters']
+            [v => /^[\w.]+$/.exec(v), 'Can only contain alphanumeric characters']
         ] as Array<FieldValidator>,
         password: [
             [v => v.length > 8, 'Minimum length is 8 characters '],

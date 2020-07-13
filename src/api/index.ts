@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import {session} from '@state/modules/session';
+import {session} from '@state/session';
+export * from './enums/ErrorCode';
+export * from './enums/Status';
 
 export type APICallConfig = {
     method?: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';

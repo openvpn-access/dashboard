@@ -15,6 +15,7 @@
         "allowSyntheticDefaultImports": true,
         "baseUrl": ".",
         "paths": {
+            "@api/*": ["./src/api/*"],
             "@state/*": ["./src/state/*"],
             "@utils/*": ["./src/utils/*"],
             "@components/*": ["./src/app/components/*"],

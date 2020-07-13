@@ -30,6 +30,7 @@ module.exports = {
         alias: {
             'react': 'preact/compat',
             'react-dom': 'preact/compat',
+            '@api': path.resolve('./src/api'),
             '@state': path.resolve('./src/state'),
             '@utils': path.resolve('./src/utils'),
             '@components': path.resolve('./src/app/components')

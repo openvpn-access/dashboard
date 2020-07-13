@@ -1,5 +1,5 @@
-import {api} from '@state/api';
-import {DBUser} from '@state/types';
+import {api} from '../api';
+import {DBUser} from '../api/types';
 import {createDomain} from 'effector';
 
 type UsersList = Array<DBUser>;
@@ -29,6 +29,9 @@ export const users = {
         page: 1,
         per_page: 25
     }),
+
+    // Update a single user locally
+    updateUser: domain.createEvent<DBUser>('updateUser'),
 
     // Update current view
     updateView: domain.createEffect<void, UsersList>('updateView', {
@@ -65,4 +68,16 @@ users.stats
 users.list
     .on(users.updateView.done, (state, payload) => {
         return payload.result;
+    });
+
+users.list
+    .on(users.updateUser, (state, payload) => {
+        for (const item of state) {
+            if (item.id === payload.id) {
+                Object.assign(item, payload);
+                break;
+            }
+        }
+
+        return state;
     });

@@ -1,5 +1,5 @@
-import {users} from '@state/modules/users';
-import {DBUser} from '@state/types';
+import {users} from '@state/users';
+import {DBUser} from '../../../../api/types';
 import {FunctionalComponent, h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 import {User} from './User';
