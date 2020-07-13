@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import {session} from '@state/modules/session';
-import {APIError} from '@state/types';
 
 export type APICallConfig = {
     method?: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
@@ -46,8 +45,4 @@ export const api = <T>(
 
         return res.ok ? res.json() : Promise.reject(await res.json());
     });
-};
-
-export const extractAPIError = (err: null | APIError, map: Record<number, string>): string | null => {
-    return (err && map[err.code]) || null;
 };

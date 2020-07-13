@@ -2,6 +2,8 @@ import {Button} from '@components/Button';
 import {InputField} from '@components/InputField';
 import {api} from '@state/api';
 import {session} from '@state/modules/session';
+import {validation} from '@state/validation';
+import {ErrorCode} from '@utils/enums/ErrorCode';
 import {Status} from '@utils/enums/Status';
 import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
@@ -9,7 +11,6 @@ import {FunctionalComponent, h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 import styles from './UpdateCredentials.module.scss';
 
-const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 export const UpdateCredentials: FunctionalComponent = () => {
     const [loading, setLoading] = useState(false);
@@ -49,11 +50,15 @@ export const UpdateCredentials: FunctionalComponent = () => {
             form.clearValue('current_password', 'password');
             setChangePassword(false);
         }).catch(err => {
-            switch (err.status) {
-                case Status.UNAUTHORIZED:
+            switch (err.code) {
+                case ErrorCode.INVALID_PASSWORD:
                     return form.setError('current_password', 'Invalid password');
-                case Status.FORBIDDEN:
+                case ErrorCode.USERNAME_LOCKED:
                     return form.setError('username', 'This user cannot change its username');
+                case ErrorCode.DUPLICATE_EMAIL:
+                    return form.setError('email', 'This email is already in use.');
+                case ErrorCode.DUPLICATE_USERNAME:
+                    return form.setError('username', 'This username is already in use.');
             }
         }).finally(() => setLoading(false));
     };
@@ -68,11 +73,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
                             ariaLabel="New username"
                             {...form.register('username', {
                                 required: true,
-                                validate: [
-                                    [v => v.length > 3, 'Must be longer than 3 characters'],
-                                    [v => v.length < 50, 'Cannot be longer than 50 characters'],
-                                    [v => /^[\w]+$/.exec(v), 'Can only contain alphanumeric characters']
-                                ]
+                                validate: validation.user.username
                             })}/>
 
                 <InputField placeholder="E-Mail"
@@ -80,9 +81,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
                             ariaLabel="New e-mail"
                             {...form.register('email', {
                                 required: true,
-                                validate: [
-                                    [v => EMAIL_REGEX.exec(v), 'Please enter a valid email-address.']
-                                ]
+                                validate: validation.user.email
                             })}/>
 
                 <InputField password={true}
@@ -100,11 +99,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
                                                ariaLabel="New password"
                                                onSubmit={form.onSubmit(submit)}
                                                {...form.register('password', {
-                                                   validate: [
-                                                       [v => v.length > 8, 'Minimum length is 8 characters '],
-                                                       [v => v.length < 50, 'Cannot be longer than 50 characters'],
-                                                       [v => /^[\S]+$/.exec(v), 'May not contain whitespace']
-                                                   ]
+                                                   validate: validation.user.password
                                                })}/>}
 
                 <div className={styles.actionBar}>

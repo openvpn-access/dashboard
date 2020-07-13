@@ -1,9 +1,13 @@
 import {Button} from '@components/Button';
 import {DropDown} from '@components/DropDown';
 import {InputField} from '@components/InputField';
-import {api, extractAPIError} from '@state/api';
+import {api} from '@state/api';
 import {users} from '@state/modules/users';
-import {APIError, DBUser} from '@state/types';
+import {DBUser} from '@state/types';
+import {validation} from '@state/validation';
+import {ErrorCode} from '@utils/enums/ErrorCode';
+import {delayPromise} from '@utils/promises';
+import {useForm} from '@utils/use-form';
 import {FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
 import styles from './UserEditBar.module.scss';
@@ -14,30 +18,32 @@ type Props = {
 };
 
 export const UserEditBar: FunctionalComponent<Props> = ({user, onSave}) => {
-    const [newUsername, setUsername] = useState(user.username);
-    const [newEmail, setEmail] = useState(user.email);
-    const [newType, setType] = useState(user.type);
-    const [error, setError] = useState<APIError | null>(null);
     const [loading, setLoading] = useState(false);
+    const form = useForm({
+        username: user.username,
+        email: user.email,
+        type: user.type
+    });
 
-    const save = () => {
+    const submit = () => {
         setLoading(true);
 
-        api({
-            method: 'PUT', route: `/users/${user.username}`, data: {
-                email: newEmail,
-                username: newUsername,
-                type: newType
-            }
-        }).then(() => {
+        delayPromise(500, api({
+            method: 'PATCH',
+            route: `/users/${user.username}`,
+            data: form.values()
+        })).then(() => {
             void users.updateView();
             setLoading(false);
-            setError(null);
             onSave(false);
         }).catch(err => {
-            setError(err);
-            setLoading(false);
-        });
+            switch (err.code) {
+                case ErrorCode.DUPLICATE_EMAIL:
+                    return form.setError('email', 'This email is already in use.');
+                case ErrorCode.DUPLICATE_USERNAME:
+                    return form.setError('username', 'This username is already in use.');
+            }
+        }).finally(() => setLoading(false));
     };
 
     return (
@@ -45,30 +51,30 @@ export const UserEditBar: FunctionalComponent<Props> = ({user, onSave}) => {
             <DropDown items={{
                 admin: 'Admin',
                 user: 'User'
-            }} selected={newType}
-                      icon={newType}
-                      onSelect={setType}/>
+            }} selected={form.getValue('type')}
+                      icon={form.getValue('type')}
+                      onSelect={v => form.setValue('type', v)}/>
 
-            <InputField value={newUsername}
-                        placeholder="Username"
+            <InputField placeholder="Username"
                         ariaLabel="Update this users username"
                         icon="user"
                         disabled={loading}
-                        error={extractAPIError(error, 'username')}
-                        onChange={setUsername}/>
+                        {...form.register('username', {
+                            validate: validation.user.username
+                        })}/>
 
-            <InputField value={newEmail}
-                        placeholder="E-Mail"
+            <InputField placeholder="E-Mail"
                         ariaLabel="Update this users email"
                         icon="envelope"
                         disabled={loading}
-                        error={extractAPIError(error, 'email')}
-                        onChange={setEmail}/>
+                        {...form.register('email', {
+                            validate: validation.user.email
+                        })}/>
 
             <Button text="Save"
                     icon="save"
                     loading={loading}
-                    onClick={save}/>
+                    onClick={form.onSubmit(submit)}/>
         </div>
     );
 };

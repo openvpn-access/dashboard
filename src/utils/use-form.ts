@@ -1,13 +1,13 @@
 import {StateUpdater, useState} from 'preact/hooks';
 
-type FormFieldRegistration = {
+export type FormFieldRegistration = {
     value: string;
     error: string | null;
     onChange: (v: string) => void;
 };
 
-type FieldValidator = [(v: string) => unknown, string];
-type RegisterOptions = {
+export type FieldValidator = [(v: string) => unknown, string];
+export type RegisterOptions = {
     validate?: Array<FieldValidator>;
     required?: boolean;
 };
@@ -106,6 +106,10 @@ export const useForm = <T extends Record<string, string>>(base: T) => {
 
         setValue(name: keyof T, value: string): void {
             stateMap.get(name)?.val[1](value);
+        },
+
+        getValue(name: keyof T): string {
+            return stateMap.get(name)?.val[0] || '';
         },
 
         clearError(...names: Array<keyof T>): void {
