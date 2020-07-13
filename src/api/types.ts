@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-type DBEntry = {id: string};
+type DBEntry = {id: number};
 
 export type DBUser = DBEntry & {
     created_at: Date;

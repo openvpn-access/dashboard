@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import {session} from '@state/session';
+
 export * from './enums/ErrorCode';
 export * from './enums/Status';
 
@@ -41,10 +42,12 @@ export const api = <T>(
             ...(token && {'Authorization': `Bearer ${token}`})
         }
     }).then(async res => {
-        if (res.headers.get('content-length') === '0') {
-            return res.status;
+        let process: 'json' | 'text' = 'text';
+
+        if (res.headers.get('content-type')?.includes('application/json')) {
+            process = 'json';
         }
 
-        return res.ok ? res.json() : Promise.reject(await res.json());
+        return res.ok ? res[process]() : Promise.reject(await res[process]());
     });
 };

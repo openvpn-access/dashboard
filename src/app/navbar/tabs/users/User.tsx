@@ -1,4 +1,4 @@
-import {DBUser} from '../../../../api/types';
+import {DBUser} from '@api/types';
 import {formatDate} from '@utils/format-date';
 import {FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';

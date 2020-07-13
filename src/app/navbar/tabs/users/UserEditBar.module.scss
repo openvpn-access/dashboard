@@ -1,9 +1,18 @@
 .userEditBar {
-    @include flex(row, flex-start);
+    @include flex(column);
     padding: 0.5em;
     border-top: 2px solid var(--c-background-secondary);
+}
+
+.form {
+    @include flex(row, flex-start);
 
     > *:not(:first-child) {
         margin-left: 0.25em;
     }
+}
+
+.actionBar {
+    @include flex(row, center, space-between);
+    margin-top: 0.5em;
 }

@@ -30,8 +30,9 @@ export const users = {
         per_page: 25
     }),
 
-    // Update a single user locally
+    // Update / remove a single user locally
     updateUser: domain.createEvent<DBUser>('updateUser'),
+    removeUser: domain.createEvent<string>('removeUser'),
 
     // Update current view
     updateView: domain.createEffect<void, UsersList>('updateView', {
@@ -80,4 +81,9 @@ users.list
         }
 
         return state;
+    });
+
+users.list
+    .on(users.removeUser, (state, payload) => {
+        return state.filter(v => v.username !== payload);
     });
