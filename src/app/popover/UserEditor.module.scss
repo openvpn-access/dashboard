@@ -8,10 +8,8 @@
     @include flex(row);
 
     > section {
-
-        > h3 {
+        h3 {
             @include font(600, 13px);
-            margin-bottom: 1em;
         }
 
         &:not(:first-child) {
@@ -19,9 +17,34 @@
             margin-left: 1em;
             padding-left: 1em;
         }
+    }
 
+    .fields {
         > *:not(:first-child) {
             margin-top: 0.5em;
+        }
+    }
+}
+
+.restrictions {
+
+    .enable {
+        @include flex(row, center, space-between);
+        margin-bottom: 0.5em;
+
+        p {
+            @include font(400, 15px);
+        }
+    }
+
+    .options {
+        transition: all 0.3s;
+        visibility: hidden;
+        opacity: 0;
+
+        &[data-visible] {
+            visibility: visible;
+            opacity: 1;
         }
     }
 }

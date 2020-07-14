@@ -1,5 +1,6 @@
 import {cn} from '@utils/preact-utils';
 import {createRef, FunctionalComponent, h} from 'preact';
+import {JSXInternal} from 'preact/src/jsx';
 import styles from './InputField.module.scss';
 
 type Falsish = null | false | undefined;
@@ -17,6 +18,7 @@ type Props = {
     onSubmit?: (v: string) => void;
     onChange?: (v: string) => void;
     onClick?: (() => void) | boolean;
+    afterInput?: Array<JSXInternal.Element> | JSXInternal.Element
 };
 
 export const InputField: FunctionalComponent<Props> = props => {
@@ -37,10 +39,12 @@ export const InputField: FunctionalComponent<Props> = props => {
                        readOnly={props.readonly || !!props.onClick}
                        placeholder={props.placeholder}
                        aria-label={props.ariaLabel}
-                       value={props.value}
+                       value={props.value || ''}
                        onInput={() => props.onChange?.(getValue())}
                        onKeyUp={e => e.key === 'Enter' && props.onSubmit?.(getValue())}
                        disabled={props.disabled}/>
+
+                {props.afterInput}
             </div>
 
             {props.error && <p className={styles.error}>{props.error}</p>}

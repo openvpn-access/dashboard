@@ -14,6 +14,7 @@
     position: relative;
     --com-color: var(--c-background-secondary-accent);
     --com-color-focus: var(--c-primary-focus);
+    --com-color-hover: var(--c-background-secondary-hover);
 
     > bc-icon {
         margin-right: 0.5em;
@@ -28,7 +29,7 @@
 
         &::placeholder {
             transition: all 0.3s;
-            color: var(--c-background-secondary-accent);
+            color: var(--com-color-hover);
         }
 
         &[disabled] {
@@ -41,11 +42,7 @@
     }
 
     &:hover:not(:focus-within):not([data-errored]):not([disabled]) {
-        --com-color: var(--c-background-secondary-hover);
-
-        > input::placeholder {
-            color: var(--c-background-secondary-hover);
-        }
+        --com-color: var(--com-color-hover);
     }
 
     &:focus-within {

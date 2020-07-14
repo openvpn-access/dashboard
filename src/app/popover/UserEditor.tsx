@@ -2,11 +2,13 @@ import {api, ErrorCode} from '@api/index';
 import {DBUser} from '@api/types';
 import {validation} from '@api/validation';
 import {Button} from '@components/Button';
+import {Checkbox} from '@components/Checkbox';
 import {DatePicker} from '@components/DatePicker';
 import {DropDown} from '@components/DropDown';
 import {InputField} from '@components/InputField';
 import {PopoverBaseProps} from '@popover';
 import {users} from '@state/users';
+import {cn} from '@utils/preact-utils';
 import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
 import {FunctionalComponent, h} from 'preact';
@@ -21,6 +23,8 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
     const [applyLoading, setApplyLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
+    const [restricted, setRestricted] = useState<boolean>(!!(user.transfer_limit_start || user.transfer_limit_end || user.transfer_limit_bytes));
+
     const isLoading = () => applyLoading || deleteLoading;
 
     const form = useForm({
@@ -39,7 +43,15 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
         delayPromise(500, api({
             method: 'PATCH',
             route: `/users/${user.username}`,
-            data: form.values()
+            data: {
+                ...form.values(),
+                ...(restricted && {
+                    transfer_limit_period: null,
+                    transfer_limit_start: null,
+                    transfer_limit_end: null,
+                    transfer_limit_bytes: null
+                })
+            }
         })).then(newUser => {
             users.updateUser(newUser as DBUser);
             setApplyLoading(false);
@@ -77,7 +89,7 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
         <div className={styles.userEditor}>
             <div className={styles.form}>
 
-                <section>
+                <section className={styles.fields}>
                     <h3>Credentials and account type</h3>
 
                     <DropDown items={{
@@ -104,14 +116,22 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
                                 })}/>
                 </section>
 
-                <section>
-                    <h3>Restrictions</h3>
+                <section className={styles.restrictions}>
+                    <div className={styles.enable}>
+                        <h3>Limit usage</h3>
+                        <Checkbox onChange={setRestricted}
+                                  checked={restricted}/>
+                    </div>
 
-                    <DatePicker placeholder="Start date"
-                                {...form.register('transfer_limit_start')}/>
+                    <div className={cn(styles.options, styles.fields)} data-visible={restricted}>
+                        <DatePicker placeholder="Start date"
+                                    nullable={true}
+                                    {...form.register('transfer_limit_start')}/>
 
-                    <DatePicker placeholder="End date"
-                                {...form.register('transfer_limit_end')}/>
+                        <DatePicker placeholder="End date"
+                                    nullable={true}
+                                    {...form.register('transfer_limit_end')}/>
+                    </div>
                 </section>
             </div>
 

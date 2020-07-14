@@ -12,7 +12,8 @@ type Props = {
     placeholder?: string;
     value: Date | number | null;
     error?: string | Falsish;
-    onChange: (d: Date) => void;
+    nullable?: boolean;
+    onChange: (d: Date | null) => void;
 };
 
 export const DatePicker: FunctionalComponent<Props> = props => {
@@ -21,6 +22,11 @@ export const DatePicker: FunctionalComponent<Props> = props => {
 
     const [view, setView] = useState<'day' | 'month' | 'year'>('day');
     const [date, setDate] = useState(currentDate.startOf('month'));
+
+    const reset = (e: MouseEvent) => {
+        props.onChange(null);
+        e.stopPropagation();
+    };
 
     const toggleView = () => {
         switch (view) {
@@ -150,7 +156,15 @@ export const DatePicker: FunctionalComponent<Props> = props => {
                             error={props.error}
                             icon="calendar"
                             onClick={true}
-                            readonly={true}/>
+                            afterInput={
+                                <button className={styles.clear}
+                                        aria-label="Clear"
+                                        onClickCapture={reset}
+                                        data-visible={!!(props.nullable && props.value)}>
+                                    <bc-tooltip content="Reset"/>
+                                    <bc-icon name="reset"/>
+                                </button>
+                            }/>
             }
             content={
                 <div className={styles.datePicker}>

@@ -83,3 +83,17 @@
         }
     }
 }
+
+.clear {
+    transition: all 0.3s;
+    opacity: 0;
+    color: var(--com-color-hover);
+
+    &[data-visible] {
+        opacity: 1;
+    }
+
+    &:hover {
+        color: var(--c-primary)
+    }
+}
