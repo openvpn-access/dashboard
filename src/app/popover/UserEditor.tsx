@@ -90,7 +90,9 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
             <div className={styles.form}>
 
                 <section className={styles.fields}>
-                    <h3>Credentials and account type</h3>
+                    <div className={styles.header}>
+                        <h3>Credentials and account type</h3>
+                    </div>
 
                     <DropDown items={{
                         admin: 'Admin',
@@ -117,7 +119,7 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
                 </section>
 
                 <section className={styles.restrictions}>
-                    <div className={styles.enable}>
+                    <div className={styles.header}>
                         <h3>Limit usage</h3>
                         <Checkbox onChange={setRestricted}
                                   checked={restricted}/>

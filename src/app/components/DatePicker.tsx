@@ -162,7 +162,7 @@ export const DatePicker: FunctionalComponent<Props> = props => {
                                         onClickCapture={reset}
                                         data-visible={!!(props.nullable && props.value)}>
                                     <bc-tooltip content="Reset"/>
-                                    <bc-icon name="reset"/>
+                                    <bc-icon name="delete"/>
                                 </button>
                             }/>
             }

@@ -12,6 +12,12 @@
             @include font(600, 13px);
         }
 
+        .header {
+            @include flex(row, center, space-between);
+            margin-bottom: 0.5em;
+            height: 1.5em;
+        }
+
         &:not(:first-child) {
             border-left: 2px solid var(--c-background-secondary);
             margin-left: 1em;
@@ -27,15 +33,6 @@
 }
 
 .restrictions {
-
-    .enable {
-        @include flex(row, center, space-between);
-        margin-bottom: 0.5em;
-
-        p {
-            @include font(400, 15px);
-        }
-    }
 
     .options {
         transition: all 0.3s;
