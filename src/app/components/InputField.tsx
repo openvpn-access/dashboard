@@ -13,9 +13,10 @@ type Props = {
     readonly?: boolean;
     placeholder?: string;
     error?: string | Falsish;
-    value: string;
+    value?: string;
     onSubmit?: (v: string) => void;
     onChange?: (v: string) => void;
+    onClick?: (() => void) | boolean;
 };
 
 export const InputField: FunctionalComponent<Props> = props => {
@@ -23,14 +24,17 @@ export const InputField: FunctionalComponent<Props> = props => {
     const getValue = () => inputField.current?.value || '';
 
     return (
-        <div className={cn(styles.inputField, props.className)}>
-            <div className={styles.main}
-                 data-errored={props.error}>
+        <div className={cn(styles.inputField, props.className)}
+             onClick={typeof props.onClick === 'function' ? props.onClick : undefined}>
+
+            <div className={cn(styles.main, {
+                [styles.buttonLike]: !!props.onClick
+            })} data-errored={props.error}>
                 {props.icon && <bc-icon name={props.icon}/>}
 
                 <input type={props.password ? 'password' : 'text'}
                        ref={inputField}
-                       readOnly={props.readonly}
+                       readOnly={props.readonly || !!props.onClick}
                        placeholder={props.placeholder}
                        aria-label={props.ariaLabel}
                        value={props.value}

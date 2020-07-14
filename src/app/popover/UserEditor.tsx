@@ -106,8 +106,12 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
 
                 <section>
                     <h3>Restrictions</h3>
-                    <DatePicker {...form.register('transfer_limit_start')}/>
-                    <DatePicker {...form.register('transfer_limit_end')}/>
+
+                    <DatePicker placeholder="Start date"
+                                {...form.register('transfer_limit_start')}/>
+
+                    <DatePicker placeholder="End date"
+                                {...form.register('transfer_limit_end')}/>
                 </section>
             </div>
 

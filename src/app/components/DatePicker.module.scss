@@ -1,6 +1,5 @@
 .datePicker {
-    @include flex(column);
-    border-radius: 0.25em;
+    @include flex(column, center);
 }
 
 .controls {
@@ -19,6 +18,7 @@
 
         &.title {
             flex-grow: 1;
+            width: 10em;
         }
     }
 }
@@ -30,16 +30,15 @@
     grid-gap: 0.35em;
     padding: 0.25em 0.65em 0.75em;
     color: var(--c-text-primary);
+    width: 100%;
 
     > p {
         @include font(600, 12px);
     }
 
     > button {
-        @include size(100%);
         @include font(600, 13px);
-        border-radius: 10em;
-        transition: all 0.3s;
+        transition: background 0.3s, color 0.3s;
         line-height: 1.1em;
 
         &[data-selected] {
@@ -58,13 +57,19 @@
     }
 
     &[data-type=day] {
-        grid-template: repeat(6, 2em) / repeat(7, 2em);
+        grid-template: repeat(6, 2em) / repeat(7, 1fr);
+
+        > button {
+            @include size(2.5em);
+            border-radius: 10em;
+        }
     }
 
     &[data-type=month] {
         grid-template: repeat(4, 4em) / repeat(3, 6em);
 
         > button {
+            @include size(100%);
             border-radius: 0.5em;
         }
     }
@@ -73,6 +78,7 @@
         grid-template: repeat(4, 4em) / repeat(3, 6em);
 
         > button {
+            @include size(100%);
             border-radius: 0.5em;
         }
     }

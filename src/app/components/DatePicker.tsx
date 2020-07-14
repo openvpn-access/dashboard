@@ -9,6 +9,7 @@ import styles from './DatePicker.module.scss';
 type Falsish = null | false | undefined;
 
 type Props = {
+    placeholder?: string;
     value: Date | number | null;
     error?: string | Falsish;
     onChange: (d: Date) => void;
@@ -144,9 +145,11 @@ export const DatePicker: FunctionalComponent<Props> = props => {
         <Popper
             ref={popper}
             button={
-                <InputField value={props.value ? currentDate.format('DD.MM.YYYY') : 'Not set'}
+                <InputField value={props.value ? currentDate.format('DD.MM.YYYY') : undefined}
+                            placeholder={props.placeholder}
                             error={props.error}
                             icon="calendar"
+                            onClick={true}
                             readonly={true}/>
             }
             content={
