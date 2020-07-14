@@ -1,5 +1,5 @@
 import {api} from '../api';
-import {DBUser} from '../api/types';
+import {DBUser} from '@api/types';
 import {createDomain} from 'effector';
 
 type UsersList = Array<DBUser>;

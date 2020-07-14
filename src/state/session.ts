@@ -1,6 +1,6 @@
 import {api} from '../api';
 import {users} from '@state/users';
-import {DBUser} from '../api/types';
+import {DBUser} from '@api/types';
 import {staticStore} from '@utils/static-store';
 import {createDomain} from 'effector';
 

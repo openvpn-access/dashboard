@@ -63,9 +63,17 @@
 
     &[data-type=month] {
         grid-template: repeat(4, 4em) / repeat(3, 6em);
+
+        > button {
+            border-radius: 0.5em;
+        }
     }
 
     &[data-type=year] {
         grid-template: repeat(4, 4em) / repeat(3, 6em);
+
+        > button {
+            border-radius: 0.5em;
+        }
     }
 }

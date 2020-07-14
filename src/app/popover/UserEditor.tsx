@@ -1,23 +1,23 @@
+import {api, ErrorCode} from '@api/index';
 import {DBUser} from '@api/types';
 import {validation} from '@api/validation';
 import {Button} from '@components/Button';
 import {DatePicker} from '@components/DatePicker';
 import {DropDown} from '@components/DropDown';
 import {InputField} from '@components/InputField';
-import {ErrorCode, api} from '@api/index';
+import {PopoverBaseProps} from '@popover';
 import {users} from '@state/users';
 import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
 import {FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
-import styles from './UserEditBar.module.scss';
+import styles from './UserEditor.module.scss';
 
 type Props = {
     user: DBUser;
-    onSave: (v: false) => void;
 };
 
-export const UserEditBar: FunctionalComponent<Props> = ({user, onSave}) => {
+export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, hidePopover}) => {
     const [applyLoading, setApplyLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
@@ -43,7 +43,7 @@ export const UserEditBar: FunctionalComponent<Props> = ({user, onSave}) => {
         })).then(newUser => {
             users.updateUser(newUser as DBUser);
             setApplyLoading(false);
-            onSave(false);
+            hidePopover();
         }).catch(err => {
             switch (err.code) {
                 case ErrorCode.LOCKED_USERNAME:
@@ -67,14 +67,14 @@ export const UserEditBar: FunctionalComponent<Props> = ({user, onSave}) => {
             route: `/users/${user.username}`
         }).then(() => {
             users.removeUser(user.username);
-            onSave(false);
+            hidePopover();
         }).finally(() => {
             setDeleteLoading(false);
         });
     };
 
     return (
-        <div className={styles.userEditBar}>
+        <div className={styles.userEditor}>
             <div className={styles.form}>
 
                 <section>

@@ -18,6 +18,7 @@
             "@api/*": ["./src/api/*"],
             "@state/*": ["./src/state/*"],
             "@utils/*": ["./src/utils/*"],
+            "@popover": ["./src/app/popover/Popover.tsx"],
             "@components/*": ["./src/app/components/*"],
             "*": ["./node_modules/*"]
         }

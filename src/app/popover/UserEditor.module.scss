@@ -1,7 +1,7 @@
-.userEditBar {
+.userEditor {
     @include flex(column);
     padding: 0.5em;
-    border-top: 2px solid var(--c-background-secondary);
+    color: var(--c-text-primary);
 }
 
 .form {
@@ -10,8 +10,8 @@
     > section {
 
         > h3 {
-            @include font(300, 0.95em);
-            margin: 0.25em 0;
+            @include font(600, 13px);
+            margin-bottom: 1em;
         }
 
         &:not(:first-child) {
@@ -21,12 +21,12 @@
         }
 
         > *:not(:first-child) {
-            margin-top: 0.25em;
+            margin-top: 0.5em;
         }
     }
 }
 
 .actionBar {
     @include flex(row, center, space-between);
-    margin-top: 0.75em;
+    margin-top: 1em;
 }
