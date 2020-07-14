@@ -1,0 +1,71 @@
+.datePicker {
+    @include flex(column);
+    border-radius: 0.25em;
+}
+
+.controls {
+    @include flex(row, center);
+    padding: 0.5em;
+    width: 100%;
+
+    > button {
+        padding: 0.5em 1em;
+        border-radius: 0.15em;
+        transition: all 0.3s;
+
+        &:hover {
+            background: var(--c-background-secondary);
+        }
+
+        &.title {
+            flex-grow: 1;
+        }
+    }
+}
+
+.view {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-gap: 0.35em;
+    padding: 0.25em 0.65em 0.75em;
+    color: var(--c-text-primary);
+
+    > p {
+        @include font(600, 12px);
+    }
+
+    > button {
+        @include size(100%);
+        @include font(600, 13px);
+        border-radius: 10em;
+        transition: all 0.3s;
+        line-height: 1.1em;
+
+        &[data-selected] {
+            background: var(--c-primary);
+            color: var(--c-text-secondary);
+            cursor: default;
+        }
+
+        &[data-indirect] {
+            opacity: 0.75;
+        }
+
+        &:hover:not([data-selected]) {
+            background: var(--c-background-secondary);
+        }
+    }
+
+    &[data-type=day] {
+        grid-template: repeat(6, 2em) / repeat(7, 2em);
+    }
+
+    &[data-type=month] {
+        grid-template: repeat(4, 4em) / repeat(3, 6em);
+    }
+
+    &[data-type=year] {
+        grid-template: repeat(4, 4em) / repeat(3, 6em);
+    }
+}

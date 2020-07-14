@@ -10,11 +10,12 @@ type Props = {
     password?: boolean;
     icon?: string;
     disabled?: boolean;
-    placeholder: string;
+    readonly?: boolean;
+    placeholder?: string;
     error?: string | Falsish;
     value: string;
     onSubmit?: (v: string) => void;
-    onChange: (v: string) => void;
+    onChange?: (v: string) => void;
 };
 
 export const InputField: FunctionalComponent<Props> = props => {
@@ -29,10 +30,11 @@ export const InputField: FunctionalComponent<Props> = props => {
 
                 <input type={props.password ? 'password' : 'text'}
                        ref={inputField}
+                       readOnly={props.readonly}
                        placeholder={props.placeholder}
                        aria-label={props.ariaLabel}
                        value={props.value}
-                       onInput={() => props.onChange(getValue())}
+                       onInput={() => props.onChange?.(getValue())}
                        onKeyUp={e => e.key === 'Enter' && props.onSubmit?.(getValue())}
                        disabled={props.disabled}/>
             </div>

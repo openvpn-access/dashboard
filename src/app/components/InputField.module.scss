@@ -33,6 +33,10 @@
         &[disabled] {
             color: var(--c-text-disabled);
         }
+
+        &[readonly] {
+            cursor: default;
+        }
     }
 
     &:hover:not(:focus-within):not([data-errored]):not([disabled]) {

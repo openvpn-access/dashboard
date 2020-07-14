@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import {StateUpdater, useState} from 'preact/hooks';
 
 export type FormFieldRegistration = {
-    value: string;
+    value: any;
     error: string | null;
-    onChange: (v: string) => void;
+    onChange: (v: any) => void;
 };
 
-export type FieldValidator = [(v: string) => unknown, string];
+export type FieldValidator = [(v: any) => unknown, string];
 export type RegisterOptions = {
     validate?: Array<FieldValidator>;
     required?: boolean;
@@ -16,10 +18,10 @@ export type RegisterOptions = {
  * Form state manager with errors and such.
  * @param base Form fields with base values.
  */
-export const useForm = <T extends Record<string, string>>(base: T) => {
+export const useForm = <T extends Record<string, any>>(base: T) => {
     const stateMap = new Map<keyof T, {
         opt: RegisterOptions | null,
-        val: [string, StateUpdater<string>];
+        val: [any, StateUpdater<any>];
         err: [string | null, StateUpdater<string | null>];
     }>();
 
@@ -104,11 +106,11 @@ export const useForm = <T extends Record<string, string>>(base: T) => {
             stateMap.get(name)?.err[1](err);
         },
 
-        setValue(name: keyof T, value: string): void {
+        setValue(name: keyof T, value: any): void {
             stateMap.get(name)?.val[1](value);
         },
 
-        getValue(name: keyof T): string {
+        getValue(name: keyof T): any {
             return stateMap.get(name)?.val[0] || '';
         },
 
@@ -147,7 +149,7 @@ export const useForm = <T extends Record<string, string>>(base: T) => {
         },
 
         values(): T {
-            const obj = {} as Record<keyof T, string>;
+            const obj = {} as Record<keyof T, any>;
             for (const [key, value] of stateMap.entries()) {
                 obj[key] = value.val[0];
             }

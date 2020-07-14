@@ -5,14 +5,28 @@
 }
 
 .form {
-    @include flex(row, flex-start);
+    @include flex(row);
 
-    > *:not(:first-child) {
-        margin-left: 0.25em;
+    > section {
+
+        > h3 {
+            @include font(300, 0.95em);
+            margin: 0.25em 0;
+        }
+
+        &:not(:first-child) {
+            border-left: 2px solid var(--c-background-secondary);
+            margin-left: 1em;
+            padding-left: 1em;
+        }
+
+        > *:not(:first-child) {
+            margin-top: 0.25em;
+        }
     }
 }
 
 .actionBar {
     @include flex(row, center, space-between);
-    margin-top: 0.5em;
+    margin-top: 0.75em;
 }

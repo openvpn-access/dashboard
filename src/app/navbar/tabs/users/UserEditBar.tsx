@@ -1,6 +1,7 @@
 import {DBUser} from '@api/types';
 import {validation} from '@api/validation';
 import {Button} from '@components/Button';
+import {DatePicker} from '@components/DatePicker';
 import {DropDown} from '@components/DropDown';
 import {InputField} from '@components/InputField';
 import {ErrorCode, api} from '@api/index';
@@ -25,7 +26,11 @@ export const UserEditBar: FunctionalComponent<Props> = ({user, onSave}) => {
     const form = useForm({
         username: user.username,
         email: user.email,
-        type: user.type
+        type: user.type,
+        transfer_limit_period: user.transfer_limit_period,
+        transfer_limit_start: user.transfer_limit_start,
+        transfer_limit_end: user.transfer_limit_end,
+        transfer_limit_bytes: user.transfer_limit_bytes
     });
 
     const submit = () => {
@@ -71,29 +76,39 @@ export const UserEditBar: FunctionalComponent<Props> = ({user, onSave}) => {
     return (
         <div className={styles.userEditBar}>
             <div className={styles.form}>
-                <DropDown items={{
-                    admin: 'Admin',
-                    user: 'User'
-                }} selected={form.getValue('type')}
-                          icon={form.getValue('type')}
-                          onSelect={v => form.setValue('type', v)}/>
 
+                <section>
+                    <h3>Credentials and account type</h3>
 
-                <InputField placeholder="Username"
-                            ariaLabel="Update this users username"
-                            icon="user"
-                            disabled={isLoading()}
-                            {...form.register('username', {
-                                validate: validation.user.username
-                            })}/>
+                    <DropDown items={{
+                        admin: 'Admin',
+                        user: 'User'
+                    }} selected={form.getValue('type')}
+                              icon={form.getValue('type')}
+                              onSelect={v => form.setValue('type', v)}/>
 
-                <InputField placeholder="E-Mail"
-                            ariaLabel="Update this users email"
-                            icon="envelope"
-                            disabled={isLoading()}
-                            {...form.register('email', {
-                                validate: validation.user.email
-                            })}/>
+                    <InputField placeholder="Username"
+                                ariaLabel="Update this users username"
+                                icon="user"
+                                disabled={isLoading()}
+                                {...form.register('username', {
+                                    validate: validation.user.username
+                                })}/>
+
+                    <InputField placeholder="E-Mail"
+                                ariaLabel="Update this users email"
+                                icon="envelope"
+                                disabled={isLoading()}
+                                {...form.register('email', {
+                                    validate: validation.user.email
+                                })}/>
+                </section>
+
+                <section>
+                    <h3>Restrictions</h3>
+                    <DatePicker {...form.register('transfer_limit_start')}/>
+                    <DatePicker {...form.register('transfer_limit_end')}/>
+                </section>
             </div>
 
             <div className={styles.actionBar}>
