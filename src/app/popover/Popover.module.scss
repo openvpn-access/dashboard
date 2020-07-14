@@ -2,11 +2,12 @@
     @include position(0, 0, 0, 0);
     @include flex(row, center, center);
     position: absolute;
-    pointer-events: none;
     transition: all 0.5s;
+    visibility: hidden;
     opacity: 0;
 
     &[data-visible] {
+        visibility: visible;
         transform: none;
         opacity: 1;
 
@@ -41,7 +42,6 @@
     padding: 1em 2em;
     border-radius: 0.5em;
     box-shadow: 0 0.25em 1em var(--c-background-tertiary);
-    pointer-events: all;
     position: relative;
 
 

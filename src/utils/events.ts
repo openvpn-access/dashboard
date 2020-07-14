@@ -66,3 +66,30 @@ export const on = eventListener('addEventListener');
  * @return Array passed arguments
  */
 export const off = eventListener('removeEventListener');
+
+/**
+ * Clean up utility function.
+ */
+export const createNativeEventContainer = () => {
+    let listeners: Array<EventBindingArgs> = [];
+
+    return {
+        unbind(): void {
+            for (const args of listeners) {
+                off(...args);
+            }
+
+            listeners = [];
+        },
+
+        onMany(args: Array<EventBindingArgs>): void {
+            for (const set of args) {
+                listeners.push(on(...set));
+            }
+        },
+
+        on(...args: EventBindingArgs): void {
+            listeners.push(on(...args));
+        }
+    };
+};
