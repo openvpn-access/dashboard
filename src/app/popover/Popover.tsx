@@ -23,7 +23,15 @@ const list = new Map<string, FunctionalComponent<PopoverBaseProps<any>>>([
     ['UserEditor', UserEditor]
 ]);
 
-const hidePopover = () => state && state[1]({...state[0], visible: false} as State);
+const hidePopover = () => {
+    if (state) {
+        const [value, setState] = state;
+        setState({...value, visible: false} as State);
+
+        // Invalidate data after animation is done
+        setTimeout(() => setState(null), 300);
+    }
+};
 
 export const showPopover = (name: string, data: unknown) => {
     state?.[1]({name, data, visible: true});
