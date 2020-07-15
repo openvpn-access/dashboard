@@ -13,6 +13,24 @@
         @include font(400, 0.9em);
         margin: 1px 0 0 0.75em;
         color: var(--c-text-primary);
+        width: 100%;
+    }
+
+    > button {
+        @include flex(row, center, center);
+        padding: 0.25em;
+        color: var(--c-text-primary);
+        transition: all 0.3s;
+        margin-left: 0.5em;
+        border-radius: 0.25em;
+
+        &:hover {
+            background: var(--c-background-secondary);
+        }
+
+        > bc-icon {
+            font-size: 17px;
+        }
     }
 
     &:focus-within > bc-icon {

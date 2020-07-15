@@ -7,5 +7,13 @@ export const SearchBar: FunctionalComponent = () => (
         <input type="text"
                placeholder="Search users"
                aria-label="Search for users"/>
+
+        <button>
+            <bc-icon name="filter"/>
+        </button>
+
+        <button>
+            <bc-icon name="plus"/>
+        </button>
     </div>
 );

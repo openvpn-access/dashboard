@@ -1,6 +1,6 @@
 import {session} from '@state/session';
+import {DBUser} from '@api/types';
 import {users} from '@state/users';
-import {DBUser} from '../../../../api/types';
 import {FunctionalComponent, h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 import {User} from './User';
@@ -22,12 +22,21 @@ export const UserList: FunctionalComponent = () => {
         });
     }, []);
 
+    const items = list.map((value, index) => (
+        value.id !== currentUser.user?.id && <User user={value} key={index}/>
+    ));
+
     return (
         <div className={styles.userList}
+             data-empty={items.length === 0}
              data-hide={hide}>
-            {list.map((value, index) => (
-                value.id !== currentUser.user?.id && <User user={value} key={index}/>
-            ))}
+            {items}
+
+            {/* TODO: Make this more beautiful */}
+            <div className={styles.placeholder}>
+                <h1>Empty here huh?</h1>
+                <p>Press the + button to add a new user!</p>
+            </div>
         </div>
     );
 };

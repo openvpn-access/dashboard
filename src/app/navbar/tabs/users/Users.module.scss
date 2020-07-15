@@ -1,8 +1,10 @@
 .users {
     @include size(100%);
     @include flex(column);
+    padding-bottom: 1em;
 }
 
 .table {
-    max-height: calc(100% - 2.5em - 2px);
+    max-height: calc(100% - 3.5em);
+    flex-grow: 1;
 }

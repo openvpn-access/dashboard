@@ -4,14 +4,37 @@
     overflow: auto;
     transition: all 0.3s;
     will-change: transform;
+    flex-grow: 1;
 
     &::after {
         display: block;
         content: '';
-        height: 3em;
+        height: 3.5em;
     }
 
     &[data-hide] {
         opacity: 0;
+    }
+
+    &[data-empty] {
+        @include flex(row, center, center);
+
+        .placeholder {
+            display: block;
+        }
+    }
+}
+
+.placeholder {
+    @include flex(column, center, center);
+    color: var(--c-text-primary);
+    display: none;
+
+    > h1 {
+
+    }
+
+    > p {
+
     }
 }
