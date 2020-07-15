@@ -31,17 +31,26 @@
         }
     }
 }
-
 .restrictions {
 
     .options {
-        transition: all 0.3s;
+        transition: visibility 0s 1.5s;
         visibility: hidden;
-        opacity: 0;
 
         &[data-visible] {
+            transition: visibility 0s 0s;
             visibility: visible;
-            opacity: 1;
+
+            > * {
+                @include transition_sequence(3, 0.125s);
+                opacity: 1;
+            }
+        }
+
+        > * {
+            @include transition_sequence(3, 0.125s, true);
+            transition: opacity 0.3s;
+            opacity: 0;
         }
     }
 }

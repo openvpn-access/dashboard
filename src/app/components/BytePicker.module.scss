@@ -1,0 +1,41 @@
+.bytePicker {
+    @include flex(row, center);
+    @include size(100%, 2.5em);
+    border-radius: 0.25em;
+    transition: all 0.3s;
+    border: 1.5px solid var(--c-background-secondary-accent);
+    overflow: hidden;
+
+    &:focus-within {
+        @include focus_border(--com-color-focus);
+    }
+
+    > input {
+        @include font(600, 0.85em);
+        text-align: center;
+        color: var(--c-text-primary);
+    }
+
+    > button {
+        @include flex(row, center, center);
+        font-size: inherit;
+        color: var(--c-text-primary-accent);
+        height: 100%;
+        padding: 0 0.75em;
+        margin-left: auto;
+
+        > bc-icon {
+            font-size: 12px;
+        }
+
+        &:hover {
+            color: var(--c-text-primary);
+            background: var(--c-background-secondary);
+        }
+    }
+
+    > bc-icon {
+        margin: 0 0.75em;
+        flex-shrink: 0;
+    }
+}

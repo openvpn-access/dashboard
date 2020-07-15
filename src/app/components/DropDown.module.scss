@@ -1,10 +1,10 @@
 .button {
     @include flex(row, center);
+    @include size(100%, 2.5em);
     border-radius: 0.25em;
-    padding: 0.5em 0.75em;
+    padding: 0 0.75em;
     transition: all 0.3s;
     border: 1.5px solid var(--com-color);
-    width: 100%;
     --com-color: var(--c-background-secondary-accent);
     --com-color-focus: var(--c-primary-focus);
 

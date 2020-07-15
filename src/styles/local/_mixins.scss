@@ -9,3 +9,27 @@
 @mixin focus_border($var) {
     box-shadow: 0 0 0 2px var($var);
 }
+
+@mixin inner_border_radius($radius) {
+    &:first-child {
+        border-top-left-radius: $radius;
+        border-bottom-left-radius: $radius;
+    }
+
+    &:last-child {
+        border-top-right-radius: $radius;
+        border-bottom-right-radius: $radius;
+    }
+}
+
+@mixin transition_sequence($amount, $dur, $reverse: false) {
+    @for $i from 1 through $amount {
+        &:nth-child(#{$i}) {
+            @if $reverse {
+                transition-delay: ($amount - $i) * $dur;
+            } @else {
+                transition-delay: ($i - 1) * $dur;
+            }
+        }
+    }
+}

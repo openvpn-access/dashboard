@@ -85,16 +85,23 @@
 }
 
 .clear {
-    font-size: 12px;
+    @include flex(row, center, center);
     transition: all 0.3s;
     opacity: 0;
     color: var(--com-color-hover);
+    padding: 0 0.75em;
+    height: 100%;
 
     &[data-visible] {
         opacity: 1;
     }
 
+    > bc-icon {
+        font-size: 12px;
+    }
+
     &:hover {
-        color: var(--c-primary)
+        color: var(--c-text-primary);
+        background: var(--c-background-secondary);
     }
 }

@@ -2,6 +2,7 @@ import {api, ErrorCode} from '@api/index';
 import {DBUser} from '@api/types';
 import {validation} from '@api/validation';
 import {Button} from '@components/Button';
+import {BytePicker} from '@components/BytePicker';
 import {Checkbox} from '@components/Checkbox';
 import {DatePicker} from '@components/DatePicker';
 import {DropDown} from '@components/DropDown';
@@ -45,7 +46,7 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
             route: `/users/${user.username}`,
             data: {
                 ...form.values(),
-                ...(restricted && {
+                ...(!restricted && {
                     transfer_limit_period: null,
                     transfer_limit_start: null,
                     transfer_limit_end: null,
@@ -133,6 +134,10 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
                         <DatePicker placeholder="End date"
                                     nullable={true}
                                     {...form.register('transfer_limit_end')}/>
+
+                        <BytePicker placeholder="Unlimited"
+                                    nullable={true}
+                                    {...form.register('transfer_limit_bytes')}/>
                     </div>
                 </section>
             </div>

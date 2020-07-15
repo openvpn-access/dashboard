@@ -6,18 +6,19 @@
 
 .main {
     @include flex(row, center);
+    @include size(100%, 2.5em);
     border-radius: 0.25em;
-    padding: 0.5em 0.75em;
     transition: all 0.3s;
     border: 1.5px solid var(--com-color);
-    width: 100%;
     position: relative;
+    flex-shrink: 0;
     --com-color: var(--c-background-secondary-accent);
     --com-color-focus: var(--c-primary-focus);
     --com-color-hover: var(--c-background-secondary-hover);
 
     > bc-icon {
         margin-right: 0.5em;
+        margin-left: 0.75em;
         color: var(--com-color);
         transition: all 0.3s;
     }
@@ -26,6 +27,7 @@
         @include font(600, 0.85em);
         color: var(--c-text-primary);
         width: 100%;
+        padding-right: 0.75em;
 
         &::placeholder {
             transition: all 0.3s;
