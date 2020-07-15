@@ -30,7 +30,7 @@ export const users = {
         per_page: 25
     }),
 
-    // Update / remove a single user locally
+    // Update (/ add) or remove a single user locally
     updateUser: domain.createEvent<DBUser>('updateUser'),
     removeUser: domain.createEvent<string>('removeUser'),
 
@@ -76,11 +76,11 @@ users.list
         for (const item of state) {
             if (item.id === payload.id) {
                 Object.assign(item, payload);
-                break;
+                return state;
             }
         }
 
-        return state;
+        return [...state, payload];
     });
 
 users.list

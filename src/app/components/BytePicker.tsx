@@ -5,12 +5,11 @@ import prettyBytes from 'pretty-bytes';
 import styles from './BytePicker.module.scss';
 
 type Props = {
-    value: string | number | null;
+    value: string | number | null | undefined;
     nullable?: boolean;
     placeholder?: string;
     onChange: (v: number | null) => void;
 }
-
 
 export const BytePicker: FunctionalComponent<Props> = props => {
     const input = useRef<HTMLInputElement>();
@@ -52,7 +51,7 @@ export const BytePicker: FunctionalComponent<Props> = props => {
                    onInput={consume}
                    onKeyUp={blur}
                    ref={input}
-                   value={props.value === null ? '∞' : value}/>
+                   value={props.value === null || props.value === undefined ? '∞' : value}/>
 
             {props.nullable && <button onClick={clear}>
                 <bc-tooltip content="No limit"/>

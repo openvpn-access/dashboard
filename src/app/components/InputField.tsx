@@ -38,7 +38,7 @@ export const InputField: FunctionalComponent<Props> = props => {
                        ref={inputField}
                        readOnly={props.readonly || !!props.onClick}
                        placeholder={props.placeholder}
-                       aria-label={props.ariaLabel}
+                       aria-label={props.ariaLabel || props.placeholder}
                        value={props.value || ''}
                        onInput={() => props.onChange?.(getValue())}
                        onKeyUp={e => e.key === 'Enter' && props.onSubmit?.(getValue())}

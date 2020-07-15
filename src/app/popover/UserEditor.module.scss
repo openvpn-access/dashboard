@@ -60,6 +60,10 @@
 }
 
 .actionBar {
-    @include flex(row, center, space-between);
+    @include flex(row, center);
     margin-top: 1em;
+
+    > button:last-child {
+        margin-left: auto;
+    }
 }

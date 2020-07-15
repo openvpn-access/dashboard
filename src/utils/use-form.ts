@@ -111,7 +111,7 @@ export const useForm = <T extends Record<string, any>>(base: T) => {
         },
 
         getValue(name: keyof T): any {
-            return stateMap.get(name)?.val[0] || '';
+            return stateMap.get(name)?.val[0];
         },
 
         clearError(...names: Array<keyof T>): void {
@@ -122,7 +122,7 @@ export const useForm = <T extends Record<string, any>>(base: T) => {
 
         clearValue(...names: Array<keyof T>): void {
             for (const name of names) {
-                stateMap.get(name)?.val[1]('');
+                stateMap.get(name)?.val[1](base[name]);
             }
         },
 

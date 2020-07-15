@@ -19,21 +19,21 @@ import styles from './UserEditor.module.scss';
 
 type Props = {
     newUser?: boolean;
-    user: DBUser;
+    user?: DBUser;
 };
 
-export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, newUser, hidePopover}) => {
+export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user = {}, newUser, hidePopover}) => {
     const [applyLoading, setApplyLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [restricted, setRestricted] = useState<boolean>(!!(user.transfer_limit_start || user.transfer_limit_end || user.transfer_limit_bytes));
-
     const isLoading = () => applyLoading || deleteLoading;
 
     const form = useForm({
         username: user.username,
         email: user.email,
-        type: user.type,
+        type: user.type || 'user',
+        password: user.password,
         transfer_limit_period: user.transfer_limit_period,
         transfer_limit_start: user.transfer_limit_start,
         transfer_limit_end: user.transfer_limit_end,
@@ -77,11 +77,12 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
         }
 
         setDeleteLoading(true);
+
         api({
             method: 'DELETE',
             route: `/users/${user.username}`
         }).then(() => {
-            users.removeUser(user.username);
+            users.removeUser(user.username || '');
             hidePopover();
         }).finally(() => {
             setDeleteLoading(false);
@@ -107,7 +108,6 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
                               onSelect={v => form.setValue('type', v)}/>
 
                     <InputField placeholder="Username"
-                                ariaLabel="Update this users username"
                                 icon="user"
                                 disabled={isLoading()}
                                 {...form.register('username', {
@@ -115,12 +115,19 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
                                 })}/>
 
                     <InputField placeholder="E-Mail"
-                                ariaLabel="Update this users email"
                                 icon="envelope"
                                 disabled={isLoading()}
                                 {...form.register('email', {
                                     validate: validation.user.email
                                 })}/>
+
+                    {newUser && <InputField placeholder="Password"
+                                            icon="lock"
+                                            password={true}
+                                            disabled={isLoading()}
+                                            {...form.register('password', {
+                                                validate: validation.user.password
+                                            })}/>}
                 </section>
 
                 <section className={styles.restrictions}>
@@ -147,13 +154,13 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
             </div>
 
             <div className={styles.actionBar}>
-                {!newUser && <Button text={confirmDelete ? 'Confirm deletion' : 'Delete user'}
-                                     type="red"
-                                     icon="trash-can"
-                                     ariaLabel={confirmDelete ? 'Confirm deletion' : 'Delete user'}
-                                     loading={deleteLoading}
-                                     disabled={applyLoading}
-                                     onClick={deleteUser}/>}
+                <Button text={confirmDelete ? 'Confirm deletion' : 'Delete user'}
+                        type="red"
+                        icon="trash-can"
+                        ariaLabel={confirmDelete ? 'Confirm deletion' : 'Delete user'}
+                        loading={deleteLoading}
+                        disabled={applyLoading || newUser}
+                        onClick={deleteUser}/>
 
                 <Button text={newUser ? 'Add User' : 'Update'}
                         icon="upgrade"

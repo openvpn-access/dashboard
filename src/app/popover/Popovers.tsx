@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {Popper} from '@components/Popper';
 import {eventPath} from '@utils/event-path';
 import {createNativeEventContainer} from '@utils/events';
 import {createRef, FunctionalComponent, h} from 'preact';
@@ -39,7 +40,7 @@ export const showPopover = (name: string, data: unknown) => {
 
 export const Popovers: FunctionalComponent = () => {
     const [subState] = state = useState<State>(null);
-    const container = createRef<HTMLDivElement>();
+    const container = createRef<Popper>();
     const nativeEvents = createNativeEventContainer();
     let content: JSXInternal.Element | null = null;
 
@@ -52,7 +53,8 @@ export const Popovers: FunctionalComponent = () => {
                 }
             }],
             [window, 'click', (e: MouseEvent) => {
-                if (state?.[0]?.visible && container.current && !eventPath(e).includes(container.current)) {
+                const el = container.current?.base as (HTMLElement | undefined);
+                if (state?.[0]?.visible && el && !eventPath(e).includes(el)) {
                     hidePopover();
                 }
             }]
