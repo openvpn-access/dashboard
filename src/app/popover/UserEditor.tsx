@@ -14,13 +14,15 @@ import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
 import {FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
+import {Popover} from './Popover';
 import styles from './UserEditor.module.scss';
 
 type Props = {
+    newUser?: boolean;
     user: DBUser;
 };
 
-export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, hidePopover}) => {
+export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, newUser, hidePopover}) => {
     const [applyLoading, setApplyLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
@@ -42,8 +44,8 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
         setApplyLoading(true);
 
         delayPromise(500, api({
-            method: 'PATCH',
-            route: `/users/${user.username}`,
+            method: newUser ? 'PUT' : 'PATCH',
+            route: newUser ? '/users' : `/users/${user.username}`,
             data: {
                 ...form.values(),
                 ...(!restricted && {
@@ -87,9 +89,11 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
     };
 
     return (
-        <div className={styles.userEditor}>
+        <Popover className={styles.userEditor}
+                 icon={newUser ? 'starburst-shape' : 'edit'}
+                 title={newUser ? 'Add a new user' : 'Modify a user'}
+                 hidePopover={hidePopover}>
             <div className={styles.form}>
-
                 <section className={styles.fields}>
                     <div className={styles.header}>
                         <h3>Credentials and account type</h3>
@@ -143,21 +147,21 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user, 
             </div>
 
             <div className={styles.actionBar}>
-                <Button text={confirmDelete ? 'Confirm deletion' : 'Delete user'}
-                        type="red"
-                        icon="trash-can"
-                        ariaLabel={confirmDelete ? 'Confirm deletion' : 'Delete user'}
-                        loading={deleteLoading}
-                        disabled={applyLoading}
-                        onClick={deleteUser}/>
+                {!newUser && <Button text={confirmDelete ? 'Confirm deletion' : 'Delete user'}
+                                     type="red"
+                                     icon="trash-can"
+                                     ariaLabel={confirmDelete ? 'Confirm deletion' : 'Delete user'}
+                                     loading={deleteLoading}
+                                     disabled={applyLoading}
+                                     onClick={deleteUser}/>}
 
-                <Button text="Save"
-                        icon="save"
-                        ariaLabel="Save changes"
+                <Button text={newUser ? 'Add User' : 'Update'}
+                        icon="upgrade"
+                        ariaLabel={newUser ? 'Add user' : 'Save changes'}
                         loading={applyLoading}
                         disabled={deleteLoading}
                         onClick={form.onSubmit(submit)}/>
             </div>
-        </div>
+        </Popover>
     );
 };

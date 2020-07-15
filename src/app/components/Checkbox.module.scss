@@ -3,9 +3,10 @@
     flex-shrink: 0;
     position: relative;
     overflow: visible;
-    border: 1.5px solid var(--c-primary);
+    border: 1.5px solid var(--color);
     border-radius: 2px;
     transition: all 0.3s;
+    --color: var(--c-text-primary);
 
     > svg {
         @include size(70%);
@@ -29,7 +30,8 @@
 }
 
 .checked {
-    background: var(--c-primary);
+    background: var(--color);
+    --color: var(--c-primary);
 
     > svg {
         stroke: var(--c-text-secondary);

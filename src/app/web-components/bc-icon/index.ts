@@ -22,7 +22,13 @@ class BeamCafeIcon extends HTMLElement {
     connectedCallback(): void {
         if (!this._connected) {
             const iconName = this.getAttribute('name');
-            this.innerHTML = icons.get(iconName) || '';
+            const svg = icons.get(iconName);
+
+            if (!svg) {
+                throw new Error(`Unknown icon: ${iconName}`);
+            }
+
+            this.innerHTML = svg;
             this._connected = true;
         }
     }

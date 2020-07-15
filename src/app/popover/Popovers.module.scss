@@ -1,0 +1,45 @@
+.popovers {
+    @include position(0, 0, 0, 0);
+    @include flex(row, center, center);
+    position: absolute;
+    transition: all 0.5s;
+    visibility: hidden;
+    opacity: 0;
+
+    &[data-visible] {
+        visibility: visible;
+        transform: none;
+        opacity: 1;
+
+        &::before {
+            @include position(0, 0, 0, 0);
+            @include pseudo();
+            background: var(--c-background-secondary);
+            opacity: 0.5;
+        }
+
+        > * {
+            transform: none;
+            opacity: 1;
+
+            @include animate('0.5s ease-in-out') {
+                0% {
+                    transform: scale(0.95) translateY(-0.5em);
+                }
+                50% {
+                    transform: scale(1.01);
+                }
+            }
+        }
+    }
+
+    > * {
+        transition: all 0.5s;
+        opacity: 0;
+        z-index: 10;
+        background: var(--c-background-primary);
+        border-radius: 0.5em;
+        box-shadow: 0 0.25em 1em var(--c-background-tertiary);
+        position: relative;
+    }
+}

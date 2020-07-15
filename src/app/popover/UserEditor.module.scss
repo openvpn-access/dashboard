@@ -1,7 +1,11 @@
 .userEditor {
     @include flex(column);
-    padding: 0.5em;
     color: var(--c-text-primary);
+
+    > h1 {
+        @include font(600, 0.85em);
+        margin: 0.75em;
+    }
 }
 
 .form {
@@ -31,8 +35,8 @@
         }
     }
 }
-.restrictions {
 
+.restrictions {
     .options {
         transition: visibility 0s 1.5s;
         visibility: hidden;

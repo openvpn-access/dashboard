@@ -1,59 +1,31 @@
 .popover {
-    @include position(0, 0, 0, 0);
-    @include flex(row, center, center);
-    position: absolute;
-    transition: all 0.5s;
-    visibility: hidden;
-    opacity: 0;
+    @include flex(column);
+}
 
-    &[data-visible] {
-        visibility: visible;
-        transform: none;
-        opacity: 1;
+.title {
+    @include flex(row, center, space-between);
+    padding: 1em;
+    border-bottom: 1.5px solid var(--c-text-primary);
+    color: var(--c-text-primary);
 
-        &::before {
-            @include position(0, 0, 0, 0);
-            @include pseudo();
+    > bc-icon {
+        margin-left: 0.5em;
+    }
+
+    > button {
+        @include flex(row, center, center);
+        font-size: 12px;
+        transition: all 0.3s;
+        padding: 0.5em;
+        color: var(--c-text-primary);
+        border-radius: 0.25em;
+
+        &:hover {
             background: var(--c-background-secondary);
-            opacity: 0.5;
-        }
-
-        .container {
-            transform: none;
-            opacity: 1;
-
-            @include animate('0.5s ease-in-out') {
-                0% {
-                    transform: scale(0.95) translateY(-0.5em);
-                }
-                50% {
-                    transform: scale(1.01);
-                }
-            }
         }
     }
 }
 
-.container {
-    transition: all 0.5s;
-    opacity: 0;
-    z-index: 10;
-    background: var(--c-background-primary);
-    padding: 1em 2em;
-    border-radius: 0.5em;
-    box-shadow: 0 0.25em 1em var(--c-background-tertiary);
-    position: relative;
-
-
-    > button {
-        @include position(0.85em, 0.85em, auto, auto);
-        position: absolute;
-        font-size: 12px;
-        color: var(--c-text-primary);
-        transition: all 0.3s;
-
-        &:hover {
-            color: var(--c-primary);
-        }
-    }
+.content {
+    padding: 1em;
 }

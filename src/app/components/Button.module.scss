@@ -1,6 +1,6 @@
 .button {
     @include inline-flex(row, center);
-    border-radius: 0.2em;
+    border-radius: 0.25em;
     padding: 0.55em 1em 0.5em;
     transition: all 0.3s;
     background: var(--c-color);
@@ -33,6 +33,7 @@
 
     > span {
         @include font(400, 14px);
+        line-height: 1.1em;
     }
 
     &:focus {
