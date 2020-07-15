@@ -11,19 +11,6 @@
     > bc-icon {
         margin-left: 0.5em;
     }
-
-    > button {
-        @include flex(row, center, center);
-        font-size: 12px;
-        transition: all 0.3s;
-        padding: 0.5em;
-        color: var(--c-text-primary);
-        border-radius: 0.25em;
-
-        &:hover {
-            background: var(--c-background-secondary);
-        }
-    }
 }
 
 .content {

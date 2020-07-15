@@ -1,3 +1,4 @@
+import {IconButton} from '@components/IconButton';
 import {FunctionalComponent, h} from 'preact';
 import styles from './Searchbar.module.scss';
 
@@ -8,12 +9,12 @@ export const SearchBar: FunctionalComponent = () => (
                placeholder="Search users"
                aria-label="Search for users"/>
 
-        <button>
-            <bc-icon name="filter"/>
-        </button>
+        <IconButton icon="filter"
+                    title="Filter search"
+                    onClick={console.log}/>
 
-        <button>
-            <bc-icon name="plus"/>
-        </button>
+        <IconButton icon="plus"
+                    title="Add new user"
+                    onClick={console.log}/>
     </div>
 );

@@ -1,0 +1,15 @@
+.iconButton {
+    @include flex(row, center, center);
+    @include size(1.5em);
+    color: var(--c-text-primary);
+    transition: all 0.3s;
+    border-radius: 0.25em;
+
+    &:hover {
+        background: var(--c-background-secondary);
+    }
+
+    > bc-icon {
+        font-size: 14px;
+    }
+}

@@ -1,3 +1,4 @@
+import {IconButton} from '@components/IconButton';
 import {PopoverBaseProps} from '@popover';
 import {cn} from '@utils/preact-utils';
 import {uid} from '@utils/uid';
@@ -22,11 +23,9 @@ export const Popover: FunctionalComponent<PopoverBaseProps<Props>> = props => {
             <div className={styles.title}>
                 {props.icon && <bc-icon name={props.icon}/>}
                 <h3 id={labelledById}>{props.title}</h3>
-
-                <button aria-label="Close popover"
-                        onClick={props.hidePopover}>
-                    <bc-icon name="delete"/>
-                </button>
+                <IconButton icon="delete"
+                            title="Close dialog"
+                            onClick={props.hidePopover}/>
             </div>
 
             <div className={cn(styles.content, props.className)}>
