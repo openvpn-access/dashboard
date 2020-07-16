@@ -41,12 +41,13 @@ export const showPopover = (name: string, data: unknown) => {
 export const Popovers: FunctionalComponent = () => {
     const [subState] = state = useState<State>(null);
     const container = createRef<Popper>();
-    const nativeEvents = createNativeEventContainer();
     let content: JSXInternal.Element | null = null;
 
     // Hide popover if user presses the escape key
     useEffect(() => {
-        nativeEvents.onMany([
+        const events = createNativeEventContainer();
+
+        events.onMany([
             [window, 'keydown', (e: KeyboardEvent) => {
                 if (state?.[0]?.visible && e.key === 'Escape') {
                     hidePopover();
@@ -60,7 +61,7 @@ export const Popovers: FunctionalComponent = () => {
             }]
         ]);
 
-        return () => nativeEvents.unbind();
+        return events.unbind;
     });
 
     if (subState && list.has(subState.name)) {
