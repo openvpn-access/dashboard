@@ -24,11 +24,14 @@ export const users = {
         total_users_count: -1
     }),
 
-    // Search configuration
-    config: domain.createStore<UsersConfig>({
+    // Search configuration and filters
+    searchConfig: domain.createStore<UsersConfig>({
         page: 1,
         per_page: 25
     }),
+
+    // Search query
+    searchQuery: domain.createStore<string | null>(null),
 
     // Update (/ add) or remove a single user locally
     updateUser: domain.createEvent<DBUser>('updateUser'),
@@ -37,10 +40,24 @@ export const users = {
     // Update current view
     updateView: domain.createEffect<void, UsersList>('updateView', {
         async handler(): Promise<UsersList> {
-            return await api({
-                route: '/users',
-                query: users.config.getState()
-            });
+            const searchConfig = users.searchConfig.getState();
+            const searchQuery = users.searchQuery.getState();
+
+            if (searchQuery) {
+                return await api({
+                    method: 'POST',
+                    route: '/users/search',
+                    data: {
+                        term: searchQuery,
+                        limit: searchConfig.per_page
+                    }
+                });
+            }
+                return await api({
+                    route: '/users',
+                    query: users.searchConfig.getState()
+                });
+
         }
     }),
 
@@ -52,11 +69,14 @@ export const users = {
     }),
 
     // Update config effect
-    updateConfig: domain.createEvent<Partial<UsersConfig>>('updateConfig')
+    updateConfig: domain.createEvent<Partial<UsersConfig>>('updateConfig'),
+
+    // Update search query
+    updateSearchQuery: domain.createEvent<string>('updateSearchQuery')
 };
 
 // Bind events
-users.config
+users.searchConfig
     .on(users.updateConfig, (state, payload) => {
         return {...state, ...payload};
     });
@@ -86,4 +106,9 @@ users.list
 users.list
     .on(users.removeUser, (state, payload) => {
         return state.filter(v => v.username !== payload);
+    });
+
+users.searchQuery
+    .on(users.updateSearchQuery, (state, payload) => {
+        return payload || null;
     });

@@ -5,7 +5,8 @@ import styles from './Paginator.module.scss';
 
 // TODO: Pagination-spinner whatever animation?
 export const Paginator: FunctionalComponent = () => {
-    const {page, per_page} = useStore(users.config);
+    const searchQuery = useStore(users.searchQuery);
+    const {page, per_page} = useStore(users.searchConfig);
     const {total_users_count} = useStore(users.stats);
 
     const jumpTo = (page: number) => () => {
@@ -24,7 +25,7 @@ export const Paginator: FunctionalComponent = () => {
     const pad = Math.max(2, String(buttons[buttons.length - 1]).length);
     return (
         <div className={styles.paginator}
-             data-visible={totalPages > 1}>
+             data-visible={!searchQuery && totalPages > 1}>
             <div className={styles.controls}>
                 <button aria-label="Jump to first page"
                         disabled={page === 1}

@@ -28,6 +28,7 @@
 .placeholder {
     @include flex(column, center, center);
     color: var(--c-text-primary);
+    text-align: center;
     display: none;
 
     > h1 {
