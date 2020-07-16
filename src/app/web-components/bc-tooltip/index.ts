@@ -25,17 +25,19 @@ class BeamCafeTooltip extends HTMLElement {
         return REFLECTED_ATTRIBUTES;
     }
 
-    private updateText() {
+    private updateText(): void {
         this._toolTip.innerHTML = this.getAttribute('content') as string;
     }
 
-    private updatePosition() {
-        this._nanoPop.update({
-            position: (this.getAttribute('pos') || 'bottom-middle') as NanoPopPosition
+    private updatePosition(reference?: HTMLElement, popper?: HTMLElement): string | null {
+        return this._nanoPop.update({
+            container: document.body.getBoundingClientRect(),
+            position: (this.getAttribute('pos') || 'bottom-middle') as NanoPopPosition,
+            reference, popper
         });
     }
 
-    private hide() {
+    private hide(): void {
         if (this._visible) {
             const tt = this._toolTip;
 
@@ -55,7 +57,7 @@ class BeamCafeTooltip extends HTMLElement {
         }
     }
 
-    private show() {
+    private show(): void {
         if (!this._connected || this._visible || !this.parentElement) {
             return;
         }
@@ -68,12 +70,7 @@ class BeamCafeTooltip extends HTMLElement {
         document.body.appendChild(tt);
         this.updateText();
 
-        const pos = this._nanoPop.update({
-            position: (this.getAttribute('pos') || 'bottom-middle') as NanoPopPosition,
-            reference: ref,
-            popper: tt
-        });
-
+        const pos = this.updatePosition(ref, tt);
         if (pos) {
             this._visible = true;
 
@@ -119,7 +116,7 @@ class BeamCafeTooltip extends HTMLElement {
         }
     }
 
-    disconnectedCallback() {
+    disconnectedCallback(): void {
         if (!isMobile) {
             this._connected = false;
             this.hide();
@@ -129,13 +126,13 @@ class BeamCafeTooltip extends HTMLElement {
         }
     }
 
-    attributeChangedCallback(name: string): void {
+    attributeChangedCallback(name: string): unknown {
         if (REFLECTED_ATTRIBUTES.includes(name)) {
             switch (name) {
-            case 'content':
-                return this.updateText();
-            case 'pos':
-                return this.updatePosition();
+                case 'content':
+                    return this.updateText();
+                case 'pos':
+                    return this.updatePosition();
             }
         }
     }
