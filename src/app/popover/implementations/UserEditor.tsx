@@ -151,13 +151,13 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user =
             </div>
 
             <div className={styles.actionBar}>
-                <Button text={confirmDelete ? 'Confirm deletion' : 'Delete user'}
-                        type="red"
-                        icon="trash-can"
-                        ariaLabel={confirmDelete ? 'Confirm deletion' : 'Delete user'}
-                        loading={deleteLoading}
-                        disabled={applyLoading || newUser}
-                        onClick={deleteUser}/>
+                {!newUser && <Button text={confirmDelete ? 'Confirm deletion' : 'Delete user'}
+                                     type="red"
+                                     icon="trash-can"
+                                     ariaLabel={confirmDelete ? 'Confirm deletion' : 'Delete user'}
+                                     loading={deleteLoading}
+                                     disabled={applyLoading}
+                                     onClick={deleteUser}/>}
 
                 <Button text={newUser ? 'Add User' : 'Update'}
                         icon="upgrade"
