@@ -17,11 +17,20 @@
         }
     }
 
-    &:hover {
+    &.disabled {
+        cursor: not-allowed;
+        background: var(--c-background-secondary);
+
+        > p {
+            color: var(--c-text-disabled);
+        }
+    }
+
+    &:hover:not(.disabled):not(:focus-within) {
         --com-color: var(--c-background-secondary-hover);
     }
 
-    &:focus-within {
+    &:focus-within:not(.disabled) {
         @include focus_border(--com-color-focus);
         --com-color: var(--c-primary);
     }

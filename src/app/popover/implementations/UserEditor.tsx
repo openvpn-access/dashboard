@@ -14,7 +14,7 @@ import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
 import {FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
-import {Popover} from './Popover';
+import {Popover} from '../Popover';
 import styles from './UserEditor.module.scss';
 
 type Props = {
@@ -100,12 +100,9 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user =
                         <h3>Credentials and account type</h3>
                     </div>
 
-                    <DropDown items={{
-                        admin: 'Admin',
-                        user: 'User'
-                    }} selected={form.getValue('type')}
+                    <DropDown items={{admin: 'Admin', user: 'User'}}
                               icon={form.getValue('type')}
-                              onSelect={v => form.setValue('type', v)}/>
+                              {...form.register('type')}/>
 
                     <InputField placeholder="Username"
                                 icon="user"

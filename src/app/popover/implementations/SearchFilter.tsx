@@ -1,0 +1,54 @@
+import {Button} from '@components/Button';
+import {DropDown} from '@components/DropDown';
+import {PopoverBaseProps} from '@popover';
+import {users} from '@state/users';
+import {useForm} from '@utils/use-form';
+import {FunctionalComponent, h} from 'preact';
+import {useState} from 'react';
+import {Popover} from '../Popover';
+import styles from './SearchFilter.module.scss';
+
+const SORTING_FIELDS = {
+    'id': 'ID',
+    'created_at': 'Created at',
+    'updated_at': 'Updated at',
+    'type': 'Type',
+    'state': 'Account state',
+    'email': 'E-Mail Address',
+    'email_verified': 'E-Mail verified',
+    'username': 'Username'
+};
+
+export const SearchFilter: FunctionalComponent<PopoverBaseProps> = props => {
+    const [locked, setLocked] = useState(false);
+    const form = useForm({...users.searchConfig.getState()});
+
+    const apply = () => {
+        setLocked(true);
+
+        users.updateConfig(form.values());
+        users.updateView().finally(() => {
+            setLocked(false);
+            props.hidePopover();
+        });
+    };
+
+    return (
+        <Popover className={styles.searchFilter}
+                 hidePopover={props.hidePopover}
+                 icon="filter"
+                 title="User Filter">
+
+            <p className={styles.label}>Sort list by</p>
+            <DropDown items={SORTING_FIELDS}
+                      disabled={locked}
+                      {...form.register('sort')}/>
+
+            <Button className={styles.btn}
+                    text="Apply"
+                    ariaLabel="Apply filter options"
+                    disabled={locked}
+                    onClick={form.onSubmit(apply)}/>
+        </Popover>
+    );
+};

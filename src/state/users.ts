@@ -6,6 +6,7 @@ type UsersList = Array<DBUser>;
 type UsersConfig = {
     page: number;
     per_page: number;
+    sort: string;
 };
 
 type UsersStats = {
@@ -27,7 +28,8 @@ export const users = {
     // Search configuration and filters
     searchConfig: domain.createStore<UsersConfig>({
         page: 1,
-        per_page: 25
+        per_page: 25,
+        sort: 'id'
     }),
 
     // Search query
@@ -96,7 +98,7 @@ users.list
         for (const item of state) {
             if (item.id === payload.id) {
                 Object.assign(item, payload);
-                return state;
+                return [...state];
             }
         }
 

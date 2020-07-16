@@ -24,7 +24,7 @@ export const Popover: FunctionalComponent<PopoverBaseProps<Props>> = props => {
                 {props.icon && <bc-icon name={props.icon}/>}
                 <h3 id={labelledById}>{props.title}</h3>
                 <IconButton icon="delete"
-                            title="Close dialog"
+                            ariaLabel="Close dialog"
                             onClick={props.hidePopover}/>
             </div>
 

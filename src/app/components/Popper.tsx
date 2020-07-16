@@ -9,6 +9,7 @@ import styles from './Popper.module.scss';
 type Props = {
     className?: string;
     style?: string;
+    disabled?: boolean;
     content: JSXInternal.Element;
     button: JSXInternal.Element | ((open: boolean) => JSXInternal.Element);
 };
@@ -94,7 +95,7 @@ export class Popper extends Component<Props, State> {
         });
 
         const container = this.container.current as HTMLElement;
-        if (!this.state.open) {
+        if (!this.state.open && !this.props.disabled) {
             container.style.display = 'block';
             this.updatePopperPosition();
         } else {

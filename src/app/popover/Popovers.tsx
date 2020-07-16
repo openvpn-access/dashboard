@@ -5,10 +5,11 @@ import {createNativeEventContainer} from '@utils/events';
 import {createRef, FunctionalComponent, h} from 'preact';
 import {StateUpdater, useEffect, useState} from 'preact/hooks';
 import {JSXInternal} from 'preact/src/jsx';
+import {SearchFilter} from './implementations/SearchFilter';
 import styles from './Popovers.module.scss';
-import {UserEditor} from './UserEditor';
+import {UserEditor} from './implementations/UserEditor';
 
-export type PopoverBaseProps<T> = T & {
+export type PopoverBaseProps<T = unknown> = T & {
     hidePopover: () => void;
 };
 
@@ -21,7 +22,8 @@ type State = {
 let state: [State, StateUpdater<State>] | null = null;
 
 const list = new Map<string, FunctionalComponent<PopoverBaseProps<any>>>([
-    ['UserEditor', UserEditor]
+    ['UserEditor', UserEditor],
+    ['SearchFilter', SearchFilter]
 ]);
 
 const hidePopover = () => {
@@ -34,7 +36,7 @@ const hidePopover = () => {
     }
 };
 
-export const showPopover = (name: string, data: unknown) => {
+export const showPopover = (name: string, data?: unknown) => {
     state?.[1]({name, data, visible: true});
 };
 
