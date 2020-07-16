@@ -3,9 +3,8 @@ import {showPopover} from '@popover';
 import {users} from '@state/users';
 import {debounce} from '@utils/debounce';
 import {createNativeEventContainer} from '@utils/events';
-import {FunctionalComponent, h} from 'preact';
-import {useState} from 'preact/hooks';
-import {createRef, useEffect} from 'react';
+import {createRef, FunctionalComponent, h} from 'preact';
+import {useEffect, useState} from 'preact/hooks';
 import styles from './Searchbar.module.scss';
 
 export const SearchBar: FunctionalComponent = () => {

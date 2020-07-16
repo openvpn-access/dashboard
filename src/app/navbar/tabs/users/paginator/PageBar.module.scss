@@ -1,31 +1,17 @@
-.paginator {
-    @include position(auto, 0, 0, 0);
-    @include flex(row, center, center);
-    position: absolute;
-    pointer-events: none;
-    opacity: 0;
-
-    &[data-visible] {
-        opacity: 1;
-    }
-}
-
-.controls {
+.pageBar {
     @include flex(row, center);
-    border-radius: 10em;
-    background: var(--c-background-primary);
-    box-shadow: 0 3px 10px var(--c-background-tertiary);
-    margin-bottom: 0.5em;
-    padding: 0 0.75em;
     height: 2.25em;
-    position: relative;
-    overflow: hidden;
+    z-index: 5;
+    pointer-events: all;
+    box-shadow: 0 3px 10px var(--c-background-tertiary);
+    background: var(--c-background-primary);
+    padding: 0 0.75em;
+    border-radius: 0.25em;
 
     button {
         @include font(600, 13px);
         padding: 0.25em 0;
         margin: 0 0.5em;
-        pointer-events: all;
         min-width: 2.25em;
         line-height: 1.5em;
         transition: all 0.3s, visibility 0s 0s;
@@ -79,13 +65,13 @@
         &:first-child {
             border-right: 2px solid var(--c-background-secondary);
             padding-right: 0.75em;
-            margin-right: 0;
+            margin: 0;
         }
 
         &:last-child {
             border-left: 2px solid var(--c-background-secondary);
             padding-left: 0.75em;
-            margin-left: 0;
+            margin: 0;
         }
     }
 }

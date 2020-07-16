@@ -4,7 +4,7 @@ import {PopoverBaseProps} from '@popover';
 import {users} from '@state/users';
 import {useForm} from '@utils/use-form';
 import {FunctionalComponent, h} from 'preact';
-import {useState} from 'react';
+import {useState} from 'preact/hooks';
 import {Popover} from '../Popover';
 import styles from './SearchFilter.module.scss';
 

@@ -1,0 +1,64 @@
+.perPageButton {
+    @include flex(column, center, center);
+    height: 2.25em;
+    z-index: 5;
+    pointer-events: all;
+
+    .btn {
+        @include size(2.5em);
+        @include font(600, 13px);
+        line-height: 1.5em;
+        color: var(--c-text-primary);
+        box-shadow: 0 3px 10px var(--c-background-tertiary);
+        background: var(--c-background-primary);
+        border-radius: 0.25em;
+        transition: all 0.3s;
+    }
+
+    .list {
+        @include flex(column);
+        box-shadow: 0 3px 10px var(--c-background-tertiary);
+        background: var(--c-background-primary);
+        width: 2.25em;
+        border-radius: 0.25em;
+        position: absolute;
+        transition: all 0.3s;
+        overflow: hidden;
+        transform-origin: bottom center;
+        transform: translateY(calc(-50% - 1.5em)) scaleY(0);
+        opacity: 0;
+
+        > button {
+            @include font(600, 12px);
+            padding: 0.5em 0;
+            transition: all 0.3s;
+            color: var(--c-text-primary);
+            text-align: center;
+
+            &:hover {
+                background: var(--c-background-secondary);
+            }
+
+            &:first-child {
+                margin-top: 0.5em;
+            }
+
+            &:last-child {
+                margin-bottom: 0.5em;
+            }
+        }
+    }
+
+    &[data-open] {
+
+        .list {
+            transform: translateY(calc(-50% - 1.5em));
+            opacity: 1;
+        }
+
+        .btn {
+            background: var(--c-primary);
+            color: var(--c-text-secondary);
+        }
+    }
+}

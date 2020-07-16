@@ -1,6 +1,6 @@
 import {FunctionalComponent, h} from 'preact';
 import {Header} from './Header';
-import {Paginator} from './Paginator';
+import {Paginator} from './paginator/Paginator';
 import {SearchBar} from './SearchBar';
 import {UserList} from './UserList';
 import styles from './Users.module.scss';

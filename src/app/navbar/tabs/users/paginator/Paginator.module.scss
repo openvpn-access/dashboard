@@ -1,0 +1,11 @@
+.paginator {
+    @include position(auto, 1em, 0.5em, 1em);
+    @include flex(row, center, space-between);
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+
+    &[data-visible] {
+        opacity: 1;
+    }
+}
