@@ -14,9 +14,10 @@
     @include flex(row, center);
     padding: 0.5em 1em 0.5em 1em;
     border-radius: 0 10em 10em 0;
-    color: var(--c-text-primary-accent);
+    color: var(--c-text-primary-inactive);
     margin: 0.5em 0;
     transition: all 0.3s;
+    border-left: 2px solid transparent;
 
     > span {
         @include font(600, 0.9em);
@@ -28,8 +29,8 @@
     }
 
     &.active {
-        color: var(--c-text-secondary);
-        background: var(--c-primary);
+        color: var(--c-text-primary);
+        border-color: var(--c-primary);
     }
 
     &:not(.active):hover {
