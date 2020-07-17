@@ -18,40 +18,6 @@
         color: var(--c-text-primary);
         position: relative;
 
-        &[data-current] {
-            color: var(--c-text-primary);
-            pointer-events: none;
-            cursor: default;
-
-            &::before {
-                @include position(auto, 0, 0, 0);
-                @include pseudo();
-                @include size(100%, 1.5px);
-                border-radius: 1em;
-                background: currentColor;
-            }
-        }
-
-        &.number:not([data-current]) {
-            color: var(--c-text-disabled);
-            transition: all 0.3s, visibility 0s 0s;
-
-            &:hover {
-                color: var(--c-text-primary);
-            }
-        }
-
-        &.icon {
-            @include flex(row, center, center);
-            margin: 0;
-            padding: 0;
-            min-width: 0;
-
-            bc-icon {
-                font-size: 14px;
-            }
-        }
-
         &[disabled] {
             color: var(--c-text-disabled);
             cursor: default;
@@ -62,16 +28,92 @@
             visibility: hidden;
         }
 
-        &:first-child {
+        &.first {
             border-right: 2px solid var(--c-background-secondary);
             padding-right: 0.75em;
             margin: 0;
         }
 
-        &:last-child {
+        &.last {
             border-left: 2px solid var(--c-background-secondary);
             padding-left: 0.75em;
             margin: 0;
+        }
+    }
+}
+
+.spinner {
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        @include pseudo();
+        @include position(0, 0, 0, 0);
+        position: absolute;
+        pointer-events: none;
+        z-index: 8;
+        background: linear-gradient(
+                to right,
+                var(--c-background-primary),
+                transparent 12.5%,
+                transparent 87.5%,
+                var(--c-background-primary)
+        );
+    }
+
+    .fake {
+        visibility: hidden;
+    }
+
+    .real {
+        @include flex(row);
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+
+        > button {
+            &::before {
+                @include position(auto, 0, 0, 0);
+                @include pseudo();
+                @include size(100%, 1.5px);
+                border-radius: 1em;
+                background: currentColor;
+                transition: all 0.3s;
+                opacity: 0;
+            }
+
+            &[data-current] {
+                color: var(--c-text-primary);
+                pointer-events: none;
+                cursor: default;
+
+                &::before {
+                    opacity: 1;
+                }
+            }
+
+            &.number:not([data-current]) {
+                color: var(--c-text-disabled);
+                transition: all 0.3s, visibility 0s 0s;
+
+                &:hover {
+                    color: var(--c-text-primary);
+                }
+            }
+        }
+
+        &[data-moving] {
+            transition: all 0.3s;
+
+            > button[data-current]::before {
+                opacity: 0;
+            }
+        }
+
+        &[data-hiding] {
+            transition: all 0.3s;
+            opacity: 0;
         }
     }
 }
