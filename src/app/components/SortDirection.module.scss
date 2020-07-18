@@ -1,0 +1,51 @@
+.sortDirection {
+    @include size(100%, 2.5em);
+    border-radius: 0.25em;
+    transition: all 0.3s;
+    border: 1.5px solid var(--com-color);
+    margin-left: 0.5em;
+    position: relative;
+    --com-color: var(--c-background-secondary-accent);
+    --com-color-focus: var(--c-primary-focus);
+    --com-color-hover: var(--c-background-secondary-hover);
+
+    &::before,
+    &::after {
+        @include position(0, 0, 0, 0);
+        @include pseudo();
+        @include size(0.5em, 1.5px);
+        margin: auto;
+        background: var(--com-color);
+        border-radius: 2em;
+        transition: all 0.3s;
+    }
+
+    &::before {
+        transform-origin: right center;
+        transform: translate3d(-50%, -0.25em, 0) rotate(-45deg);
+    }
+
+    &::after {
+        transform-origin: left center;
+        transform: translate3d(50%, -0.25em, 0) rotate(45deg);
+    }
+
+    &[data-dir=desc] {
+        &::before {
+            transform: translate3d(-50%, 0.25em, 0) rotate(45deg);
+        }
+
+        &::after {
+            transform: translate3d(50%, 0.25em, 0) rotate(-45deg);
+        }
+    }
+
+    &:hover {
+        --com-color: var(--com-color-hover);
+    }
+
+    &:focus {
+        @include focus_border(--com-color-focus);
+        --com-color: var(--c-primary);
+    }
+}

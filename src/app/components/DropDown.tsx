@@ -5,7 +5,7 @@ import styles from './DropDown.module.scss';
 import {Popper} from './Popper';
 
 type Props = {
-    'aria-label'?: string;
+    ariaLabel?: string;
     icon?: string;
     value?: number | string;
     disabled?: boolean;
@@ -62,7 +62,7 @@ export const DropDown: FunctionalComponent<Props> = props => {
                         [styles.open]: open,
                         [styles.empty]: !buttons.length,
                         [styles.disabled]: !!props.disabled
-                    })} aria-label={props['aria-label'] || 'Open context menu'}>
+                    })} aria-label={props.ariaLabel || 'Open context menu'}>
                         {props.icon && <bc-icon name={props.icon}/>}
 
                         <p style={`min-width: calc(${maxTextWidth} * 0.6em)`}>

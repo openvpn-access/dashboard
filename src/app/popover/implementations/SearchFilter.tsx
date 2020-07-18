@@ -1,5 +1,6 @@
 import {Button} from '@components/Button';
 import {DropDown} from '@components/DropDown';
+import {SortDirection} from '@components/SortDirection';
 import {PopoverBaseProps} from '@popover';
 import {users} from '@state/users';
 import {useForm} from '@utils/use-form';
@@ -39,10 +40,19 @@ export const SearchFilter: FunctionalComponent<PopoverBaseProps> = props => {
                  icon="filter"
                  title="User Filter">
 
-            <p className={styles.label}>Sort list by</p>
-            <DropDown items={SORTING_FIELDS}
-                      disabled={locked}
-                      {...form.register('sort')}/>
+            <section className={styles.sort}>
+                <p className={styles.label}>Sort list by</p>
+
+                <div>
+                    <DropDown items={SORTING_FIELDS}
+                              disabled={locked}
+                              ariaLabel="Sort by propertie"
+                              {...form.register('sort')}/>
+
+                    <SortDirection ariaLabel="Sorting direction"
+                                   {...form.register('sort_dir')}/>
+                </div>
+            </section>
 
             <Button className={styles.btn}
                     text="Apply"

@@ -7,6 +7,7 @@ type UsersConfig = {
     page: number;
     per_page: number;
     sort: string;
+    sort_dir: 'asc' | 'desc';
 };
 
 type UsersStats = {
@@ -29,7 +30,8 @@ export const users = {
     searchConfig: domain.createStore<UsersConfig>({
         page: 1,
         per_page: 25,
-        sort: 'id'
+        sort: 'id',
+        sort_dir: 'asc'
     }),
 
     // Search query

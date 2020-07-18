@@ -1,11 +1,26 @@
 .searchFilter {
     @include flex(column);
+
+
+    > section {
+        .label {
+            @include font(600, 13px);
+            margin-bottom: 0.25em;
+            color: var(--c-text-primary);
+        }
+    }
 }
 
-.label {
-    @include font(600, 13px);
-    margin-bottom: 0.25em;
-    color: var(--c-text-primary);
+.sort {
+
+    > div {
+        @include flex(row, center);
+        height: 100%;
+
+        > button {
+
+        }
+    }
 }
 
 .btn {
