@@ -1,4 +1,4 @@
-import {InputField} from '@components/InputField';
+import {InputField} from '@components/form/InputField';
 import {Popper} from '@components/Popper';
 import day, {Dayjs} from 'dayjs';
 import {FunctionalComponent, h} from 'preact';

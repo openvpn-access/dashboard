@@ -2,7 +2,7 @@
 import {cn} from '@utils/preact-utils';
 import {createRef, FunctionalComponent, h} from 'preact';
 import styles from './DropDown.module.scss';
-import {Popper} from './Popper';
+import {Popper} from '../Popper';
 
 type Props = {
     ariaLabel?: string;

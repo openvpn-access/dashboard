@@ -1,4 +1,4 @@
-import {IconButton} from '@components/IconButton';
+import {IconButton} from '@components/form/IconButton';
 import {showPopover} from '@popover';
 import {users} from '@state/users';
 import {debounce} from '@utils/debounce';

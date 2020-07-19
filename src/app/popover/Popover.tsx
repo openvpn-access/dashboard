@@ -1,4 +1,4 @@
-import {IconButton} from '@components/IconButton';
+import {IconButton} from '@components/form/IconButton';
 import {PopoverBaseProps} from '@popover';
 import {cn} from '@utils/preact-utils';
 import {uid} from '@utils/uid';

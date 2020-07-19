@@ -1,7 +1,7 @@
 import {api, ErrorCode} from '@api/index';
 import {validation} from '@api/validation';
-import {Button} from '@components/Button';
-import {InputField} from '@components/InputField';
+import {Button} from '@components/form/Button';
+import {InputField} from '@components/form/InputField';
 import {session} from '@state/session';
 import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
