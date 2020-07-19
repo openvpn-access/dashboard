@@ -7,13 +7,19 @@ import {useEffect, useState} from 'preact/hooks';
 import styles from './PerPageButton.module.scss';
 
 export const PerPageButton: FunctionalComponent = () => {
-    const {per_page} = useStore(users.searchConfig);
+    const {total_users_count} = useStore(users.stats);
+    const {per_page, page} = useStore(users.searchConfig);
     const [showPages, setShowPages] = useState(false);
     const listEl = createRef<HTMLDivElement>();
 
-    const setPageSize = (per_page: number) => () => {
+    const setPageSize = (newPageSize: number) => () => {
         setShowPages(false);
-        users.updateConfig({per_page});
+
+        users.updateConfig({
+            per_page: newPageSize,
+            page: Math.min(Math.ceil(total_users_count / newPageSize), page)
+        });
+
         void users.updateView();
     };
 
