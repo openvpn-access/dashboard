@@ -14,5 +14,7 @@ export const SortDirection: FunctionalComponent<Props> = props => (
     <button className={styles.sortDirection}
             data-disabled={props.disabled}
             data-dir={props.value}
-            onClick={() => props.onChange(props.value === 'asc' ? 'desc' : 'asc')}/>
+            onClick={() => props.onChange(props.value === 'asc' ? 'desc' : 'asc')}>
+        <bc-tooltip content={props.value === 'asc' ? 'Ascending' : 'Descending'}/>
+    </button>
 );

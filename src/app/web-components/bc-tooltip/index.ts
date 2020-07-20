@@ -29,11 +29,11 @@ class BeamCafeTooltip extends HTMLElement {
         this._toolTip.innerHTML = this.getAttribute('content') as string;
     }
 
-    private updatePosition(reference?: HTMLElement, popper?: HTMLElement): string | null {
+    private updatePosition(reference?: HTMLElement): string | null {
         return this._nanoPop.update({
             container: document.body.getBoundingClientRect(),
             position: (this.getAttribute('pos') || 'bottom-middle') as NanoPopPosition,
-            reference, popper
+            reference
         });
     }
 
@@ -70,7 +70,7 @@ class BeamCafeTooltip extends HTMLElement {
         document.body.appendChild(tt);
         this.updateText();
 
-        const pos = this.updatePosition(ref, tt);
+        const pos = this.updatePosition(ref);
         if (pos) {
             this._visible = true;
 
@@ -126,13 +126,22 @@ class BeamCafeTooltip extends HTMLElement {
         }
     }
 
-    attributeChangedCallback(name: string): unknown {
+    attributeChangedCallback(name: string): void {
         if (REFLECTED_ATTRIBUTES.includes(name)) {
             switch (name) {
-                case 'content':
-                    return this.updateText();
-                case 'pos':
-                    return this.updatePosition();
+                case 'content': {
+                    this.updateText();
+
+                    if (this._visible && this.parentElement) {
+                        this.updatePosition(this.parentElement);
+                    }
+
+                    break;
+                }
+                case 'pos': {
+                    this.updatePosition();
+                    break;
+                }
             }
         }
     }
