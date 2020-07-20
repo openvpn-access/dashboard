@@ -58,7 +58,7 @@ session.store
 
         // Update user list
         if (state.user?.type === 'admin') {
-            void users.updateView();
-            void users.updateStats();
+            void users.items.refresh();
+            void users.stats.refresh();
         }
     });

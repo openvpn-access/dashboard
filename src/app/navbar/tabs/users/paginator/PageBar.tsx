@@ -5,8 +5,8 @@ import {useRef} from 'preact/hooks';
 import styles from './PageBar.module.scss';
 
 export const PageBar: FunctionalComponent = () => {
-    const {page, per_page} = useStore(users.searchConfig);
-    const {total_users_count} = useStore(users.stats);
+    const {page, per_page} = useStore(users.filters.state);
+    const {total_users_count} = useStore(users.stats.state);
     const spinner = useRef<HTMLDivElement>();
 
     const totalPages = Math.ceil(total_users_count / per_page);
@@ -46,8 +46,8 @@ export const PageBar: FunctionalComponent = () => {
                 pad.removeAttribute('data-moving');
                 pad.removeAttribute('data-hiding');
                 pad.style.transform = 'translateX(calc(-50%))';
-                users.updateConfig({page});
-                void users.updateView(); // TODO: Show loading indicator?
+                users.filters.update({page});
+                void users.items.refresh(); // TODO: Show loading indicator?
             }, 300);
         }
     };

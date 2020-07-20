@@ -9,7 +9,7 @@ export type APICallConfig = {
     method?: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
     route: string;
     data?: unknown;
-    query?: Record<string, string | number>
+    query?: Record<string, string | number | null | undefined>
 };
 
 export const api = <T>(
@@ -27,7 +27,9 @@ export const api = <T>(
         const params = new URLSearchParams();
 
         for (const [key, value] of Object.entries(query)) {
-            params.append(key, String(value));
+            if (value !== null && value !== undefined) {
+                params.append(key, String(value));
+            }
         }
 
         queryString = `?${params.toString()}`;

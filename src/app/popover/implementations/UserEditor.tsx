@@ -1,4 +1,4 @@
-import {api, ErrorCode} from '@api/index';
+import {ErrorCode} from '@api/index';
 import {DBUser} from '@api/types';
 import {validation} from '@api/validation';
 import {Button} from '@components/form/Button';
@@ -42,21 +42,20 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user =
 
     const submit = () => {
         setApplyLoading(true);
+        const data = {
+            ...form.values(),
+            ...(!restricted && {
+                transfer_limit_period: null,
+                transfer_limit_start: null,
+                transfer_limit_end: null,
+                transfer_limit_bytes: null
+            })
+        } as Partial<DBUser>;
 
-        delayPromise(500, api({
-            method: newUser ? 'PUT' : 'PATCH',
-            route: newUser ? '/users' : `/users/${user.username}`,
-            data: {
-                ...form.values(),
-                ...(!restricted && {
-                    transfer_limit_period: null,
-                    transfer_limit_start: null,
-                    transfer_limit_end: null,
-                    transfer_limit_bytes: null
-                })
-            }
-        })).then(newUser => {
-            users.updateUser(newUser as DBUser);
+        const promise = newUser ? users.items.insert(data) :
+            users.items.update([data, user?.username as string]);
+
+        delayPromise(500, promise).then(() => {
             setApplyLoading(false);
             hidePopover();
         }).catch(err => {
@@ -77,16 +76,9 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user =
         }
 
         setDeleteLoading(true);
-
-        api({
-            method: 'DELETE',
-            route: `/users/${user.username}`
-        }).then(() => {
-            users.removeUser(user.username || '');
-            hidePopover();
-        }).finally(() => {
-            setDeleteLoading(false);
-        });
+        users.items.delete(user?.id as number)
+            .then(() => hidePopover())
+            .finally(() => setDeleteLoading(false));
     };
 
     return (

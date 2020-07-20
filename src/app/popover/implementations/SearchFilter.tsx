@@ -22,13 +22,13 @@ const SORTING_FIELDS = {
 
 export const SearchFilter: FunctionalComponent<PopoverBaseProps> = props => {
     const [locked, setLocked] = useState(false);
-    const form = useForm({...users.searchConfig.getState()});
+    const form = useForm({...users.filters.state.getState()});
 
     const apply = () => {
         setLocked(true);
 
-        users.updateConfig(form.values());
-        users.updateView().finally(() => {
+        users.filters.update(form.values());
+        users.items.refresh().finally(() => {
             setLocked(false);
             props.hidePopover();
         });

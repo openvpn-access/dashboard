@@ -1,5 +1,5 @@
-import {session} from '@state/session';
 import {DBUser} from '@api/types';
+import {session} from '@state/session';
 import {users} from '@state/users';
 import {useStore} from 'effector-react';
 import {Fragment, FunctionalComponent, h} from 'preact';
@@ -10,11 +10,11 @@ import styles from './UserList.module.scss';
 export const UserList: FunctionalComponent = () => {
     const [list, setList] = useState<Array<DBUser>>([]);
     const [hide, setHide] = useState(false);
+    const filters = useStore(users.filters.state);
     const currentUser = session.store.getState();
-    const searchQuery = useStore(users.searchQuery);
 
     useEffect(() => {
-        users.list.watch(state => {
+        users.items.state.watch(state => {
             setHide(true);
 
             setTimeout(() => {
@@ -36,7 +36,7 @@ export const UserList: FunctionalComponent = () => {
 
             {/* TODO: Make this more beautiful */}
             <div className={styles.placeholder}>
-                {searchQuery ?
+                {filters.search ?
                     <Fragment>
                         <h1>No results...</h1>
                         <p>Try a different query or tweak your filters!</p>

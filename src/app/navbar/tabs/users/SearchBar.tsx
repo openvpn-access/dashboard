@@ -16,8 +16,8 @@ export const SearchBar: FunctionalComponent = () => {
             setLocket(true);
 
             // Update search-query and user table
-            users.updateSearchQuery(input.current.value);
-            users.updateView().finally(() => setLocket(false));
+            users.filters.update({search: input.current.value});
+            users.items.refresh().finally(() => setLocket(false));
         }
     }, 1500);
 
