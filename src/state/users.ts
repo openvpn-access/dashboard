@@ -32,8 +32,6 @@ export const users = linkTable<Item, Filters, Stats>('/users', {
     }
 });
 
-// TODO: Move to config file
-const LOGIN_ATTEMPTS_TIME_RANGE = 3600;
 export const isUserAccountLocked = async (username: string): Promise<boolean> => {
     return api<Array<{created_at: number}>>({
         route: '/login-attempts/web',
@@ -54,6 +52,6 @@ export const isUserAccountLocked = async (username: string): Promise<boolean> =>
         // Check if the last entry is within the timestamp of an account to get locked
         const lastEntry = value[value.length - 1];
         const lastEntryDate = new Date(lastEntry.created_at);
-        return lastEntryDate.getTime() > (Date.now() - LOGIN_ATTEMPTS_TIME_RANGE * 1000);
+        return lastEntryDate.getTime() > (Date.now() - env.config.security.loginAttemptsTimeRange * 1000);
     });
 };

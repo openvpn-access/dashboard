@@ -12,6 +12,13 @@ declare const env: {
     NODE_ENV: 'development' | 'production';
     BUILD_DATE: number;
     VERSION: string;
-    HTTPS_ENDPOINT: string;
-    API_ENDPOINT: string;
+
+    config: {
+        server: {
+            restEndpoint: string;
+        };
+        security: {
+            loginAttemptsTimeRange: number;
+        };
+    };
 };

@@ -35,7 +35,7 @@ export const api = <T>(
         queryString = `?${params.toString()}`;
     }
 
-    const url = env.API_ENDPOINT + route + queryString;
+    const url = env.config.server.restEndpoint + route + queryString;
     return fetch(url, {
         method,
         body: method !== 'GET' ? JSON.stringify(data) : undefined,

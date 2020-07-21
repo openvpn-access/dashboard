@@ -1,0 +1,8 @@
+{
+    "server": {
+        "restEndpoint": "http://localhost:8080/api"
+    },
+    "security": {
+        "loginAttemptsTimeRange": 3600
+    }
+}

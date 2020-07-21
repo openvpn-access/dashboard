@@ -30,6 +30,8 @@
     }
 
     .fields {
+        flex-grow: 1;
+
         > *:not(:first-child) {
             margin-top: 0.5em;
         }
@@ -37,6 +39,8 @@
 }
 
 .restrictions {
+    flex-grow: 1;
+
     .options {
         transition: visibility 0s 1.5s;
         visibility: hidden;

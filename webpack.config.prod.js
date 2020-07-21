@@ -9,6 +9,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
+const {resolveConfigFile} = require('./scripts/resolveConfigFile');
 
 const globalSCSS = path.resolve(__dirname, 'src/styles/_global.scss');
 const dist = path.resolve(__dirname, 'dist');
@@ -120,11 +121,10 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'env': {
+                'config': JSON.stringify(resolveConfigFile()),
                 'NODE_ENV': JSON.stringify('production'),
                 'VERSION': JSON.stringify(resolveAppVersion()),
-                'BUILD_DATE': JSON.stringify(Date.now()),
-                'WS_ENDPOINT': JSON.stringify('???'),
-                'API_ENDPOINT': JSON.stringify('???')
+                'BUILD_DATE': JSON.stringify(Date.now())
             }
         }),
 
