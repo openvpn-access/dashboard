@@ -5,7 +5,6 @@ import {PageBar} from './PageBar';
 import styles from './Paginator.module.scss';
 import {PerPageButton} from './PerPageButton';
 
-// TODO: Pagination-spinner whatever animation?
 export const Paginator: FunctionalComponent = () => {
     const {search, per_page} = useStore(users.filters.state);
     const {total_users_count} = useStore(users.stats.state);

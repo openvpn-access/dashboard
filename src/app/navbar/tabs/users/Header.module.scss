@@ -1,7 +1,7 @@
 .header {
     padding: 0.5em;
     display: grid;
-    grid-template-columns: 1.5em 1.5em 1em 0.5fr 1fr 0.35fr 0.35fr 2em;
+    grid-template-columns: var(--grid-columns);
     grid-gap: 0.5em;
     align-items: center;
     color: var(--c-text-primary);
@@ -10,11 +10,6 @@
 
     > div {
         @include flex(row, center, center);
-
-        > span {
-            @include font(400, 0.85em);
-            margin-right: 0.5em;
-        }
     }
 
     .id {
