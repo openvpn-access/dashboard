@@ -35,6 +35,7 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user =
         username: user.username,
         email: user.email,
         type: user.type || 'user',
+        activated: user.activated,
         password: user.password,
         transfer_limit_period: user.transfer_limit_period,
         transfer_limit_start: user.transfer_limit_start,
@@ -55,7 +56,7 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user =
         } as Partial<DBUser>;
 
         const promise = newUser ? users.items.insert(data) :
-            users.items.update([data, user?.username as string]);
+            users.items.update([data, user.id as number]);
 
         delayPromise(500, promise).then(() => {
             setApplyLoading(false);
@@ -134,13 +135,18 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user =
                                             {...form.register('password', {
                                                 validate: validation.user.password
                                             })}/>}
+
+                    <div className={styles.accountState}>
+                        <p>Activated</p>
+                        <Checkbox {...form.register('activated')}/>
+                    </div>
                 </section>
 
                 <section className={styles.restrictions}>
                     <div className={styles.header}>
                         <h3>Limit usage</h3>
                         <Checkbox onChange={setRestricted}
-                                  checked={restricted}/>
+                                  value={restricted}/>
                     </div>
 
                     <div className={cn(styles.options, styles.fields)} data-visible={restricted}>

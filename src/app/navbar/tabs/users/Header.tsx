@@ -21,13 +21,8 @@ export const Header: FunctionalComponent = () => (
 
         <div className={styles.state}>
             <HelpCard className={styles.stateHelp}
-                      label="Show help about status column">
-                <div data-state="activated"/>
-                <p>Activated</p>
-                <div data-state="pending"/>
-                <p>Pending</p>
-                <div data-state="deactivated"/>
-                <p>Deactivated</p>
+                      label="Show help about activated/deactivated column">
+                <p>If account is activated</p>
             </HelpCard>
         </div>
 

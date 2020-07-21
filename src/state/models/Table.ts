@@ -38,8 +38,8 @@ export function linkTable<Item extends ListStoreItem, Filters extends ListStoreF
         }),
 
         // Update an item
-        update: domain.createEffect<[Partial<Item>, string], Item>(`${endpoint}-items-update`, {
-            handler([params, id]: [Partial<Item>, string]): Promise<Item> {
+        update: domain.createEffect<[Partial<Item>, number], Item>(`${endpoint}-items-update`, {
+            handler([params, id]: [Partial<Item>, number]): Promise<Item> {
                 return api({
                     method: 'PATCH',
                     route: `${endpoint}/${id}`,

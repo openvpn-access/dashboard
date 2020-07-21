@@ -35,6 +35,14 @@
         > *:not(:first-child) {
             margin-top: 0.5em;
         }
+
+        .accountState {
+            @include flex(row, center, space-between);
+
+            > p {
+                @include font(600, 13px);
+            }
+        }
     }
 }
 
