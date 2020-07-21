@@ -24,19 +24,42 @@
         opacity: 0;
     }
 
+    &::before {
+        @include position(0, 0, 0, 0);
+        @include pseudo();
+        @include size(65%, 1.5px);
+        border-radius: 1em;
+        margin: auto;
+        background: var(--c-text-secondary);
+        transform-origin: left center;
+        transition: all 0.3s;
+        transform: scale(0);
+        opacity: 0;
+    }
+
     &:focus {
         @include focus_border(--c-primary-focus);
     }
-}
 
-.checked {
-    background: var(--color);
-    --color: var(--c-primary);
+    &[data-state=true] {
+        background: var(--color);
+        --color: var(--c-primary);
 
-    > svg {
-        stroke: var(--c-text-secondary);
-        stroke-dashoffset: 0;
-        opacity: 1;
-        transform: none;
+        > svg {
+            stroke: var(--c-text-secondary);
+            stroke-dashoffset: 0;
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    &[data-state=null] {
+        background: var(--color);
+        --color: var(--c-primary);
+
+        &::before {
+            transform: none;
+            opacity: 1;
+        }
     }
 }

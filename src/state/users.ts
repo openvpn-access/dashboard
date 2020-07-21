@@ -9,6 +9,9 @@ type Filters = {
     per_page: number;
     sort: string;
     sort_dir: 'asc' | 'desc';
+    type: 'user' | 'admin' | null;
+    activated: null | boolean;
+    email_verified: null | boolean;
     search?: string;
 };
 
@@ -24,6 +27,9 @@ export const users = linkTable<Item, Filters, Stats>('/users', {
         per_page: 25,
         sort: 'id',
         sort_dir: 'asc',
+        type: null,
+        activated: null,
+        email_verified: null,
         search: undefined
     },
 

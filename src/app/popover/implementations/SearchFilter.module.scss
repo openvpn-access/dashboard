@@ -1,28 +1,39 @@
 .searchFilter {
     @include flex(column);
 
-
     > section {
         .label {
             @include font(600, 13px);
             margin-bottom: 0.25em;
             color: var(--c-text-primary);
         }
+
+        &:not(:last-child) {
+            margin-bottom: 1em;
+        }
     }
 }
 
 .sort {
-
     > div {
         @include flex(row, center);
         height: 100%;
+    }
+}
 
-        > button {
+.type {
+    > div {
+        @include flex(row, center, space-between);
+        height: 100%;
+        color: var(--c-text-primary);
+        margin: 0.65em 0 0;
 
+        > p {
+            @include font(600, 13px);
         }
     }
 }
 
 .btn {
-    margin: 1em 0 0 auto;
+    justify-content: center;
 }

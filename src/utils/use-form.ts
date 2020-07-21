@@ -12,6 +12,7 @@ export type FieldValidator = [(v: any) => unknown, string];
 export type RegisterOptions = {
     validate?: Array<FieldValidator>;
     required?: boolean;
+    mapValue?: (v: any) => any;
 };
 
 /**
@@ -20,14 +21,14 @@ export type RegisterOptions = {
  */
 export const useForm = <T extends Record<string, any>>(base: T) => {
     const stateMap = new Map<keyof T, {
-        opt: RegisterOptions | null,
+        opt: RegisterOptions,
         val: [any, StateUpdater<any>];
         err: [string | null, StateUpdater<string | null>];
     }>();
 
     for (const [name, value] of Object.entries(base)) {
         stateMap.set(name, {
-            opt: null,
+            opt: {},
             val: useState(value),
             err: useState<string | null>(null)
         });
@@ -151,7 +152,7 @@ export const useForm = <T extends Record<string, any>>(base: T) => {
         values(): T {
             const obj = {} as Record<keyof T, any>;
             for (const [key, value] of stateMap.entries()) {
-                obj[key] = value.val[0];
+                obj[key] = value.opt.mapValue?.(value.val[0]) || value.val[0];
             }
 
             return obj as T;

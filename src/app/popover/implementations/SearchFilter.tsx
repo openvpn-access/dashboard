@@ -1,4 +1,5 @@
 import {Button} from '@components/form/Button';
+import {Checkbox} from '@components/form/Checkbox';
 import {DropDown} from '@components/form/DropDown';
 import {SortDirection} from '@components/form/SortDirection';
 import {PopoverBaseProps} from '@popover';
@@ -22,7 +23,9 @@ const SORTING_FIELDS = {
 
 export const SearchFilter: FunctionalComponent<PopoverBaseProps> = props => {
     const [locked, setLocked] = useState(false);
-    const form = useForm({...users.filters.state.getState()});
+    const form = useForm({
+        ...users.filters.state.getState()
+    });
 
     const apply = () => {
         setLocked(true);
@@ -51,6 +54,31 @@ export const SearchFilter: FunctionalComponent<PopoverBaseProps> = props => {
 
                     <SortDirection ariaLabel="Sorting direction"
                                    {...form.register('sort_dir')}/>
+                </div>
+            </section>
+
+            <section className={styles.type}>
+                <p className={styles.label}>Show only</p>
+
+                <div>
+                    <p>With verified email</p>
+                    <Checkbox allowIndeterminate={true}
+                              {...form.register('email_verified')}/>
+                </div>
+
+                <div>
+                    <p>Activated users</p>
+                    <Checkbox allowIndeterminate={true}
+                              {...form.register('activated')}/>
+                </div>
+
+                <div>
+                    <p>Administrators</p>
+                    <Checkbox allowIndeterminate={true}
+                              {...form.register('type', {
+                                  mapValue: v => v === true ? 'admin' :
+                                      v === null ? null : 'user'
+                              })}/>
                 </div>
             </section>
 

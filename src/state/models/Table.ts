@@ -5,7 +5,8 @@ export type ListStoreItem = {
     id: number;
 };
 
-export type ListStoreFilter = Record<string, string | number | null | undefined>;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export type ListStoreFilter = Record<string, any>;
 
 /**
  * Creates a new, classic store to insert, update and manipulate a list of database items (much convenient!).
