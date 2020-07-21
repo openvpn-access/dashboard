@@ -8,12 +8,13 @@ import {DatePicker} from '@components/form/DatePicker';
 import {DropDown} from '@components/form/DropDown';
 import {InputField} from '@components/form/InputField';
 import {PopoverBaseProps} from '@popover';
-import {users} from '@state/users';
+import {isUserAccountLocked, users} from '@state/users';
 import {cn} from '@utils/preact-utils';
 import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
 import {FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
+import {useEffect} from 'react';
 import {Popover} from '../Popover';
 import styles from './UserEditor.module.scss';
 
@@ -26,6 +27,7 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user =
     const [applyLoading, setApplyLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
+    const [accountLocked, setAccountLocked] = useState(false);
     const [restricted, setRestricted] = useState<boolean>(!!(user.transfer_limit_start || user.transfer_limit_end || user.transfer_limit_bytes));
     const isLoading = () => applyLoading || deleteLoading;
 
@@ -81,11 +83,26 @@ export const UserEditor: FunctionalComponent<PopoverBaseProps<Props>> = ({user =
             .finally(() => setDeleteLoading(false));
     };
 
+    useEffect(() => {
+        if (user?.username) {
+            isUserAccountLocked(user.username)
+                .then(setAccountLocked)
+                .catch(() => null);
+        }
+    }, [user]);
+
     return (
         <Popover className={styles.userEditor}
                  icon={newUser ? 'starburst-shape' : 'edit'}
                  title={newUser ? 'Add a new user' : 'Modify a user'}
                  hidePopover={hidePopover}>
+
+            {/* TODO: Add un-block button? */}
+            <p className={styles.accountLocked}
+               data-visible={accountLocked}>
+                <span>This account is locked for a certain time period as the user entered his password wrong too often.</span>
+            </p>
+
             <div className={styles.form}>
                 <section className={styles.fields}>
                     <div className={styles.header}>

@@ -1,3 +1,4 @@
+import {api} from '@api/index';
 import {DBUser} from '@api/types';
 import {linkTable} from '@state/models/Table';
 
@@ -30,3 +31,29 @@ export const users = linkTable<Item, Filters, Stats>('/users', {
         total_users_count: -1
     }
 });
+
+// TODO: Move to config file
+const LOGIN_ATTEMPTS_TIME_RANGE = 3600;
+export const isUserAccountLocked = async (username: string): Promise<boolean> => {
+    return api<Array<{created_at: number}>>({
+        route: '/login-attempts/web',
+        query: {
+            sort: 'created_at',
+            sort_dir: 'desc',
+            state: 'fail',
+            username,
+            per_page: 5
+        }
+    }).then(value => {
+
+        // This user has not enough failed login-attempts
+        if (value.length < 5) {
+            return false;
+        }
+
+        // Check if the last entry is within the timestamp of an account to get locked
+        const lastEntry = value[value.length - 1];
+        const lastEntryDate = new Date(lastEntry.created_at);
+        return lastEntryDate.getTime() > (Date.now() - LOGIN_ATTEMPTS_TIME_RANGE * 1000);
+    });
+};
