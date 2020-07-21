@@ -19,11 +19,15 @@ export const User: FunctionalComponent<Props> = ({user}) => (
                 <bc-icon name={user.type}/>
             </div>
 
-            <div className={styles.state} data-state={user.state}>
+            <div className={styles.state} data-activated={user.activated}>
                 <div/>
             </div>
 
-            <p>{user.username}</p>
+            <p className={styles.username}>
+                <span>{user.username}</span>
+                {user.email_verified && <bc-icon name="verified-account"/>}
+            </p>
+
             <p>{user.email}</p>
             <p>{formatDate(DATE_FORMAT, user.created_at)}</p>
             <p>{formatDate(DATE_FORMAT, user.updated_at)}</p>

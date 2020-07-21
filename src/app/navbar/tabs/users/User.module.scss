@@ -32,19 +32,23 @@
         > div {
             @include size(10px);
             border-radius: 100%;
+            background: var(--c-red);
+            border: 1px solid var(--c-red-accent);
         }
 
-        $states: (
-            activated: --c-green,
-            deactivated: --c-red,
-            pending: --c-yellow,
-        );
+        &[data-activated] > div {
+            background: var(--c-green);
+            border: 1px solid var(--c-green-accent);
+        }
+    }
 
-        @each $state, $color in $states {
-            &[data-state=#{$state}] > div {
-                background: var($color);
-                border: 1px solid var(#{$color + '-accent'});
-            }
+    .username {
+        @include flex(row, center);
+
+        > bc-icon {
+            font-size: 14px;
+            color: var(--c-primary);
+            margin-left: 0.25em;
         }
     }
 

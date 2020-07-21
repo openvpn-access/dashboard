@@ -97,7 +97,11 @@ export function linkTable<Item extends ListStoreItem, Filters extends ListStoreF
 
     const stats = {
         state: domain.createStore<Stats>(init.stats),
-        refresh: domain.createEffect<void, Stats>()
+        refresh: domain.createEffect<void, Stats>({
+            handler(): Promise<Stats> | Stats {
+                return api({route: '/users/stats'});
+            }
+        })
     };
 
     stats.state

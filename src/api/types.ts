@@ -5,7 +5,7 @@ export type DBUser = DBEntry & {
     created_at: Date;
     updated_at: Date;
     type: 'admin' | 'user';
-    state: 'activated' | 'pending' | 'deactivated';
+    activated: boolean;
     email: string;
     email_verified: boolean;
     username: string;
