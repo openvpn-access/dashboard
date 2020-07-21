@@ -1,7 +1,8 @@
 .button {
     @include inline-flex(row, center);
+    @include font(400, 13px);
     border-radius: 0.25em;
-    padding: 0.55em 1em 0.5em;
+    padding: 0.65em 1.25em 0.6em;
     transition: all 0.3s;
     background: var(--c-color);
     color: var(--c-text-secondary);
@@ -32,7 +33,7 @@
     }
 
     > span {
-        @include font(400, 14px);
+        font-size: inherit;
         line-height: 1.1em;
     }
 

@@ -1,8 +1,8 @@
-import {api} from '../api';
-import {users} from '@state/users';
 import {DBUser} from '@api/types';
+import {users} from '@state/users';
 import {staticStore} from '@utils/static-store';
 import {createDomain} from 'effector';
+import {api} from '../api';
 
 export type Session = {
     token: string;
@@ -44,10 +44,18 @@ export const session = {
 // Bind events
 session.store
     .on(session.logout, state => {
+
+        // Clear user-list
+        users.reset();
+
+        // Remove sessio token from localStorage
         staticStore.delete('token');
+
+        // Clear user and token
         const newState = {...state};
         newState.token = null;
         newState.user = null;
+
         return newState;
     })
     .on(session.login.done, (_, {result}) => {

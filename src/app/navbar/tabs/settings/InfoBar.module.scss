@@ -1,0 +1,31 @@
+.infoBar {
+    width: 100%;
+}
+
+.status {
+    @include flex(row, center, space-between);
+    width: 100%;
+    color: var(--c-text-secondary);
+    padding: 0.35em 0.75em;
+    border-radius: 0.25em;
+    background: var(--c-red);
+    border: 2px solid var(--c-red-accent);
+    line-height: 1.1em;
+
+    &[data-ok] {
+        background: var(--c-green);
+        border-color: var(--c-green-accent);
+    }
+
+    &:not(:first-child) {
+        margin-top: 0.25em;
+    }
+
+    > span {
+        @include font(600, 12px);
+    }
+
+    > bc-icon {
+        font-size: 16px;
+    }
+}

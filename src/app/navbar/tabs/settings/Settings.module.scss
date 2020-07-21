@@ -1,5 +1,17 @@
 .settings {
     @include flex(column, center);
+    @include width(80%, auto, 20em);
     @include size(100%);
     padding: 5em 0;
+    margin: auto;
+
+    > *:not(:first-child) {
+        margin-top: 1em;
+    }
+}
+
+.divider {
+    @include size(100%, 2px);
+    border-radius: 1em;
+    background: var(--c-background-secondary);
 }

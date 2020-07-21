@@ -21,6 +21,7 @@ export function linkTable<Item extends ListStoreItem, Filters extends ListStoreF
     }
 ) {
     const domain = createDomain(name);
+    const reset = domain.createEvent(`${endpoint}-reset`);
 
     /* eslint-disable no-use-before-define */
     const items = {
@@ -83,7 +84,8 @@ export function linkTable<Item extends ListStoreItem, Filters extends ListStoreF
         })
         .on(items.refresh.done, (_, payload) => {
             return payload.result;
-        });
+        })
+        .reset(reset);
 
     const filters = {
         state: domain.createStore<Filters>(init.filters),
@@ -93,7 +95,8 @@ export function linkTable<Item extends ListStoreItem, Filters extends ListStoreF
     filters.state
         .on(filters.update, (state, payload) => {
             return {...state, ...payload};
-        });
+        })
+        .reset(reset);
 
     const stats = {
         state: domain.createStore<Stats>(init.stats),
@@ -107,7 +110,8 @@ export function linkTable<Item extends ListStoreItem, Filters extends ListStoreF
     stats.state
         .on(stats.refresh.done, (_, payload) => {
             return payload.result;
-        });
+        })
+        .reset(reset);
 
-    return {items, filters, stats};
+    return {items, filters, stats, reset};
 }

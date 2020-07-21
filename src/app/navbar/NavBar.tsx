@@ -1,29 +1,35 @@
 import {session} from '@state/session';
 import {cn} from '@utils/preact-utils';
 import {staticStore} from '@utils/static-store';
+import {useStore} from 'effector-react';
 import {FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
+import styles from './NavBar.module.scss';
 import {Settings} from './tabs/settings/Settings';
 import {Users} from './tabs/users/Users';
-import styles from './NavBar.module.scss';
-
-const tabs = [
-    {
-        name: 'Users',
-        icon: 'bulleted-list',
-        com: <Users/>
-    },
-    {
-        name: 'Settings',
-        icon: 'settings',
-        com: <Settings/>
-    }
-];
 
 export const NavBar: FunctionalComponent = () => {
+    const {user} = useStore(session.store);
     const [activeTab, changeTab] = useState(
         env.NODE_ENV === 'development' ? staticStore.getJSON('--dev-') || 0 : 0
     );
+
+    const tabs = [
+        {
+            name: 'Settings',
+            icon: 'settings',
+            com: <Settings/>
+        }
+    ];
+
+    if (user?.type === 'admin') {
+        tabs.splice(0, 0, {
+            name: 'Users',
+            icon: 'bulleted-list',
+            com: <Users/>
+        });
+    }
+
 
     const tabContainers = [];
     const tabButtons = [];
