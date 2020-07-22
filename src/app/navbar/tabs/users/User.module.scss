@@ -43,12 +43,19 @@
     }
 
     .username {
+        @include white-space-overflow();
         @include flex(row, center);
 
         > bc-icon {
+            background: var(--c-text-secondary);
+            border-radius: 100%;
             font-size: 14px;
             color: var(--c-primary);
             margin-left: 0.25em;
+            flex-shrink: 0;
+            position: sticky;
+            right: 0;
+            z-index: 10;
         }
     }
 
