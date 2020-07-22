@@ -14,7 +14,6 @@ const {resolveConfigFile} = require('./scripts/resolveConfigFile');
 const globalSCSS = path.resolve(__dirname, 'src/styles/_global.scss');
 const dist = path.resolve(__dirname, 'dist');
 const src = path.resolve(__dirname, 'src');
-const app = path.resolve(src, 'app');
 
 module.exports = {
     mode: 'production',
@@ -22,7 +21,7 @@ module.exports = {
 
     output: {
         path: dist,
-        filename: 'js/[name].js',
+        filename: 'js/[chunkhash].js',
         publicPath: '/'
     },
 
@@ -67,7 +66,6 @@ module.exports = {
             },
             {
                 test: /\.module\.(sc|sa|c)ss$/,
-                include: app,
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
@@ -82,8 +80,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(sc|sa|c)ss$/,
-                exclude: app,
+                test: /(?<!.module)\.(scss|sass|css)$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader'
@@ -129,7 +126,6 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            chunks: ['bundle'],
             filename: 'index.html',
             template: 'public/index.html',
             inject: true,
@@ -145,7 +141,7 @@ module.exports = {
         }),
 
         new MiniCssExtractPlugin({
-            chunkFilename: 'css/bundle.css',
+            chunkFilename: 'css/bundle.[chunkhash].css',
             filename: 'css/bundle.css'
         }),
 

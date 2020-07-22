@@ -1,0 +1,32 @@
+.verifyEmail {
+    @include flex(column, center, center);
+    @include size(100%);
+}
+
+.error {
+    @include font(600, 13px);
+    background: var(--c-red);
+    border: 2px solid var(--c-red-accent);
+    color: var(--c-text-secondary);
+    padding: 0.75em 1em;
+    text-align: center;
+    border-radius: 0.25em;
+}
+
+.verified {
+    @include flex(column, flex-start);
+
+    > p {
+        margin-bottom: 0.5em;
+    }
+}
+
+.success {
+    @include font(600, 13px);
+    background: var(--c-green);
+    border: 2px solid var(--c-green-accent);
+    color: var(--c-text-secondary);
+    padding: 0.75em 1em;
+    text-align: center;
+    border-radius: 0.25em;
+}

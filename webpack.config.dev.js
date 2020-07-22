@@ -9,7 +9,6 @@ const {resolveConfigFile} = require('./scripts/resolveConfigFile');
 const globalSCSS = path.resolve(__dirname, 'src/styles/_global.scss');
 const dist = path.resolve(__dirname, 'dist');
 const src = path.resolve(__dirname, 'src');
-const app = path.resolve(src, 'app');
 
 module.exports = {
     mode: 'development',
@@ -84,7 +83,6 @@ module.exports = {
             },
             {
                 test: /\.module\.(scss|sass|css)$/,
-                include: app,
                 use: [
                     'style-loader',
                     {
@@ -100,8 +98,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(scss|sass|css)$/,
-                exclude: app,
+                test: /(?<!.module)\.(scss|sass|css)$/,
                 use: [
                     'style-loader',
                     {

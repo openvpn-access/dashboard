@@ -10,8 +10,7 @@ if (env.NODE_ENV === 'development') {
     }
 
     // See https://github.com/facebook/react/issues/16604#issuecomment-528663101
-    window.$RefreshReg$ = () => {
-    };
+    window.$RefreshReg$ = () => {};
     window.$RefreshSig$ = () => type => type;
 } else if (env.NODE_ENV === 'production') {
 
@@ -36,5 +35,14 @@ if (env.NODE_ENV === 'development') {
     console.groupEnd();
 }
 
-require('./app/web-components');
-require('./app');
+(async () => {
+    await import('./app/web-components');
+    await import('./styles/_global.scss');
+
+    // TODO: Should we use preact-router?
+    if (location.pathname.startsWith('/verify-email')) {
+        import('./pages/verify-email');
+    } else {
+        import('./app');
+    }
+})();

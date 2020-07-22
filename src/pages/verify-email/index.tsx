@@ -1,9 +1,7 @@
 import {h, render} from 'preact';
-import {App} from './App';
+import {VerifyEmail} from './VerifyEmail';
 
 render(
-    <App/>,
+    <VerifyEmail/>,
     document.getElementById('app') as HTMLElement
 );
-
-
