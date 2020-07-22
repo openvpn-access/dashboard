@@ -45,6 +45,9 @@ export const session = {
 session.store
     .on(session.logout, state => {
 
+        // Invalidate session token server-side
+        void api({method: 'POST', route: '/logout'});
+
         // Clear user-list
         users.reset();
 
