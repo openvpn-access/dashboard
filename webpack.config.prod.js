@@ -33,7 +33,7 @@ module.exports = {
             '@api': path.resolve('./src/api'),
             '@state': path.resolve('./src/state'),
             '@utils': path.resolve('./src/utils'),
-            '@popover': path.resolve('./src/app/popover/Popovers.tsx'),
+            '@popover': path.resolve('./src/lib/popover'),
             '@components': path.resolve('./src/app/components')
         }
     },

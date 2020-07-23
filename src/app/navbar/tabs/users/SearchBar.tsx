@@ -58,11 +58,11 @@ export const SearchBar: FunctionalComponent = () => {
 
             <IconButton icon="filter"
                         title="Filter search"
-                        onClick={() => showPopover('SearchFilter')}/>
+                        onClick={() => showPopover('search-filter')}/>
 
             <IconButton icon="plus"
                         title="Add new user"
-                        onClick={() => showPopover('UserEditor', {newUser: true})}/>
+                        onClick={() => showPopover('user-editor', {newUser: true})}/>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-.popovers {
+.popoverContainer {
     @include position(0, 0, 0, 0);
     @include flex(row, center, center);
     position: absolute;
@@ -42,4 +42,24 @@
         box-shadow: 0 0.25em 1em var(--c-background-tertiary);
         position: relative;
     }
+}
+
+.popover {
+    @include flex(column);
+    min-width: 15em;
+}
+
+.title {
+    @include flex(row, center, space-between);
+    padding: 1em;
+    border-bottom: 1.5px solid var(--c-text-primary);
+    color: var(--c-text-primary);
+
+    > bc-icon {
+        margin-left: 0.5em;
+    }
+}
+
+.content {
+    padding: 1em;
 }

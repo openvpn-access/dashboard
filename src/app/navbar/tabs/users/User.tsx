@@ -1,7 +1,7 @@
 import {DBUser} from '@api/types';
+import {showPopover} from '@popover';
 import {formatDate} from '@utils/format-date';
 import {FunctionalComponent, h} from 'preact';
-import {showPopover} from '@popover';
 import styles from './User.module.scss';
 
 type Props = {
@@ -34,7 +34,7 @@ export const User: FunctionalComponent<Props> = ({user}) => (
 
             <button className={styles.edit}
                     aria-label="Edit user"
-                    onClick={() => showPopover('UserEditor', {user})}>
+                    onClick={() => showPopover('user-editor', {user})}>
                 <bc-icon name="edit"/>
             </button>
         </div>
