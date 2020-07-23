@@ -3,30 +3,66 @@
     @include size(100%);
 }
 
-.error {
-    @include font(600, 13px);
-    background: var(--c-red);
-    border: 2px solid var(--c-red-accent);
-    color: var(--c-text-secondary);
-    padding: 0.75em 1em;
-    text-align: center;
-    border-radius: 0.25em;
-}
+.verified,
+.errored {
+    @include flex(column, stretch);
+    @include width(50%, 10em, 20em);
 
-.verified {
-    @include flex(column, flex-start);
-
-    > p {
+    .msg {
+        @include font(300, 13px);
         margin-bottom: 0.5em;
+        color: var(--c-text-secondary);
+        background: var(--color);
+        padding: 0.75em 1em;
+        text-align: center;
+        position: relative;
+        border-radius: 0.15em;
+
+        &::after {
+            @include pseudo();
+            @include position(auto, 0, -5px, 0);
+            @include size(100%, 3px);
+            position: absolute;
+            background: var(--color);
+            border-radius: 0.15em;
+
+            @include animate('1s') {
+                from {
+                    transform: scaleX(0);
+                }
+                to {
+                    transform: none;
+                }
+            }
+        }
+
+        small {
+            display: inline-block;
+            margin-top: 0.5em;
+        }
+    }
+
+    > a {
+        @include font(600, 12px);
+        text-align: center;
+        margin-top: 1em;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
 
-.success {
-    @include font(600, 13px);
-    background: var(--c-green);
-    border: 2px solid var(--c-green-accent);
-    color: var(--c-text-secondary);
-    padding: 0.75em 1em;
-    text-align: center;
-    border-radius: 0.25em;
+.verified .msg {
+    @include flex(row, center, center);
+    --color: var(--c-green);
+
+    bc-icon {
+        margin-right: 0.5em;
+        flex-shrink: 0;
+    }
+}
+
+.errored .msg {
+    --color: var(--c-red);
 }

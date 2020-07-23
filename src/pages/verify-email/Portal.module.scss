@@ -1,0 +1,7 @@
+.portal {
+    transition: all 0.3s;
+
+    &[data-fadeout] {
+        opacity: 0;
+    }
+}
