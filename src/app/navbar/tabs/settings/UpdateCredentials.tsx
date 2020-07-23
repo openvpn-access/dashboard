@@ -41,7 +41,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
         setLoading(true);
         delayPromise(1000, api({
             method: 'PATCH',
-            route: '/users/admin',
+            route: `/users/${session.store.getState().user?.id}`,
             data
         })).then(() => {
             form.clearValue('current_password', 'password');

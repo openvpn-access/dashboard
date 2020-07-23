@@ -8,11 +8,19 @@
     color: var(--c-text-secondary);
     padding: 0.35em 0.75em;
     border-radius: 0.25em;
-    background: var(--c-red);
-    border: 2px solid var(--c-red-accent);
     line-height: 1.1em;
 
-    &[data-ok] {
+    &[data-status=error] {
+        background: var(--c-red);
+        border: 2px solid var(--c-red-accent);
+    }
+
+    &[data-status=warning] {
+        background: var(--c-yellow);
+        border: 2px solid var(--c-yellow-accent);
+    }
+
+    &[data-status=ok] {
         background: var(--c-green);
         border-color: var(--c-green-accent);
     }
@@ -27,5 +35,15 @@
 
     > bc-icon {
         font-size: 16px;
+    }
+}
+
+.requestNewVerificationEmail {
+    @include flex(row, flex-start, space-between);
+    margin-top: 0.5em;
+
+    > p {
+        @include font(600, 12px);
+        color: var(--c-text-primary);
     }
 }
