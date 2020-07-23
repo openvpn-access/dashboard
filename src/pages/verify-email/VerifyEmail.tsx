@@ -3,7 +3,7 @@ import {Button} from '@components/form/Button';
 import {delayPromise} from '@utils/promises';
 import {Fragment, FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
-import {Portal} from './Portal';
+import {Portal} from '@components/Portal';
 import styles from './VerifyEmail.module.scss';
 
 type State = 'idle' | 'errored' | 'success';

@@ -1,3 +1,4 @@
+import {Portal} from '@components/Portal';
 import {session} from '@state/session';
 import {cn} from '@utils/preact-utils';
 import {staticStore} from '@utils/static-store';
@@ -8,54 +9,40 @@ import styles from './NavBar.module.scss';
 import {Settings} from './tabs/settings/Settings';
 import {Users} from './tabs/users/Users';
 
+type View = 'Users' | 'Settings';
+
 export const NavBar: FunctionalComponent = () => {
     const {user} = useStore(session.store);
-    const [activeTab, changeTab] = useState(
-        env.NODE_ENV === 'development' ? staticStore.getJSON('--dev-') || 0 : 0
+    const [activeTab, changeTab] = useState<View>(
+        env.NODE_ENV === 'development' ? staticStore.getJSON('--dev-') || 'Settings' : 'Settings'
     );
 
     const tabs = [
+        ...(
+            user?.type === 'admin' ? [{
+                name: 'Users',
+                icon: 'bulleted-list'
+            }] : []
+        ),
         {
             name: 'Settings',
-            icon: 'settings',
-            com: <Settings/>
+            icon: 'settings'
         }
     ];
 
-    if (user?.type === 'admin') {
-        tabs.splice(0, 0, {
-            name: 'Users',
-            icon: 'bulleted-list',
-            com: <Users/>
-        });
-    }
-
-
-    const tabContainers = [];
-    const tabButtons = [];
-
-    const changeTabTo = (index: number) => () => {
-        env.NODE_ENV === 'development' && staticStore.setJSON('--dev-', index);
-        changeTab(index);
+    const changeTabTo = (name: View) => () => {
+        env.NODE_ENV === 'development' && staticStore.setJSON('--dev-', name);
+        changeTab(name);
     };
 
     // Generate tabs and nav-buttons
-    for (let i = 0; i < tabs.length; i++) {
-        const {name, icon, com} = tabs[i];
-        const active = i === activeTab;
-
-        tabContainers.push(
-            <div className={cn(styles.tabContainer, {
-                [styles.active]: active
-            })}>{com}</div>
-        );
-
+    const tabButtons = [];
+    for (const {name, icon} of tabs) {
         tabButtons.push(
-            <button className={cn(styles.tabButton, {
-                [styles.active]: active
-            })}
+            <button className={styles.tabButton}
+                    data-active={name === activeTab}
                     aria-label={`Switch to tab: ${name}`}
-                    onClick={changeTabTo(i)}>
+                    onClick={changeTabTo(name as View)}>
                 <bc-icon name={icon}/>
                 <span>{name}</span>
             </button>
@@ -75,7 +62,13 @@ export const NavBar: FunctionalComponent = () => {
                 </button>
             </div>
 
-            <div className={styles.tabContaiers}>{tabContainers}</div>
+            <Portal className={styles.tabContaiers}
+                    keepAlive={true}
+                    show={activeTab}
+                    views={{
+                        'Settings': <Settings/>,
+                        'Users': <Users/>
+                    }}/>
         </div>
     );
 };

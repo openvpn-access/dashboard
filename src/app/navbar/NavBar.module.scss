@@ -28,12 +28,12 @@
         @include size(20px)
     }
 
-    &.active {
+    &[data-active] {
         color: var(--c-text-primary);
         border-color: var(--c-primary);
     }
 
-    &:not(.active):hover {
+    &:not([data-active]):hover {
         background: var(--c-background-secondary);
         color: var(--c-text-primary);
     }

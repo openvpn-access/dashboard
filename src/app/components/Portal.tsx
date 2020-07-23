@@ -1,11 +1,12 @@
 import {cn} from '@utils/preact-utils';
-import {h} from 'preact';
+import {Fragment, h} from 'preact';
 import {useEffect, useRef, useState} from 'preact/hooks';
 import {JSXInternal} from 'preact/src/jsx';
 import styles from './Portal.module.scss';
 
 type Props<T> = {
     className?: string;
+    keepAlive?: boolean;
     show: keyof T;
     views: T;
 }
@@ -33,7 +34,11 @@ export const Portal = <T extends Record<string, JSXInternal.Element>>(props: Pro
     return (
         <div className={cn(styles.portal, props.className)}
              data-fadeout={fadeout}>
-            {props.views[activeView]}
+            {props.keepAlive ? <Fragment>
+                {Object.entries(props.views).map(([name, com]) => (
+                    <div hidden={name !== activeView} key={name}>{com}</div>
+                ))}
+            </Fragment> : props.views[activeView]}
         </div>
     );
 };
