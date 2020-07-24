@@ -24,7 +24,7 @@
     }
 
     > input {
-        @include font(600, 0.85em);
+        @include font(600, 13px);
         color: var(--c-text-primary);
         width: 100%;
         padding-right: 0.75em;
@@ -75,4 +75,14 @@
     white-space: pre-wrap;
     word-break: break-word;
     max-width: inherit;
+}
+
+.passwordQualityMeter {
+    @include size(5px, calc(100% - 0.75em));
+    margin: 0 0.5em;
+    position: relative;
+    border-radius: 10em;
+    background: hsl(calc(var(--pwd-entropy) * 120), 75%, 50%);
+    clip-path: inset(calc((1 - var(--pwd-entropy)) * 100%) 0 0 0);
+    transition: all 0.3s;
 }

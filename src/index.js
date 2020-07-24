@@ -40,8 +40,11 @@ if (env.NODE_ENV === 'development') {
     await import('./styles/_global.scss');
 
     // TODO: Should we use preact-router?
-    if (location.pathname.startsWith('/verify-email')) {
+    const path = location.pathname;
+    if (path.startsWith('/verify-email')) {
         import('./pages/verify-email');
+    } else if (path.startsWith('/reset-password')) {
+        import('./pages/reset-password');
     } else {
         import('./app');
     }

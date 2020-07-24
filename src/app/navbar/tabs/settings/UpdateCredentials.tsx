@@ -91,6 +91,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
                             })}/>
 
                 {changePassword && <InputField password={true}
+                                               passwordMeter={true}
                                                placeholder="New password"
                                                icon="lock"
                                                ariaLabel="New password"

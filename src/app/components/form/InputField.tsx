@@ -9,6 +9,7 @@ type Props = {
     ariaLabel?: string;
     className?: string;
     password?: boolean;
+    passwordMeter?: boolean;
     icon?: string;
     disabled?: boolean;
     readonly?: boolean;
@@ -19,6 +20,27 @@ type Props = {
     onChange?: (v: string) => void;
     onClick?: (() => void) | boolean;
     afterInput?: Array<JSXInternal.Element> | JSXInternal.Element
+};
+
+const symbols: Array<[RegExp, number]> = [
+    [/[0-9]/, 10],
+    [/[a-z]/, 26],
+    [/[A-Z]/, 26],
+    [/[\W]/, 26],
+    [/[\x20-\x2F\x3A-\x40\x5B-\x60{|}~]/, 32]
+];
+
+const entropy = (pw: string): number => {
+    if (!pw.length) {
+return 0;
+}
+
+    let charSets = 0;
+    for (const [regex, en] of symbols) {
+        charSets += regex.test(pw) ? en : 0;
+    }
+
+    return Math.log2(charSets) * pw.length;
 };
 
 export const InputField: FunctionalComponent<Props> = props => {
@@ -43,6 +65,12 @@ export const InputField: FunctionalComponent<Props> = props => {
                        onInput={() => props.onChange?.(getValue())}
                        onKeyUp={e => e.key === 'Enter' && props.onSubmit?.(getValue())}
                        disabled={props.disabled}/>
+
+                {
+                    props.password && props.passwordMeter &&
+                        <div className={styles.passwordQualityMeter}
+                             style={`--pwd-entropy: ${Math.min(entropy(props.value || '') / 200, 1)};`}/>
+                }
 
                 {props.afterInput}
             </div>
