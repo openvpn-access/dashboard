@@ -1,14 +1,14 @@
 import {Status} from '@api/enums/Status';
-import {Button} from '@components/form/Button';
-import {InputField} from '@components/form/InputField';
 import {session} from '@state/session';
-import {staticStore} from '@utils/static-store';
 import {cn} from '@utils/preact-utils';
 import {delayPromise} from '@utils/promises';
+import {staticStore} from '@utils/static-store';
 import {useForm} from '@utils/use-form';
 import {useStore} from 'effector-react';
 import {h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
+import {Button} from '@components/form/Button';
+import {InputField} from '@components/form/InputField';
 import styles from './Login.module.scss';
 
 export const Login = () => {
@@ -87,10 +87,17 @@ export const Login = () => {
                             onSubmit={login}
                             {...form.register('password')}/>
 
-                <Button text="Submit"
-                        loading={loading}
-                        disabled={form.empty()}
-                        onClick={login}/>
+                <div className={styles.btnBar}>
+                    <button className={styles.resetPassword}
+                            aria-label="Forget your password?">
+                        Forgot password?
+                    </button>
+
+                    <Button text="Submit"
+                            loading={loading}
+                            disabled={form.empty()}
+                            onClick={login}/>
+                </div>
             </div>
 
         </div>

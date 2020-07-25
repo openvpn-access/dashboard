@@ -3,7 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "description": "",
-    "main": "src/app/index.tsx",
+    "main": "src/index.js",
     "author": "Simon Reinisch <trash@reinisch.io>",
     "license": "MIT",
     "scripts": {

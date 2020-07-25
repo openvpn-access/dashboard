@@ -1,6 +1,6 @@
 import {EventBindingArgs, off, on} from '@utils/events';
 import {NanoPop, NanoPopPosition} from 'nanopop';
-import {isMobile} from '../../browserenv';
+import {isMobile} from '../../pages/app/browserenv';
 import styles from './tooltip.module.scss';
 
 const REFLECTED_ATTRIBUTES = ['content', 'pos'];

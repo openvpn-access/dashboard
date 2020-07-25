@@ -1,10 +1,10 @@
-import {Portal} from '@components/Portal';
 import {session} from '@state/session';
 import {cn} from '@utils/preact-utils';
 import {staticStore} from '@utils/static-store';
 import {useStore} from 'effector-react';
 import {FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
+import {Portal} from '@components/Portal';
 import styles from './NavBar.module.scss';
 import {Settings} from './tabs/settings/Settings';
 import {Users} from './tabs/users/Users';

@@ -1,5 +1,5 @@
-import {HelpCard} from '@components/HelpCard';
 import {FunctionalComponent, h} from 'preact';
+import {HelpCard} from '@components/HelpCard';
 import styles from './Header.module.scss';
 
 // TODO: Make this whole table thing a component!

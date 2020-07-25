@@ -32,9 +32,9 @@ module.exports = {
             'react-dom': 'preact/compat',
             '@api': path.resolve('./src/api'),
             '@state': path.resolve('./src/state'),
+            '@lib': path.resolve('./src/lib'),
             '@utils': path.resolve('./src/utils'),
-            '@popover': path.resolve('./src/lib/popover'),
-            '@components': path.resolve('./src/app/components')
+            '@components': path.resolve('./src/components')
         }
     },
 

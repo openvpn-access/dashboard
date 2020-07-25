@@ -1,5 +1,5 @@
 import {DBUser} from '@api/types';
-import {showPopover} from '@popover';
+import {showPopover} from '@lib/popover';
 import {formatDate} from '@utils/format-date';
 import {FunctionalComponent, h} from 'preact';
 import styles from './User.module.scss';

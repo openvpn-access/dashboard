@@ -36,16 +36,18 @@ if (env.NODE_ENV === 'development') {
 }
 
 (async () => {
-    await import('./app/web-components');
+    await import('./web-components');
     await import('./styles/_global.scss');
 
     // TODO: Should we use preact-router?
-    const path = location.pathname;
-    if (path.startsWith('/verify-email')) {
-        import('./pages/verify-email');
-    } else if (path.startsWith('/reset-password')) {
-        import('./pages/reset-password');
-    } else {
-        import('./app');
-    }
+    // const path = location.pathname;
+    // if (path.startsWith('/verify-email')) {
+    //     import('./pages/verify-email');
+    // } else if (path.startsWith('/reset-password')) {
+    //     import('./pages/reset-password');
+    // } else {
+    //     import('./router');
+    // }
+
+    import('./router');
 })();

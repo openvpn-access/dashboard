@@ -2,11 +2,11 @@ import {Button} from '@components/form/Button';
 import {Checkbox} from '@components/form/Checkbox';
 import {DropDown} from '@components/form/DropDown';
 import {SortDirection} from '@components/form/SortDirection';
+import {registerPopover} from '@lib/popover';
 import {users} from '@state/users';
 import {useForm} from '@utils/use-form';
 import {h} from 'preact';
 import {useState} from 'preact/hooks';
-import {registerPopover} from '@popover';
 import styles from './SearchFilter.module.scss';
 
 const SORTING_FIELDS = {

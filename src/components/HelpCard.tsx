@@ -1,4 +1,4 @@
-import {Popper} from '@components/Popper';
+import {Popper} from './Popper';
 import {cn} from '@utils/preact-utils';
 import {FunctionalComponent, h} from 'preact';
 import styles from './HelpCard.module.scss';

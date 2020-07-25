@@ -1,12 +1,7 @@
 import {ErrorCode} from '@api/index';
 import {DBUser} from '@api/types';
 import {validation} from '@api/validation';
-import {Button} from '@components/form/Button';
-import {BytePicker} from '@components/form/BytePicker';
-import {Checkbox} from '@components/form/Checkbox';
-import {DatePicker} from '@components/form/DatePicker';
-import {DropDown} from '@components/form/DropDown';
-import {InputField} from '@components/form/InputField';
+import {registerPopover} from '@lib/popover';
 import {isUserAccountLocked, users} from '@state/users';
 import {cn} from '@utils/preact-utils';
 import {delayPromise} from '@utils/promises';
@@ -14,7 +9,12 @@ import {useForm} from '@utils/use-form';
 import {h} from 'preact';
 import {useState} from 'preact/hooks';
 import {useEffect} from 'react';
-import {registerPopover} from '@popover';
+import {Button} from '@components/form/Button';
+import {BytePicker} from '@components/form/BytePicker';
+import {Checkbox} from '@components/form/Checkbox';
+import {DatePicker} from '@components/form/DatePicker';
+import {DropDown} from '@components/form/DropDown';
+import {InputField} from '@components/form/InputField';
 import styles from './UserEditor.module.scss';
 
 type Props = {

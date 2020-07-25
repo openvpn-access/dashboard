@@ -5,13 +5,13 @@ import {InputField} from '@components/form/InputField';
 import {Portal} from '@components/Portal';
 import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
-import {Fragment, FunctionalComponent, h} from 'preact';
+import {Fragment, h} from 'preact';
 import {useState} from 'preact/hooks';
 import styles from './ResetPassword.module.scss';
 
 type State = 'idle' | 'errored' | 'success';
 
-export const ResetPassword: FunctionalComponent = () => {
+export default () => {
     const [loading, setLoading] = useState(false);
     const [view, setView] = useState<State>('idle');
     const params = new URLSearchParams(location.search);

@@ -17,9 +17,9 @@
         "paths": {
             "@api/*": ["./src/api/*"],
             "@state/*": ["./src/state/*"],
+            "@lib/*": ["./src/lib/*"],
             "@utils/*": ["./src/utils/*"],
-            "@popover": ["./src/lib/popover"],
-            "@components/*": ["./src/app/components/*"],
+            "@components/*": ["./src/components/*"],
             "*": ["./node_modules/*"]
         }
     },

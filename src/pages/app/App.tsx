@@ -1,11 +1,11 @@
-import {FunctionalComponent, h} from 'preact';
-import {PopoverContainer} from '@popover';
+import {PopoverContainer} from '@lib/popover';
+import {h} from 'preact';
 import styles from './App.module.scss';
 import {NavBar} from './navbar/NavBar';
 import {Login} from './overlays/Login';
 import './popovers';
 
-export const App: FunctionalComponent = () => (
+export default () => (
     <div className={styles.app}
          role="application">
 

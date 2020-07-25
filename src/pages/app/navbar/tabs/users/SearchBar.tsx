@@ -1,10 +1,10 @@
-import {IconButton} from '@components/form/IconButton';
-import {showPopover} from '@popover';
+import {showPopover} from '@lib/popover';
 import {users} from '@state/users';
 import {debounce} from '@utils/debounce';
 import {createNativeEventContainer} from '@utils/events';
 import {createRef, FunctionalComponent, h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
+import {IconButton} from '@components/form/IconButton';
 import styles from './Searchbar.module.scss';
 
 export const SearchBar: FunctionalComponent = () => {

@@ -1,4 +1,4 @@
-import {LoadingIndicator} from '@components/LoadingIndicator';
+import {LoadingIndicator} from '../LoadingIndicator';
 import {cn} from '@utils/preact-utils';
 import {FunctionalComponent, h} from 'preact';
 import styles from './Button.module.scss';

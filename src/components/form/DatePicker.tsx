@@ -1,5 +1,5 @@
-import {InputField} from '@components/form/InputField';
-import {Popper} from '@components/Popper';
+import {InputField} from './InputField';
+import {Popper} from '../Popper';
 import day, {Dayjs} from 'dayjs';
 import {FunctionalComponent, h} from 'preact';
 import {useRef, useState} from 'preact/hooks';
