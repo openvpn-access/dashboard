@@ -51,7 +51,7 @@ session.store
         // Clear user-list
         users.reset();
 
-        // Remove sessio token from localStorage
+        // Remove session token from localStorage
         staticStore.delete('token');
 
         // Clear user and token

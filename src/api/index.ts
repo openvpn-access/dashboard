@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import {session} from '@state/session';
+import {staticStore} from '@utils/static-store';
 
 export * from './enums/ErrorCode';
 export * from './enums/Status';
@@ -20,7 +20,7 @@ export const api = <T>(
         query
     }: APICallConfig
 ): Promise<T> => {
-    const {token} = session.store.getState();
+    const token = staticStore.getJSON('token');
     let queryString = '';
 
     if (query) {
