@@ -6,6 +6,7 @@ import {staticStore} from '@utils/static-store';
 import {useForm} from '@utils/use-form';
 import {useStore} from 'effector-react';
 import {h} from 'preact';
+import {Link} from 'preact-router';
 import {useEffect, useState} from 'preact/hooks';
 import {Button} from '@components/form/Button';
 import {InputField} from '@components/form/InputField';
@@ -88,10 +89,7 @@ export const Login = () => {
                             {...form.register('password')}/>
 
                 <div className={styles.btnBar}>
-                    <button className={styles.resetPassword}
-                            aria-label="Forget your password?">
-                        Forgot password?
-                    </button>
+                    <Link href="/forgot-password">Forgot password?</Link>
 
                     <Button text="Submit"
                             loading={loading}

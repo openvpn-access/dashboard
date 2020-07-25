@@ -18,7 +18,7 @@ export const AsyncRoute: FunctionalComponent<Props> = ({getComponent, loading}) 
             const Component = module.default;
             setComponent(<Component/>);
         });
-    }, []);
+    }, [getComponent]);
 
     return component;
 };

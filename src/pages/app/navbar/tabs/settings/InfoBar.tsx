@@ -1,10 +1,10 @@
 import {api} from '@api/index';
 import {DBUser} from '@api/types';
+import {Button} from '@components/form/Button';
 import {session} from '@state/session';
 import {delayPromise} from '@utils/promises';
 import {Fragment, FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
-import {Button} from '@components/form/Button';
 import styles from './InfoBar.module.scss';
 
 type Props = {
@@ -17,6 +17,7 @@ export const InfoBar: FunctionalComponent<Props> = ({user}) => {
     const resendVerficiationEmail = () => {
         setState('sending');
 
+        // TODO: This can fail!!!
         delayPromise(1000, api({
             route: '/users/email/verify/send',
             method: 'POST',

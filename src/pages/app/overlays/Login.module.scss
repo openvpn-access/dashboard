@@ -64,7 +64,7 @@
     @include flex(row, flex-start, space-between);
     width: 100%;
 
-    > button.resetPassword {
+    > a {
         @include font(600, 12px);
         color: var(--c-text-primary);
         transition: none;
