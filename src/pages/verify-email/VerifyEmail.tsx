@@ -1,6 +1,7 @@
 import {api} from '@api/index';
 import {Button} from '@components/form/Button';
 import {Portal} from '@components/Portal';
+import {Link} from 'preact-router';
 import {delayPromise} from '@utils/promises';
 import {Fragment, h} from 'preact';
 import {useState} from 'preact/hooks';
@@ -53,7 +54,7 @@ export default () => {
                                     <p>An error occured. Please try again later.</p>
                                     <small>Maybe the verification-token expired. Try logging in and request a new token in this case.</small>
                                 </div>
-                                <a href="/">Back to login</a>
+                                <Link href="/">Back to login</Link>
                             </div>
                         </Fragment>
                     ),
@@ -64,7 +65,7 @@ export default () => {
                                     <bc-icon name="checkmark"/>
                                     <span>E-Mail successfully verified!</span>
                                 </div>
-                                <a href="/">Back to login</a>
+                                <Link href="/">Back to login</Link>
                             </div>
                         </Fragment>
                     )

@@ -6,6 +6,7 @@ import {Portal} from '@components/Portal';
 import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
 import {Fragment, h} from 'preact';
+import {Link} from 'preact-router';
 import {useState} from 'preact/hooks';
 import styles from './ResetPassword.module.scss';
 
@@ -83,7 +84,7 @@ export default () => {
                                     <p>An error occured.</p>
                                     <small>Try requesting a new Email to reset your password.</small>
                                 </div>
-                                <a href="/">Back to login</a>
+                                <Link href="/">Back to login</Link>
                             </div>
                         </Fragment>
                     ),
@@ -94,7 +95,7 @@ export default () => {
                                     <bc-icon name="checkmark"/>
                                     <span>Password successfully changed!</span>
                                 </div>
-                                <a href="/">Back to login</a>
+                                <Link href="/">Back to login</Link>
                             </div>
                         </Fragment>
                     )
