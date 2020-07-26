@@ -1,0 +1,38 @@
+.login {
+    @include position(0, 0, 0, 0);
+    @include flex(column, center, center);
+    position: absolute;
+    background: var(--c-background-primary);
+    z-index: 50;
+
+    > svg {
+        @include size(13.5em);
+        fill: var(--c-primary);
+    }
+}
+
+.form {
+    @include flex(column, flex-end);
+    width: 16em;
+
+    > * {
+        margin-bottom: 0.75em;
+    }
+}
+
+.btnBar {
+    @include flex(row, flex-start, space-between);
+    width: 100%;
+
+    > a {
+        @include font(600, 12px);
+        color: var(--c-text-primary);
+        transition: none;
+
+        &:hover {
+            color: var(--c-primary);
+            text-decoration: underline;
+        }
+    }
+}
+

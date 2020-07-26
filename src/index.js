@@ -22,7 +22,7 @@ if (env.NODE_ENV === 'development') {
         color: #fff;
     `);
 
-    console.log(`%c😎 Checkout the project on GitHub: https://github.com/openvpn-access/dashboard`, `
+    console.log(`%c😎 Checkout the project on GitHub: https://github.com/openvpn-access/openvpn-access`, `
         background: #3d7cf9;
         padding: 0.3em 0.5em;
         border-radius: 0.25em;
@@ -38,16 +38,5 @@ if (env.NODE_ENV === 'development') {
 (async () => {
     await import('./web-components');
     await import('./styles/_global.scss');
-
-    // TODO: Should we use preact-router?
-    // const path = location.pathname;
-    // if (path.startsWith('/verify-email')) {
-    //     import('./pages/verify-email');
-    // } else if (path.startsWith('/reset-password')) {
-    //     import('./pages/reset-password');
-    // } else {
-    //     import('./router');
-    // }
-
-    import('./router');
+    await import('./pages');
 })();

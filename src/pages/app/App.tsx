@@ -1,21 +1,28 @@
 import {PopoverContainer} from '@lib/popover';
+import {session} from '@state/session';
 import {h} from 'preact';
+import {route} from 'preact-router';
 import styles from './App.module.scss';
 import {NavBar} from './navbar/NavBar';
-import {Login} from './overlays/Login';
 import './popovers';
 
-export default () => (
-    <div className={styles.app}
-         role="application">
+export default () => {
 
-        {/* Main App */}
-        <NavBar/>
+    // Redirect to login page if user hasn't been resolved yet
+    const s = session.store.getState();
+    if (!s.token || !s.user) {
+        route('/login');
+    }
 
-        {/* Overlays */}
-        <Login/>
+    return (
+        <div className={styles.app}
+             role="application">
 
-        {/* Popovers */}
-        {<PopoverContainer/>}
-    </div>
-);
+            {/* Main App */}
+            <NavBar/>
+
+            {/* Popovers */}
+            {<PopoverContainer/>}
+        </div>
+    );
+};

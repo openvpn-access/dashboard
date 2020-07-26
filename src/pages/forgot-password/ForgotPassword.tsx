@@ -34,7 +34,7 @@ export default () => {
                 views={{
                     'idle': (
                         <Fragment>
-                            <h3>Enter your user account&apos;s verified email address and we will send you a password reset link.</h3>
+                            <h3>Enter your user accounts verified email address and we will send you a password reset link.</h3>
 
                             <InputField placeholder="Email Address"
                                         icon="envelope"

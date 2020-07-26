@@ -1,18 +1,17 @@
 import {Status} from '@api/enums/Status';
+import {Button} from '@components/form/Button';
+import {InputField} from '@components/form/InputField';
 import {session} from '@state/session';
-import {cn} from '@utils/preact-utils';
 import {delayPromise} from '@utils/promises';
 import {staticStore} from '@utils/static-store';
 import {useForm} from '@utils/use-form';
 import {useStore} from 'effector-react';
 import {h} from 'preact';
-import {Link} from 'preact-router';
+import {Link, route} from 'preact-router';
 import {useEffect, useState} from 'preact/hooks';
-import {Button} from '@components/form/Button';
-import {InputField} from '@components/form/InputField';
 import styles from './Login.module.scss';
 
-export const Login = () => {
+export default () => {
     const sessionState = useStore(session.store);
     const [loading, setLoading] = useState(false);
     const form = useForm({
@@ -20,13 +19,13 @@ export const Login = () => {
         password: ''
     });
 
-    // TODO: Display server-side, non field-related errors too!
     const login = () => {
         setLoading(true);
         form.clearErrors();
 
         delayPromise(1000, session.login(form.values()))
             .then(() => {
+                route('/');
                 form.clearValues();
             })
             .catch(err => {
@@ -56,6 +55,7 @@ export const Login = () => {
                     staticStore.delete('token');
                 })
                 .finally(() => {
+                    route('/');
                     form.clearValues();
                     setLoading(false);
                 });
@@ -63,9 +63,7 @@ export const Login = () => {
     }, []);
 
     return (
-        <div className={cn(styles.login, {
-            [styles.visible]: sessionState.token === null
-        })}>
+        <div className={styles.login}>
 
             <svg version="1.1" viewBox="0 0 50 50">
                 <path d="M21.3,15c0.4-2-0.8-2.9-0.7-3c0.3,0.2,1.6,0.4,1.7,2.1c0,1.1-0.2,2.3,0.4,3.3C22.7,17.5,20.9,17,21.3,15z"/>
@@ -97,7 +95,6 @@ export const Login = () => {
                             onClick={login}/>
                 </div>
             </div>
-
         </div>
     );
 };
