@@ -61,7 +61,7 @@ export default () => {
                                     <bc-icon name="checkmark"/>
                                     <span>If this email belogs to a verified and valid account please check your inbox.</span>
                                 </div>
-                                <Link href="/">Back to login</Link>
+                                <Link href="/login">Back to login</Link>
                             </div>
                         </Fragment>
                     )

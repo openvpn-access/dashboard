@@ -1,8 +1,7 @@
+import {AsyncRoute} from '@lib/AsyncRoute';
 import {h, render} from 'preact';
 import Router from 'preact-router';
-import {AsyncRoute} from '@lib/AsyncRoute';
 
-// TODO: Route-change transition?
 const Main = () => (
     <Router>
         <AsyncRoute path="/" getComponent={() => import(/* webpackChunkName: "app" */'./app/App')} default/>

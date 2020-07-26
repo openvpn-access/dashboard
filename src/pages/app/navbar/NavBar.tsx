@@ -1,10 +1,11 @@
+import {Portal} from '@components/Portal';
 import {session} from '@state/session';
 import {cn} from '@utils/preact-utils';
 import {staticStore} from '@utils/static-store';
 import {useStore} from 'effector-react';
 import {FunctionalComponent, h} from 'preact';
+import {route} from 'preact-router';
 import {useState} from 'preact/hooks';
-import {Portal} from '@components/Portal';
 import styles from './NavBar.module.scss';
 import {Settings} from './tabs/settings/Settings';
 import {Users} from './tabs/users/Users';
@@ -35,6 +36,11 @@ export const NavBar: FunctionalComponent = () => {
         changeTab(name);
     };
 
+    const logout = () => {
+        route('/login');
+        setTimeout(() => session.logout(), 300);
+    };
+
     // Generate tabs and nav-buttons
     const tabButtons = [];
     for (const {name, icon} of tabs) {
@@ -56,7 +62,7 @@ export const NavBar: FunctionalComponent = () => {
 
                 <button className={cn(styles.tabButton, styles.logout)}
                         aria-label="Logout"
-                        onClick={() => session.logout()}>
+                        onClick={logout}>
                     <bc-icon name="logout"/>
                     <span>Logout</span>
                 </button>
