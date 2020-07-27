@@ -8,8 +8,8 @@ type Falsish = null | false | undefined;
 type Props = {
     ariaLabel?: string;
     className?: string;
-    password?: boolean;
     passwordMeter?: boolean;
+    type?: 'text' | 'password' | 'number';
     icon?: string;
     disabled?: boolean;
     readonly?: boolean;
@@ -32,8 +32,8 @@ const symbols: Array<[RegExp, number]> = [
 
 const entropy = (pw: string): number => {
     if (!pw.length) {
-return 0;
-}
+        return 0;
+    }
 
     let charSets = 0;
     for (const [regex, en] of symbols) {
@@ -43,9 +43,26 @@ return 0;
     return Math.log2(charSets) * pw.length;
 };
 
+const numberStr = /^[\d]*$/;
+
 export const InputField: FunctionalComponent<Props> = props => {
     const inputField = createRef<HTMLInputElement>();
     const getValue = () => inputField.current?.value || '';
+
+    const onChange = () => {
+        const el = inputField.current;
+        if (el) {
+            if (props.type === 'number') {
+                if (numberStr.test(el.value)) {
+                    props.onChange?.(el.value);
+                } else {
+                    el.value = el.value.slice(0, -1);
+                }
+            } else {
+                props.onChange?.(el.value);
+            }
+        }
+    };
 
     return (
         <div className={cn(styles.inputField, props.className)}
@@ -56,18 +73,18 @@ export const InputField: FunctionalComponent<Props> = props => {
             })} data-errored={props.error}>
                 {props.icon && <bc-icon name={props.icon}/>}
 
-                <input type={props.password ? 'password' : 'text'}
+                <input type={props.type === 'password' ? 'password' : 'text'}
                        ref={inputField}
                        readOnly={props.readonly || !!props.onClick}
                        placeholder={props.placeholder}
                        aria-label={props.ariaLabel || props.placeholder}
                        value={props.value || ''}
-                       onInput={() => props.onChange?.(getValue())}
+                       onInput={onChange}
                        onKeyUp={e => e.key === 'Enter' && props.onSubmit?.(getValue())}
                        disabled={props.disabled}/>
 
                 {
-                    props.password && props.passwordMeter &&
+                    props.type === 'password' && props.passwordMeter &&
                         <div className={styles.passwordQualityMeter}
                              style={`--pwd-entropy: ${Math.min(entropy(props.value || '') / 200, 1)};`}/>
                 }

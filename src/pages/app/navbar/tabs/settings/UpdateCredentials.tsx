@@ -1,12 +1,12 @@
 import {api, ErrorCode} from '@api/index';
 import {validation} from '@api/validation';
+import {Button} from '@components/form/Button';
+import {InputField} from '@components/form/InputField';
 import {session} from '@state/session';
 import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
 import {FunctionalComponent, h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
-import {Button} from '@components/form/Button';
-import {InputField} from '@components/form/InputField';
 import styles from './UpdateCredentials.module.scss';
 
 export const UpdateCredentials: FunctionalComponent = () => {
@@ -81,7 +81,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
                                 validate: validation.user.email
                             })}/>
 
-                <InputField password={true}
+                <InputField type="password"
                             placeholder="Password"
                             icon="lock"
                             ariaLabel="Current password"
@@ -90,7 +90,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
                                 required: true
                             })}/>
 
-                {changePassword && <InputField password={true}
+                {changePassword && <InputField type="password"
                                                passwordMeter={true}
                                                placeholder="New password"
                                                icon="lock"

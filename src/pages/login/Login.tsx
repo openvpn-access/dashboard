@@ -15,7 +15,7 @@ export default () => {
     const sessionState = useStore(session.store);
     const [loading, setLoading] = useState(false);
     const form = useForm({
-        id: '',
+        login_id: '',
         password: ''
     });
 
@@ -31,11 +31,11 @@ export default () => {
             .catch(err => {
                 switch (err.status) {
                     case Status.NOT_FOUND:
-                        return form.setError('id', 'User not found');
+                        return form.setError('login_id', 'User not found');
                     case Status.UNAUTHORIZED:
                         return form.setError('password', 'Invalid password');
                     case Status.LOCKED:
-                        return form.setError('id', 'This account is locked.');
+                        return form.setError('login_id', 'This account is locked.');
                 }
             })
             .finally(() => setLoading(false));
@@ -47,7 +47,7 @@ export default () => {
             setLoading(true);
             form.setValues({
                 password: 'password',
-                id: 'hidden'
+                login_id: 'hidden'
             });
 
             delayPromise(1000, session.login({token}))
@@ -76,12 +76,12 @@ export default () => {
                             disabled={loading}
                             icon="user"
                             ariaLabel="Username or email address"
-                            {...form.register('id')}/>
+                            {...form.register('login_id')}/>
 
                 <InputField placeholder="Password"
                             icon="lock"
                             disabled={loading}
-                            password={true}
+                            type="password"
                             ariaLabel="Password"
                             onSubmit={login}
                             {...form.register('password')}/>

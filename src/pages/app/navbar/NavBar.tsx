@@ -68,7 +68,7 @@ export const NavBar: FunctionalComponent = () => {
                 </button>
             </div>
 
-            <Portal className={styles.tabContaiers}
+            <Portal className={styles.tabContainers}
                     keepAlive={true}
                     show={activeTab}
                     views={{

@@ -15,7 +15,7 @@ export type StoredSession = {
 };
 
 export type LoginEvent = {
-    id: string;
+    login_id: string;
     password: string;
 } | {token: string};
 

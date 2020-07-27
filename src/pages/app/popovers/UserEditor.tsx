@@ -134,7 +134,7 @@ registerPopover<Props>('user-editor', {
 
                         {newUser && <InputField placeholder="Password"
                                                 icon="lock"
-                                                password={true}
+                                                type="password"
                                                 disabled={isLoading()}
                                                 {...form.register('password', {
                                                     validate: validation.user.password

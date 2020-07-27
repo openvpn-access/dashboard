@@ -33,7 +33,7 @@ export default () => {
 
         setLoading(true);
         delayPromise(1000, api({
-            method: 'POST',
+            method: 'PATCH',
             route: '/users/password/reset',
             data: {
                 new_password: newPassword,
@@ -58,7 +58,7 @@ export default () => {
 
                             <InputField placeholder="New password"
                                         disabled={loading}
-                                        password={true}
+                                        type="password"
                                         passwordMeter={true}
                                         icon="lock"
                                         {...form.register('newPassword', {
@@ -67,7 +67,7 @@ export default () => {
 
                             <InputField placeholder="Repeat password"
                                         disabled={loading}
-                                        password={true}
+                                        type="password"
                                         onSubmit={submit}
                                         icon="lock"
                                         {...form.register('newPasswordRepeat')}/>
