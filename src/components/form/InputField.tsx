@@ -68,10 +68,11 @@ export const InputField: FunctionalComponent<Props> = props => {
         <div className={cn(styles.inputField, props.className)}
              onClick={typeof props.onClick === 'function' ? props.onClick : undefined}>
 
-            <div className={styles.main}
-                 data-button-like={!!props.onClick}
-                 data-errored={props.error}
-                 data-disabled={props.disabled}>
+            <div className={cn(styles.main, {
+                [styles.button]: !!props.onClick,
+                [styles.errored]: !!props.error,
+                [styles.disabled]: !!props.disabled
+            })}>
                 {props.icon && <bc-icon name={props.icon}/>}
 
                 <input type={props.type === 'password' ? 'password' : 'text'}
@@ -92,7 +93,7 @@ export const InputField: FunctionalComponent<Props> = props => {
                 {props.afterInput}
             </div>
 
-            {props.error && <p className={styles.error}>{props.error}</p>}
+            {props.error && <p className={styles.errorMessage}>{props.error}</p>}
         </div>
     );
 };

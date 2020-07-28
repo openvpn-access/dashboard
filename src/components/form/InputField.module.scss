@@ -16,6 +16,40 @@
     --com-color-focus: var(--c-primary-focus);
     --com-color-hover: var(--c-background-secondary-hover);
 
+    &:hover:not(.disabled):not(.errored) {
+        --com-color: var(--com-color-hover);
+    }
+
+    &:focus-within:not(.disabled):not(.errored) {
+        --com-color: var(--c-primary);
+    }
+
+    &:focus-within:not(.disabled) {
+        @include focus_border(--com-color-focus);
+    }
+
+    &.button {
+        cursor: pointer;
+
+        > input {
+            cursor: pointer;
+        }
+    }
+
+    &.errored {
+        --com-color-focus: var(--c-red-focus);
+        --com-color: var(--c-red);
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+
+        input {
+            pointer-events: none;
+            color: var(--c-text-disabled);
+        }
+    }
+
     > bc-icon {
         margin-right: 0.5em;
         margin-left: 0.75em;
@@ -33,45 +67,10 @@
             transition: all 0.3s;
             color: var(--com-color-hover);
         }
-
-        &[readonly] {
-            cursor: default;
-        }
-    }
-
-    &:hover:not(:focus-within):not([data-errored]):not([disabled]) {
-        --com-color: var(--com-color-hover);
-    }
-
-    &:focus-within:not([data-disabled]) {
-        @include focus_border(--com-color-focus);
-        --com-color: var(--c-primary);
-    }
-
-    &[data-errored] {
-        --com-color: var(--c-red);
-        --c-primary-focus: var(--c-red-focus);
-    }
-
-    &[data-disabled] {
-        pointer-events: none;
-
-        input {
-            color: var(--c-text-disabled);
-        }
-    }
-
-    &[data-button-like] {
-        cursor: pointer;
-
-        > input,
-        > input[readonly] {
-            cursor: pointer;
-        }
     }
 }
 
-.error {
+.errorMessage {
     @include font(600, 12px);
     line-height: 16px;
     margin-top: 0.2em;

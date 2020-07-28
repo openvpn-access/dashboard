@@ -56,7 +56,7 @@ export const PinField: FunctionalComponent<Props> = props => {
                 }
             </div>
 
-            {props.error && <p className={styles.error}>{props.error}</p>}
+            {props.error && <p className={styles.errorMessage}>{props.error}</p>}
         </div>
     );
 };
