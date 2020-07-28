@@ -2,6 +2,7 @@ import {session} from '@state/session';
 import {useStore} from 'effector-react';
 import {Fragment, FunctionalComponent, h} from 'preact';
 import {InfoBar} from './InfoBar';
+import {MFASetup} from './MFASetup';
 import styles from './Settings.module.scss';
 import {UpdateCredentials} from './UpdateCredentials';
 
@@ -16,6 +17,8 @@ export const Settings: FunctionalComponent = () => {
             </Fragment>}
 
             <UpdateCredentials/>
+            <div className={styles.divider}/>
+            {user && <MFASetup user={user}/>}
         </div>
     );
 };

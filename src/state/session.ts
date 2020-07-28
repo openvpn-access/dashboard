@@ -29,6 +29,9 @@ export const session = {
         user: null
     }),
 
+    // Update the user object
+    updateUser: domain.createEvent<Partial<DBUser>>('update-user'),
+
     // Logout event
     logout: domain.createEvent('logout'),
 
@@ -72,4 +75,11 @@ session.store
             void users.items.refresh();
             void users.stats.refresh();
         }
+    })
+    .on(session.updateUser, (state, payload) => {
+        return {
+            token: state.token,
+            user: state.user ? {...state.user, ...payload} : null
+        };
     });
+

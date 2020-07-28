@@ -13,8 +13,8 @@
 
 .digit {
     @include flex(row, center, center);
+    @include size(2.5em);
     border-radius: 0.25em;
-    height: 2.5em;
     border: 1.5px solid var(--com-color);
     transition: all 0.3s;
 

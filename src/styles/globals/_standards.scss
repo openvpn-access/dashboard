@@ -30,8 +30,30 @@ b {
 }
 
 a {
-    color: var(--c-primary);
+    @include font(600, 12px);
+    color: var(--c-text-primary);
     text-decoration: none;
+    position: relative;
+    transition: all 0.3s;
+
+    &::after {
+        @include pseudo();
+        @include position(auto, 0, 0, 0);
+        @include size(100%, 1px);
+        background: var(--c-primary);
+        transform: translateY(2px);
+        transition: all 0.3s;
+        opacity: 0;
+    }
+
+    &:hover {
+        color: var(--c-primary);
+
+        &::after {
+            transform: none;
+            opacity: 1;
+        }
+    }
 }
 
 @for $i from 1 through 6 {
