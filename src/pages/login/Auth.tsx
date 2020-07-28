@@ -9,13 +9,10 @@ import {Fragment, FunctionalComponent, h} from 'preact';
 import {Link, route} from 'preact-router';
 import {useState} from 'preact/hooks';
 import styles from './Auth.module.scss';
+import {login} from './state';
 
-type Props = {
-    loginId: string;
-    mfa: boolean;
-};
-
-export const Auth: FunctionalComponent<Props> = props => {
+export const Auth: FunctionalComponent = () => {
+    const {login_id, mfa_required} = login.state.getState();
     const [loading, setLoading] = useState(false);
     const form = useForm({
         password: '',
@@ -27,24 +24,21 @@ export const Auth: FunctionalComponent<Props> = props => {
         form.clearErrors();
 
         delayPromise(1000, session.login({
-            login_id: props.loginId,
-            ...values
-        }))
-            .then(() => {
-                route('/');
-                form.clearValues();
-            })
-            .catch(err => {
-                switch (err.code) {
-                    case ErrorCode.INVALID_PASSWORD:
-                        return form.setError('password', 'Invalid password');
-                    case ErrorCode.LOCKED_ACCOUNT:
-                        return form.setError('password', 'Password not accepted due to submitting a wrong one too many times. Try again later.');
-                    case ErrorCode.INVALID_MFA_CODE:
-                        return form.setError('mfa_code', 'Invalid code.');
-                }
-            })
-            .finally(() => setLoading(false));
+            login_id, ...values
+        })).then(() => {
+            route('/');
+            login.state.reset();
+            form.clearValues();
+        }).catch(err => {
+            switch (err.code) {
+                case ErrorCode.INVALID_PASSWORD:
+                    return form.setError('password', 'Invalid password');
+                case ErrorCode.LOCKED_ACCOUNT:
+                    return form.setError('password', 'Account is locked. Try again later.');
+                case ErrorCode.INVALID_MFA_CODE:
+                    return form.setError('mfa_code', 'Invalid code.');
+            }
+        }).finally(() => setLoading(false));
     });
 
     return (
@@ -57,7 +51,7 @@ export const Auth: FunctionalComponent<Props> = props => {
                         onSubmit={submit}
                         {...form.register('password')}/>
 
-            {props.mfa && <Fragment>
+            {mfa_required && <Fragment>
                 <p>Please enter the code from your authenticator:</p>
                 <PinField length={6}
                           onSubmit={submit}

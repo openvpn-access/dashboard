@@ -11,28 +11,6 @@
     }
 }
 
-.form {
-    @include flex(column, flex-end);
+.portal {
     width: 16em;
-
-    > button {
-        margin-top: 0.75em;
-    }
 }
-
-.btnBar {
-    @include flex(row, flex-start, space-between);
-    width: 100%;
-
-    > a {
-        @include font(600, 12px);
-        color: var(--c-text-primary);
-        transition: none;
-
-        &:hover {
-            color: var(--c-primary);
-            text-decoration: underline;
-        }
-    }
-}
-
