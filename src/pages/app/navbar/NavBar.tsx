@@ -45,8 +45,10 @@ export const NavBar: FunctionalComponent = () => {
     const tabButtons = [];
     for (const {name, icon} of tabs) {
         tabButtons.push(
-            <button className={styles.tabButton}
+            <button role="tab"
+                    className={styles.tabButton}
                     data-active={name === activeTab}
+                    aria-selected={name === activeTab}
                     aria-label={`Switch to tab: ${name}`}
                     onClick={changeTabTo(name as View)}>
                 <bc-icon name={icon}/>
@@ -56,7 +58,9 @@ export const NavBar: FunctionalComponent = () => {
     }
 
     return (
-        <div className={styles.navBar}>
+        <div role="navigation"
+             className={styles.navBar}
+             aria-label={activeTab}>
             <div className={styles.tabButtons}>
                 {tabButtons}
 

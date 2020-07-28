@@ -29,6 +29,13 @@
         color: var(--c-background-secondary-hover);
     }
 
+    &[data-loading],
+    &[data-loading]:hover {
+        background: var(--c-color);
+        border-color: var(--c-color);
+        cursor: wait;
+    }
+
     > bc-icon {
         font-size: 1.25em;
         margin-right: 0.5em;
@@ -39,11 +46,13 @@
         line-height: 1.1em;
     }
 
-    &:focus {
-        @include focus_border(--c-focus)
-    }
+    &:not([data-loading]):not([disabled]) {
+        &:focus {
+            @include focus_border(--c-focus)
+        }
 
-    &:hover {
-        background: var(--c-accent);
+        &:hover {
+            background: var(--c-accent);
+        }
     }
 }

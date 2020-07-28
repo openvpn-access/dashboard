@@ -86,8 +86,8 @@ export const PopoverContainer: FunctionalComponent<{className?: string}> = props
 
         const labelledById = uid('aria');
         content = (
-            <div className={styles.popover}
-                 role="dialog"
+            <div role="dialog"
+                 className={styles.popover}
                  aria-labelledby={labelledById}>
 
                 <div className={styles.title}>
