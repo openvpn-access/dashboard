@@ -1,0 +1,54 @@
+.pinField {
+    width: 100%;
+    --com-color: var(--c-background-secondary-accent);
+    --com-color-focus: var(--c-primary-focus);
+    --com-color-hover: var(--c-background-secondary-hover);
+}
+
+.digits {
+    display: grid;
+    grid-gap: 0.25em;
+    grid-template-columns:repeat(var(--grid-cols), 1fr);
+}
+
+.digit {
+    @include flex(row, center, center);
+    border-radius: 0.25em;
+    height: 2.5em;
+    border: 1.5px solid var(--com-color);
+    transition: all 0.3s;
+
+    &:hover:not(:focus):not([disabled]) {
+        --com-color: var(--com-color-hover);
+    }
+
+    &:focus {
+        @include focus_border(--com-color-focus);
+        --com-color: var(--c-primary);
+
+        &[data-errored] {
+            --com-color: var(--c-red);
+        }
+    }
+
+    &[data-errored] {
+        --com-color: var(--c-red);
+        --com-color-focus: var(--c-red-focus);
+        --com-color-hover: var(--c-red-accent);
+    }
+
+    > span {
+        @include font(600, 18px);
+        color: var(--c-text-primary);
+    }
+}
+
+.error {
+    @include font(600, 12px);
+    line-height: 16px;
+    margin-top: 0.2em;
+    color: var(--c-red);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-width: inherit;
+}

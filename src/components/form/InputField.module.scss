@@ -9,7 +9,7 @@
     @include size(100%, 2.5em);
     border-radius: 0.25em;
     transition: all 0.3s;
-    border: 1.5px solid var(--com-color);
+    border: 2px solid var(--com-color);
     position: relative;
     flex-shrink: 0;
     --com-color: var(--c-background-secondary-accent);
@@ -34,10 +34,6 @@
             color: var(--com-color-hover);
         }
 
-        &[disabled] {
-            color: var(--c-text-disabled);
-        }
-
         &[readonly] {
             cursor: default;
         }
@@ -47,7 +43,7 @@
         --com-color: var(--com-color-hover);
     }
 
-    &:focus-within {
+    &:focus-within:not([data-disabled]) {
         @include focus_border(--com-color-focus);
         --com-color: var(--c-primary);
     }
@@ -57,7 +53,15 @@
         --c-primary-focus: var(--c-red-focus);
     }
 
-    &.buttonLike {
+    &[data-disabled] {
+        pointer-events: none;
+
+        input {
+            color: var(--c-text-disabled);
+        }
+    }
+
+    &[data-button-like] {
         cursor: pointer;
 
         > input,

@@ -1,22 +1,14 @@
-.login {
-    @include position(0, 0, 0, 0);
-    @include flex(column, center, center);
-    position: absolute;
-    background: var(--c-background-primary);
-    z-index: 50;
-
-    > svg {
-        @include size(13.5em);
-        fill: var(--c-primary);
-    }
-}
-
-.form {
+.auth {
     @include flex(column, flex-end);
     width: 16em;
 
-    > button {
-        margin-top: 0.75em;
+    > * {
+        margin-bottom: 0.75em;
+    }
+
+    > p {
+        @include font(600, 12px);
+        align-self: flex-start;
     }
 }
 
@@ -35,4 +27,3 @@
         }
     }
 }
-

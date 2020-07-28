@@ -10,6 +10,7 @@ export type DBUser = DBEntry & {
     email_verified: boolean;
     username: string;
     password: string;
+    mfa_activated: boolean;
     transfer_limit_period: number;
     transfer_limit_start: Date;
     transfer_limit_end: Date;
