@@ -49,6 +49,7 @@ export const Auth: FunctionalComponent = () => {
                         type="password"
                         ariaLabel="Password"
                         onSubmit={submit}
+                        autoFocus={true}
                         {...form.register('password')}/>
 
             {mfa_required && <Fragment>
@@ -63,7 +64,7 @@ export const Auth: FunctionalComponent = () => {
 
                 <Button text="Submit"
                         loading={loading}
-                        disabled={form.empty()}
+                        disabled={mfa_required ? form.empty() : form.empty('password')}
                         onClick={submit}/>
             </div>
         </div>

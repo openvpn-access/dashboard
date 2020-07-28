@@ -43,6 +43,7 @@ export const Username: FunctionalComponent<Props> = props => {
                         icon="user"
                         ariaLabel="Username or email address"
                         onSubmit={submit}
+                        autoFocus={true}
                         {...form.register('login_id')}/>
 
             <Button text="Submit"

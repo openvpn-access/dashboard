@@ -1,5 +1,6 @@
 import {cn} from '@utils/preact-utils';
 import {createRef, FunctionalComponent, h} from 'preact';
+import {useEffect} from 'preact/hooks';
 import {JSXInternal} from 'preact/src/jsx';
 import styles from './InputField.module.scss';
 
@@ -9,6 +10,7 @@ type Props = {
     ariaLabel?: string;
     className?: string;
     passwordMeter?: boolean;
+    autoFocus?: boolean;
     type?: 'text' | 'password' | 'number';
     icon?: string;
     disabled?: boolean;
@@ -63,6 +65,10 @@ export const InputField: FunctionalComponent<Props> = props => {
             }
         }
     };
+
+    if (props.autoFocus) {
+        useEffect(() => inputField.current?.focus(), [props.autoFocus]);
+    }
 
     return (
         <div className={cn(styles.inputField, props.className)}
