@@ -31,14 +31,23 @@ export const Portal = <T extends Record<string, JSXInternal.Element>>(props: Pro
         }
     }, [props.show]);
 
+    if (props.keepAlive) {
+        return <Fragment>{
+            Object.entries(props.views).map(([name, com]) => (
+                <div className={cn(styles.portal, props.className)}
+                     data-fadeout={fadeout}
+                     hidden={name !== activeView}
+                     key={name}>
+                    {com}
+                </div>
+            ))
+        }</Fragment>;
+    }
+
     return (
         <div className={cn(styles.portal, props.className)}
              data-fadeout={fadeout}>
-            {props.keepAlive ? <Fragment>
-                {Object.entries(props.views).map(([name, com]) => (
-                    <div hidden={name !== activeView} key={name}>{com}</div>
-                ))}
-            </Fragment> : props.views[activeView]}
+            {props.views[activeView]}
         </div>
     );
 };

@@ -1,11 +1,9 @@
 .settings {
     @include flex(column, center);
     @include width(80%, auto, 25em);
-    @include size(100%);
     padding: 5em 1em;
     margin: auto;
     overflow: auto;
-    max-height: 100%;
 
     > *:not(:first-child) {
         margin-top: 1em;
