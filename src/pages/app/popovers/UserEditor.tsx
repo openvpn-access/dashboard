@@ -105,7 +105,7 @@ registerPopover<Props>('user-editor', {
                 {/* TODO: Add un-block button? */}
                 <p className={styles.accountLocked}
                    data-visible={accountLocked}>
-                    <span>This account is locked for a certain time period as the user entered  his password wrong too often.</span>
+                    <span>This account is locked for a certain time period as the user entered his password wrong too often.</span>
                 </p>
 
                 <div className={styles.form}>

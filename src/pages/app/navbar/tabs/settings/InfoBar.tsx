@@ -7,11 +7,8 @@ import {Fragment, FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
 import styles from './InfoBar.module.scss';
 
-type Props = {
-    user: DBUser;
-};
-
-export const InfoBar: FunctionalComponent<Props> = ({user}) => {
+export const InfoBar: FunctionalComponent = () => {
+    const user = session.store.getState().user as DBUser;
     const [state, setState] = useState<'idle' | 'sending' | 'sended'>('idle');
 
     const resendVerficiationEmail = () => {
@@ -21,7 +18,7 @@ export const InfoBar: FunctionalComponent<Props> = ({user}) => {
         delayPromise(1000, api({
             route: '/users/email/verify/send',
             method: 'POST',
-            data: {email: session.store.getState().user?.email}
+            data: {email: user.email}
         })).finally(() => {
             setState('sended');
         });

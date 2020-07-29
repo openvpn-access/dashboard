@@ -1,13 +1,44 @@
 .settings {
-    @include flex(column, center);
-    @include width(80%, auto, 25em);
+    @include flex(row);
+    @include width(80%, auto, 35em);
     padding: 5em 1em;
     margin: auto;
     overflow: auto;
+}
 
-    > *:not(:first-child) {
-        margin-top: 1em;
+.navBar {
+    @include flex(column);
+    margin-right: 1em;
+    flex-shrink: 0;
+
+    > button {
+        @include flex(row, center);
+        @include margin-between-v(0.25em);
+        @include font(300, 15px);
+        color: var(--c-text-primary-inactive);
+        transition: all 0.3s;
+        border-radius: 0.2em;
+        padding: 0.55em 1em;
+
+        > span {
+            margin-left: 0.65em;
+        }
+
+        &:hover:not([data-current]) {
+            background: var(--c-background-secondary);
+            color: var(--c-text-primary);
+        }
+
+        &[data-current] {
+            color: var(--c-text-secondary);
+            background: var(--c-primary);
+            cursor: default;
+        }
     }
+}
+
+.portal {
+    @include flex(column, center);
 }
 
 .divider {

@@ -9,17 +9,14 @@ import {Fragment, FunctionalComponent, h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 import styles from './MFASetup.module.scss';
 
-type Props = {
-    user: DBUser;
-};
-
 type MFAResponse = {
     secret: string;
     url: string;
     qr_code: string;
 };
 
-export const MFASetup: FunctionalComponent<Props> = ({user}) => {
+export const MFASetup: FunctionalComponent = () => {
+    const user = session.store.getState().user as DBUser;
     const [loading, setLoading] = useState(false);
     const [mfa, setMfa] = useState<MFAResponse | null>(null);
     const form = useForm({code: ''});
