@@ -1,7 +1,16 @@
 .portal {
-    transition: all 0.3s;
+    transition: all 0.15s;
 
     &[data-fadeout] {
         opacity: 0;
+    }
+
+    @include animate('0.15s') {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
     }
 }
