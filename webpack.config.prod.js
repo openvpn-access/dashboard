@@ -48,6 +48,13 @@ module.exports = {
                 ]
             },
             {
+                test: /\.(png|jpe?g|gif|eot|ttf|woff|woff2)$/i,
+                loader: 'file-loader',
+                options: {
+                    outputPath: 'assets'
+                }
+            },
+            {
                 enforce: 'pre',
                 test: /\.s[ac]ss$/,
                 use: [
