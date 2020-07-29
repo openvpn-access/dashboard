@@ -38,6 +38,7 @@ export const SearchBar: FunctionalComponent = () => {
                     el.value = '';
                     updateQuery();
                 }
+
             }
         });
 

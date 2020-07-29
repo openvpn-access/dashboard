@@ -22,6 +22,16 @@
     }
 }
 
+@mixin scroll_shadow($color, $background, $size: 20px) {
+    background: linear-gradient($background 33%, rgba(255, 255, 255, 0)),
+                linear-gradient(rgba(255, 255, 255, 0), $background 66%) 0 100%,
+                radial-gradient(farthest-side at 50% 0, $color, rgba(0, 0, 0, 0)),
+                radial-gradient(farthest-side at 50% 100%, $color, rgba(0, 0, 0, 0)) 0 100%;
+    background-repeat: no-repeat;
+    background-attachment: local, local, scroll, scroll;
+    background-size: 500% $size, 500% $size, 100% $size / 2, 100% $size / 2;
+}
+
 @mixin transition_sequence($amount, $dur, $reverse: false) {
     @for $i from 1 through $amount {
         &:nth-child(#{$i}) {

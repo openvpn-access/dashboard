@@ -1,5 +1,6 @@
 .header {
-    padding: 0.5em;
+    padding: 0 0.5em;
+    height: 2em;
     display: grid;
     grid-template-columns: var(--grid-columns);
     grid-gap: 0.5em;
