@@ -61,7 +61,8 @@ export const UpdateCredentials: FunctionalComponent = () => {
     };
 
     return (
-        <div className={styles.updateCredentials}>
+        <form className={styles.updateCredentials}
+              aria-label="Update login credentials">
             <h3>Update Credentials</h3>
 
             <div className={styles.form}>
@@ -115,6 +116,6 @@ export const UpdateCredentials: FunctionalComponent = () => {
                             onClick={form.onSubmit(submit)}/>
                 </div>
             </div>
-        </div>
+        </form>
     );
 };

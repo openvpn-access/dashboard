@@ -28,6 +28,7 @@ export const InfoBar: FunctionalComponent = () => {
         <div className={styles.infoBar}>
 
             <div className={styles.status}
+                 aria-label={user.activated ? 'Info: Account is activated' : 'Info: Account is deactivated.'}
                  data-status={user.activated ? 'ok' : 'error'}>
                 {user.activated ?
                     <Fragment>
@@ -41,7 +42,9 @@ export const InfoBar: FunctionalComponent = () => {
             </div>
 
             {!user.email_verified && <Fragment>
-                <div className={styles.status} data-status="error">
+                <div className={styles.status}
+                     data-status="error"
+                     role="alert">
                     <span>Please verify your Email address by clicking the link we&apos;ve send you!</span>
                 </div>
 
@@ -52,6 +55,7 @@ export const InfoBar: FunctionalComponent = () => {
                     }
 
                     {['idle', 'sending'].includes(state) && <Button text="Resend"
+                                                                    ariaLabel="Request new verification email"
                                                                     loading={state === 'sending'}
                                                                     onClick={resendVerficiationEmail}/>}
                 </div>

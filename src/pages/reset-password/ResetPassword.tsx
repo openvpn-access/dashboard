@@ -53,7 +53,7 @@ export default () => {
                 show={view}
                 views={{
                     'idle': (
-                        <div className={styles.form}>
+                        <form className={styles.form}>
                             <h3>Set a new password:</h3>
 
                             <InputField placeholder="New password"
@@ -73,29 +73,30 @@ export default () => {
                                         {...form.register('newPasswordRepeat')}/>
 
                             <Button text="Update"
+                                    ariaLabel="Submit password change"
                                     loading={loading}
                                     onClick={submit}/>
-                        </div>
+                        </form>
                     ),
                     'errored': (
                         <Fragment>
                             <div className={styles.errored}>
-                                <div className={styles.msg}>
+                                <div className={styles.msg} role="heading">
                                     <p>An error occured.</p>
                                     <small>Try requesting a new Email to reset your password.</small>
                                 </div>
-                                <Link href="/">Back to login</Link>
+                                <Link href="/login" aria-label="Go back to login page">Back to login</Link>
                             </div>
                         </Fragment>
                     ),
                     'success': (
                         <Fragment>
                             <div className={styles.verified}>
-                                <div className={styles.msg}>
+                                <div className={styles.msg} role="heading">
                                     <bc-icon name="checkmark"/>
                                     <span>Password successfully changed!</span>
                                 </div>
-                                <Link href="/">Back to login</Link>
+                                <Link href="/login" aria-label="Go back to login page">Back to login</Link>
                             </div>
                         </Fragment>
                     )

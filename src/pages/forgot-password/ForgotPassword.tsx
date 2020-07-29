@@ -45,7 +45,7 @@ export default () => {
                                         })}/>
 
                             <div className={styles.btnBar}>
-                                <Link href="/">Back to login</Link>
+                                <Link href="/login" aria-label="Go back to login page">Back to login</Link>
 
                                 <Button text="Submit"
                                         loading={loading}
@@ -61,7 +61,7 @@ export default () => {
                                     <bc-icon name="checkmark"/>
                                     <span>If this email belogs to a verified and valid account please check your inbox.</span>
                                 </div>
-                                <Link href="/login">Back to login</Link>
+                                <Link href="/login" aria-label="Go back to login page">Back to login</Link>
                             </div>
                         </Fragment>
                     )

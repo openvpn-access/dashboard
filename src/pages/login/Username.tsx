@@ -37,7 +37,8 @@ export const Username: FunctionalComponent<Props> = props => {
     });
 
     return (
-        <div className={styles.form}>
+        <form className={styles.form}
+              aria-label="Login first with your username">
             <InputField placeholder="Username / E-Mail"
                         disabled={loading}
                         icon="user"
@@ -48,9 +49,10 @@ export const Username: FunctionalComponent<Props> = props => {
 
             <Button text="Submit"
                     icon="login"
+                    ariaLabel="Continue with provided username / email"
                     loading={loading}
                     disabled={form.empty()}
                     onClick={submit}/>
-        </div>
+        </form>
     );
 };

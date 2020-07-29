@@ -42,12 +42,12 @@ export const Auth: FunctionalComponent = () => {
     });
 
     return (
-        <div className={styles.auth}>
+        <form className={styles.auth}>
             <InputField placeholder="Password"
                         icon="lock"
                         disabled={loading}
                         type="password"
-                        ariaLabel="Password"
+                        ariaLabel="Your password"
                         onSubmit={submit}
                         autoFocus={true}
                         {...form.register('password')}/>
@@ -55,18 +55,20 @@ export const Auth: FunctionalComponent = () => {
             {mfa_required && <Fragment>
                 <p>Please enter the code from your authenticator:</p>
                 <PinField length={6}
+                          ariaLabel="Your Authenticator code"
                           onSubmit={submit}
                           {...form.register('mfa_code')}/>
             </Fragment>}
 
             <div className={styles.btnBar}>
-                <Link href="/forgot-password">Forgot password?</Link>
+                <Link href="/forgot-password" aria-label="Forgot password">Forgot password?</Link>
 
                 <Button text="Submit"
+                        ariaLabel="Submit login credentials"
                         loading={loading}
                         disabled={mfa_required ? form.empty() : form.empty('password')}
                         onClick={submit}/>
             </div>
-        </div>
+        </form>
     );
 };

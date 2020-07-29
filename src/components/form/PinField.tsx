@@ -8,6 +8,7 @@ type Props = {
     error?: string | Falsish;
     value?: string;
     disabled?: boolean;
+    ariaLabel?: string;
     onSubmit?: (v: string) => void;
     onChange?: (v: string) => void;
 }
@@ -39,7 +40,9 @@ export const PinField: FunctionalComponent<Props> = props => {
     };
 
     return (
-        <div className={styles.pinField}>
+        <div className={styles.pinField}
+             aria-label={props.ariaLabel}
+             role="textbox">
             <div className={styles.digits}
                  style={`--grid-cols: ${props.length}`}>
                 {
@@ -49,6 +52,7 @@ export const PinField: FunctionalComponent<Props> = props => {
                                 data-errored={!!props.error}
                                 key={index}
                                 onKeyDown={keydown}
+                                aria-label={`Pin number ${index + 1}`}
                                 ref={instance => instance && (refs[index] = instance)}>
                             <span>{digit}</span>
                         </button>

@@ -49,7 +49,7 @@ export const NavBar: FunctionalComponent = () => {
                     className={styles.tabButton}
                     data-active={name === activeTab}
                     aria-selected={name === activeTab}
-                    aria-label={`Switch to tab: ${name}`}
+                    aria-label={`Switch to ${name} tab`}
                     onClick={changeTabTo(name as View)}>
                 <bc-icon name={icon}/>
                 <span>{name}</span>
