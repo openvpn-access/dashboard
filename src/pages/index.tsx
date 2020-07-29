@@ -1,4 +1,4 @@
-import {AsyncRoute} from '@lib/AsyncRoute';
+import {AsyncRoute} from '@lib/async-route';
 import {h, render} from 'preact';
 import Router from 'preact-router';
 

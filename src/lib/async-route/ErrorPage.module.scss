@@ -1,0 +1,23 @@
+.errorPage {
+    @include flex(column, center, center);
+    color: var(--c-text-primary);
+
+    > svg {
+        @include size(7em);
+        fill: var(--c-primary);
+    }
+
+    > h1 {
+        @include font(600, 16px);
+    }
+
+    > p {
+        @include font(600, 13px);
+        text-align: center;
+        line-height: 1.5em;
+    }
+
+    > button {
+        margin-top: 1em;
+    }
+}
