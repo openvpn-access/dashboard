@@ -62,6 +62,11 @@ export const NavBar: FunctionalComponent = () => {
              className={styles.navBar}
              aria-label={activeTab}>
             <div className={styles.tabButtons}>
+                <header>
+                    <bc-icon name="openvpn-access"/>
+                    <h1>Welcome back!</h1>
+                </header>
+
                 {tabButtons}
 
                 <button className={cn(styles.tabButton, styles.logout)}
