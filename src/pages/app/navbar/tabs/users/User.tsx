@@ -1,6 +1,6 @@
 import {DBUser} from '@api/types';
 import {showPopover} from '@lib/popover';
-import {formatDate} from '@utils/format-date';
+import dayjs from 'dayjs';
 import {FunctionalComponent, h} from 'preact';
 import styles from './User.module.scss';
 
@@ -33,8 +33,8 @@ export const User: FunctionalComponent<Props> = ({user}) => (
             </p>
 
             <p role="cell">{user.email}</p>
-            <p role="cell">{formatDate(DATE_FORMAT, user.created_at)}</p>
-            <p role="cell">{formatDate(DATE_FORMAT, user.updated_at)}</p>
+            <p role="cell">{dayjs(user.created_at).format(DATE_FORMAT)}</p>
+            <p role="cell">{dayjs(user.updated_at).format(DATE_FORMAT)}</p>
 
             <button className={styles.edit}
                     aria-label={`Edit user ${user.id} with username ${user.username}`}
