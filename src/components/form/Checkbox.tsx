@@ -30,6 +30,7 @@ export const Checkbox = <T extends boolean = false>(props: Props<T>) => {
 
     return (
         <button role="checkbox"
+                type="button"
                 aria-label={props.ariaLabel}
                 onClick={click}
                 data-state={String(props.value)}

@@ -43,7 +43,8 @@ registerPopover('search-filter', {
         };
 
         return (
-            <div className={styles.searchFilter}>
+            <form className={styles.searchFilter}
+                  aria-label="Filter table">
                 <section className={styles.sort}>
                     <p className={styles.label}>Sort list by</p>
 
@@ -88,7 +89,7 @@ registerPopover('search-filter', {
                         ariaLabel="Apply filter options"
                         disabled={locked}
                         onClick={form.onSubmit(apply)}/>
-            </div>
+            </form>
         );
     }
 });

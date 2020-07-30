@@ -22,7 +22,8 @@ export const Button: FunctionalComponent<Props> = props => {
                 role={props.loading ? 'progressbar' : 'button'}
                 data-loading={props.loading}
                 data-type={props.type || 'primary'}
-                onClick={() => !props.disabled && props.onClick()}>
+                onClick={() => !props.disabled && props.onClick()}
+                type="button">
             {props.icon && <bc-icon name={props.icon}/>}
             <span>{props.text}</span>
 
