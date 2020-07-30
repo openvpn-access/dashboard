@@ -1,10 +1,10 @@
+import {IconButton} from '@components/form/IconButton';
 import {showPopover} from '@lib/popover';
 import {users} from '@state/users';
 import {debounce} from '@utils/debounce';
 import {createNativeEventContainer} from '@utils/events';
 import {createRef, FunctionalComponent, h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
-import {IconButton} from '@components/form/IconButton';
 import styles from './Searchbar.module.scss';
 
 export const SearchBar: FunctionalComponent = () => {
@@ -16,8 +16,14 @@ export const SearchBar: FunctionalComponent = () => {
             setLocket(true);
 
             // Update search-query and user table
-            users.filters.update({search: input.current.value || undefined});
-            users.items.refresh().finally(() => setLocket(false));
+            users.filters.update({
+                page: 1,
+                search: input.current.value || undefined
+            });
+
+            // Refresh list
+            users.items.refresh()
+                .finally(() => setLocket(false));
         }
     }, 1500);
 

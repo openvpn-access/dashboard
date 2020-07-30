@@ -7,12 +7,6 @@
     will-change: transform;
     flex-grow: 1;
 
-    &::after {
-        display: block;
-        content: '';
-        height: 3.5em;
-    }
-
     &[data-hide] {
         opacity: 0;
     }
@@ -24,6 +18,12 @@
             display: block;
         }
     }
+}
+
+.loader {
+    position: relative;
+    height: 4em;
+    padding-bottom: 3.5em;
 }
 
 .placeholder {

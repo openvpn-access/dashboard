@@ -6,7 +6,10 @@ export type ListStoreItem = {
 };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export type ListStoreFilter = Record<string, any>;
+export type ListStoreFilter = {
+    page: number;
+    per_page: number;
+};
 
 /**
  * Creates a new, classic store to insert, update and manipulate a list of database items (much convenient!).
@@ -68,9 +71,28 @@ export function linkTable<Item extends ListStoreItem, Filters extends ListStoreF
                     query: filters.state.getState()
                 });
             }
+        }),
+
+        // Append next page
+        next: domain.createEffect<void, Array<Item>>(`${endpoint}-items-next`, {
+            async handler(): Promise<Array<Item>> {
+                const query = filters.state.getState();
+                const items = await api<Array<Item>>({
+                    route: endpoint, query
+                });
+
+                if (items.length) {
+                    filters.update({
+                        page: query.page + 1
+                    } as Partial<Filters>); // Why in hell do I need to cast this???
+                }
+
+                return items;
+            }
         })
     };
 
+    // TODO: Create module with merge strategies
     items.state
         .on(items.insert.done, (state, payload) => {
             return [...state, payload.result];
@@ -85,6 +107,9 @@ export function linkTable<Item extends ListStoreItem, Filters extends ListStoreF
         })
         .on(items.refresh.done, (_, payload) => {
             return payload.result;
+        })
+        .on(items.next.done, (state, payload) => {
+            return [...state, ...payload.result];
         })
         .reset(reset);
 
