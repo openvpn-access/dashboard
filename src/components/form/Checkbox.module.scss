@@ -62,4 +62,11 @@
             opacity: 1;
         }
     }
+
+    @include disabled {
+        border-color: var(--c-background-secondary);
+        background: transparent;
+        cursor: not-allowed;
+        color: var(--c-background-secondary-hover);
+    }
 }

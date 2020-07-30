@@ -92,7 +92,6 @@ export function linkTable<Item extends ListStoreItem, Filters extends ListStoreF
         })
     };
 
-    // TODO: Create module with merge strategies
     items.state
         .on(items.insert.done, (state, payload) => {
             return [...state, payload.result];

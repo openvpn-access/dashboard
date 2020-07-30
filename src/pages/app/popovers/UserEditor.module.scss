@@ -36,10 +36,10 @@
             margin-top: 0.5em;
         }
 
-        .accountState {
+        .checkBox {
             @include flex(row, center, space-between);
 
-            > p {
+            p {
                 @include font(600, 13px);
             }
         }

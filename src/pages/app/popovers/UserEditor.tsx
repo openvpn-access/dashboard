@@ -1,6 +1,12 @@
 import {ErrorCode} from '@api/index';
 import {DBUser} from '@api/types';
 import {validation} from '@api/validation';
+import {Button} from '@components/form/Button';
+import {BytePicker} from '@components/form/BytePicker';
+import {Checkbox} from '@components/form/Checkbox';
+import {DatePicker} from '@components/form/DatePicker';
+import {DropDown} from '@components/form/DropDown';
+import {InputField} from '@components/form/InputField';
 import {registerPopover} from '@lib/popover';
 import {isUserAccountLocked, users} from '@state/users';
 import {cn} from '@utils/preact-utils';
@@ -9,12 +15,6 @@ import {useForm} from '@utils/use-form';
 import {h} from 'preact';
 import {useState} from 'preact/hooks';
 import {useEffect} from 'react';
-import {Button} from '@components/form/Button';
-import {BytePicker} from '@components/form/BytePicker';
-import {Checkbox} from '@components/form/Checkbox';
-import {DatePicker} from '@components/form/DatePicker';
-import {DropDown} from '@components/form/DropDown';
-import {InputField} from '@components/form/InputField';
 import styles from './UserEditor.module.scss';
 
 type Props = {
@@ -38,12 +38,13 @@ registerPopover<Props>('user-editor', {
         const [restricted, setRestricted] = useState<boolean>(!!(user.transfer_limit_start || user.transfer_limit_end || user.transfer_limit_bytes));
         const isLoading = () => applyLoading || deleteLoading;
 
-        const form = useForm({
+        const form = useForm<Partial<DBUser>>({
             username: user.username,
             email: user.email,
             type: user.type || 'user',
             activated: user.activated,
             password: user.password,
+            mfa_activated: user.mfa_activated,
             transfer_limit_period: user.transfer_limit_period,
             transfer_limit_start: user.transfer_limit_start,
             transfer_limit_end: user.transfer_limit_end,
@@ -140,9 +141,14 @@ registerPopover<Props>('user-editor', {
                                                     validate: validation.user.password
                                                 })}/>}
 
-                        <div className={styles.accountState}>
+                        <div className={styles.checkBox}>
                             <p>Activated</p>
                             <Checkbox {...form.register('activated')}/>
+                        </div>
+
+                        <div className={styles.checkBox}>
+                            <p>MFA <small>(Can only be deactivated)</small></p>
+                            <Checkbox disabled={!user.mfa_activated} {...form.register('mfa_activated')}/>
                         </div>
                     </section>
 

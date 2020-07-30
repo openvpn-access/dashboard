@@ -7,6 +7,7 @@ type AllowedValues<T> = T extends true ? boolean | null : boolean;
 type Props<T extends boolean> = {
     ariaLabel?: string;
     className?: string;
+    disabled?: boolean;
     value: AllowedValues<T>;
     allowIndeterminate?: T;
     onChange: (state: AllowedValues<T>, ev: MouseEvent) => void;
@@ -31,6 +32,7 @@ export const Checkbox = <T extends boolean = false>(props: Props<T>) => {
     return (
         <button role="checkbox"
                 type="button"
+                disabled={props.disabled}
                 aria-label={props.ariaLabel}
                 onClick={click}
                 data-state={String(props.value)}

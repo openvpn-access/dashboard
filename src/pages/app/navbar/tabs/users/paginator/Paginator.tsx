@@ -10,7 +10,6 @@ export const Paginator: FunctionalComponent = () => {
     const {total_users_count} = useStore(users.stats.state);
     const totalPages = Math.ceil(total_users_count / per_page);
 
-    // TODO: This is broken with filters
     return (
         <div className={styles.paginator}
              data-visible={!search && totalPages > 1}>
