@@ -13,8 +13,7 @@ import {cn} from '@utils/preact-utils';
 import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
 import {h} from 'preact';
-import {useState} from 'preact/hooks';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'preact/hooks';
 import styles from './UserEditor.module.scss';
 
 type Props = {

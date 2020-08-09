@@ -33,13 +33,13 @@ export default () => {
                 show={view}
                 views={{
                     'idle': (
-                        <Fragment>
+                        <form aria-label="Reset password"
+                              onSubmit={submit}>
                             <h3>Enter your user accounts verified email address and we will send you a password reset link.</h3>
 
                             <InputField placeholder="Email Address"
                                         icon="envelope"
                                         disabled={loading}
-                                        onSubmit={submit}
                                         {...form.register('email', {
                                             validate: validation.user.email
                                         })}/>
@@ -49,10 +49,10 @@ export default () => {
 
                                 <Button text="Submit"
                                         loading={loading}
-                                        disabled={form.empty()}
-                                        onClick={submit}/>
+                                        submit={true}
+                                        disabled={form.empty()}/>
                             </div>
-                        </Fragment>
+                        </form>
                     ),
                     'send': (
                         <Fragment>

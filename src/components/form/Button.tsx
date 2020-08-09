@@ -8,9 +8,10 @@ type Props = {
     disabled?: boolean;
     className?: string;
     icon?: string;
+    submit?: boolean;
     type?: 'primary' | 'red' | 'yellow';
     loading?: boolean;
-    onClick: () => void;
+    onClick?: () => void;
     text: string;
 };
 
@@ -22,8 +23,8 @@ export const Button: FunctionalComponent<Props> = props => {
                 role={props.loading ? 'progressbar' : 'button'}
                 data-loading={props.loading}
                 data-type={props.type || 'primary'}
-                onClick={() => !props.disabled && props.onClick()}
-                type="button">
+                onClick={() => !props.disabled && props.onClick?.()}
+                type={props.submit ? 'submit' : 'button'}>
             {props.icon && <bc-icon name={props.icon}/>}
             <span>{props.text}</span>
 

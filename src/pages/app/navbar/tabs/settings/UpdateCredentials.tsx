@@ -30,7 +30,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
         });
     }, []);
 
-    const submit = () => {
+    const submit = form.onSubmit(() => {
         const data = form.values();
         form.clearErrors();
 
@@ -58,11 +58,12 @@ export const UpdateCredentials: FunctionalComponent = () => {
                     return form.setError('username', 'This username is already in use.');
             }
         }).finally(() => setLoading(false));
-    };
+    });
 
     return (
         <form className={styles.updateCredentials}
-              aria-label="Update login credentials">
+              aria-label="Update login credentials"
+              onSubmit={submit}>
             <h3>Update Credentials</h3>
 
             <div className={styles.form}>
@@ -86,7 +87,6 @@ export const UpdateCredentials: FunctionalComponent = () => {
                             placeholder="Password"
                             icon="lock"
                             ariaLabel="Current password"
-                            onSubmit={form.onSubmit(submit)}
                             {...form.register('current_password', {
                                 required: true
                             })}/>
@@ -96,7 +96,6 @@ export const UpdateCredentials: FunctionalComponent = () => {
                                                placeholder="New password"
                                                icon="lock"
                                                ariaLabel="New password"
-                                               onSubmit={form.onSubmit(submit)}
                                                {...form.register('password', {
                                                    validate: validation.user.password
                                                })}/>}
@@ -112,8 +111,8 @@ export const UpdateCredentials: FunctionalComponent = () => {
                     <Button className={styles.submitBtn}
                             text="Submit"
                             loading={loading}
-                            disabled={form.empty('username', 'email', 'current_password')}
-                            onClick={form.onSubmit(submit)}/>
+                            submit={true}
+                            disabled={form.empty('username', 'email', 'current_password')}/>
                 </div>
             </div>
         </form>

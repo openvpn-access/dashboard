@@ -4,10 +4,9 @@ import {eventPath} from '@utils/event-path';
 import {createNativeEventContainer} from '@utils/events';
 import {cn} from '@utils/preact-utils';
 import {uid} from '@utils/uid';
-import {FunctionalComponent, h} from 'preact';
+import {createRef, FunctionalComponent, h} from 'preact';
 import {useEffect, useState} from 'preact/hooks';
 import {JSXInternal} from 'preact/src/jsx';
-import {createRef} from 'react';
 import {events, Popover} from './events';
 import styles from './Popover.module.scss';
 

@@ -6,8 +6,8 @@ import {delayPromise} from '@utils/promises';
 import {useForm} from '@utils/use-form';
 import {FunctionalComponent, h} from 'preact';
 import {useState} from 'preact/hooks';
-import styles from './Username.module.scss';
 import {login} from './state';
+import styles from './Username.module.scss';
 
 type Props = {
     onSubmit: () => void;
@@ -38,12 +38,12 @@ export const Username: FunctionalComponent<Props> = props => {
 
     return (
         <form className={styles.form}
+              onSubmit={submit}
               aria-label="Login first with your username">
             <InputField placeholder="Username / E-Mail"
                         disabled={loading}
                         icon="user"
                         ariaLabel="Username or email address"
-                        onSubmit={submit}
                         autoFocus={true}
                         {...form.register('login_id')}/>
 
@@ -51,8 +51,8 @@ export const Username: FunctionalComponent<Props> = props => {
                     icon="login"
                     ariaLabel="Continue with provided username / email"
                     loading={loading}
-                    disabled={form.empty()}
-                    onClick={submit}/>
+                    submit={true}
+                    disabled={form.empty()}/>
         </form>
     );
 };

@@ -87,7 +87,8 @@ export const MFASetup: FunctionalComponent = () => {
                 </Fragment>
             }
 
-            <form className={styles.form}>
+            <form className={styles.form}
+                  onSubmit={submit(!user.mfa_activated)}>
                 <PinField disabled={loading}
                           length={6}
                           ariaLabel="Authenticator code"
@@ -99,7 +100,7 @@ export const MFASetup: FunctionalComponent = () => {
                         ariaLabel={user.mfa_activated ? 'Deactivate MFA' : 'Activate MFA'}
                         disabled={form.empty()}
                         loading={loading}
-                        onClick={submit(!user.mfa_activated)}/>
+                        submit={true}/>
             </form>
         </div>
     );

@@ -18,7 +18,6 @@ type Props = {
     placeholder?: string;
     error?: string | Falsish;
     value?: string;
-    onSubmit?: (v: string) => void;
     onChange?: (v: string) => void;
     onClick?: (() => void) | boolean;
     afterInput?: Array<JSXInternal.Element> | JSXInternal.Element
@@ -49,7 +48,6 @@ const numberStr = /^[\d]*$/;
 
 export const InputField: FunctionalComponent<Props> = props => {
     const inputField = createRef<HTMLInputElement>();
-    const getValue = () => inputField.current?.value || '';
 
     const onChange = () => {
         const el = inputField.current;
@@ -87,8 +85,7 @@ export const InputField: FunctionalComponent<Props> = props => {
                        placeholder={props.placeholder}
                        aria-label={props.ariaLabel || props.placeholder}
                        value={props.value || ''}
-                       onInput={onChange}
-                       onKeyUp={e => e.key === 'Enter' && props.onSubmit?.(getValue())}/>
+                       onInput={onChange}/>
 
                 {
                     props.type === 'password' && props.passwordMeter &&

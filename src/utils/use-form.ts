@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {JSX} from 'preact/compat';
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import {StateUpdater, useState} from 'preact/hooks';
 
@@ -81,13 +82,16 @@ export const useForm = <T extends Record<string, any>>(base: T) => {
 
         /**
          * Takes a callback function which gets called if the form is valid.
-         * @param cb Function to be called if all fields are valid
+         * @param cb Function to be called if all fields are valid, preferable passed to onSubmit of the form element
          */
-        onSubmit(cb: (d: T) => void): () => void {
-            return () => {
+        onSubmit(cb: (d: T) => void): (e?: JSX.TargetedEvent<HTMLElement, Event>) => void {
+            return e => {
                 if (this.validate()) {
                     cb(this.values());
                 }
+
+                e?.preventDefault();
+                return false;
             };
         },
 

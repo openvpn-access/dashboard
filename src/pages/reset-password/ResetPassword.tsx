@@ -53,7 +53,8 @@ export default () => {
                 show={view}
                 views={{
                     'idle': (
-                        <form className={styles.form}>
+                        <form className={styles.form}
+                              onSubmit={submit}>
                             <h3>Set a new password:</h3>
 
                             <InputField placeholder="New password"
@@ -68,14 +69,13 @@ export default () => {
                             <InputField placeholder="Repeat password"
                                         disabled={loading}
                                         type="password"
-                                        onSubmit={submit}
                                         icon="lock"
                                         {...form.register('newPasswordRepeat')}/>
 
                             <Button text="Update"
                                     ariaLabel="Submit password change"
-                                    loading={loading}
-                                    onClick={submit}/>
+                                    submit={true}
+                                    loading={loading}/>
                         </form>
                     ),
                     'errored': (

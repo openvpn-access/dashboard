@@ -32,7 +32,7 @@ registerPopover('search-filter', {
             ...users.filters.state.getState()
         });
 
-        const apply = () => {
+        const submit = form.onSubmit(() => {
             setLocked(true);
 
             users.filters.update(form.values());
@@ -40,11 +40,12 @@ registerPopover('search-filter', {
                 setLocked(false);
                 props.hidePopover();
             });
-        };
+        });
 
         return (
             <form className={styles.searchFilter}
-                  aria-label="Filter table">
+                  aria-label="Filter table"
+                  onSubmit={submit}>
                 <section className={styles.sort}>
                     <p className={styles.label}>Sort list by</p>
 
@@ -87,8 +88,8 @@ registerPopover('search-filter', {
                 <Button className={styles.btn}
                         text="Apply"
                         ariaLabel="Apply filter options"
-                        disabled={locked}
-                        onClick={form.onSubmit(apply)}/>
+                        submit={true}
+                        disabled={locked}/>
             </form>
         );
     }
