@@ -11,7 +11,8 @@ type Props = {
 export const IconButton: FunctionalComponent<Props> = props => (
     <button className={styles.iconButton}
             aria-label={props.ariaLabel || props.title}
-            onClick={props.onClick}>
+            onClick={props.onClick}
+            type="button">
         {props.title && <bc-tooltip content={props.title}/>}
         <bc-icon name={props.icon}/>
     </button>

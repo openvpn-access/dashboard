@@ -53,7 +53,7 @@ export const BytePicker: FunctionalComponent<Props> = props => {
                    ref={input}
                    value={props.value === null || props.value === undefined ? '∞' : value}/>
 
-            {props.nullable && <button onClick={clear}>
+            {props.nullable && <button onClick={clear} type="button">
                 <bc-tooltip content="No limit"/>
                 <bc-icon name="infinite"/>
             </button>}

@@ -20,6 +20,7 @@ export const Settings: FunctionalComponent = () => {
         ['Security', 'security', 'shield']
     ].map(([text, view, icon], index) => (
         <button key={index}
+                type="button"
                 aria-label={`Switch to ${view} settings`}
                 data-current={currentView === view}
                 onClick={() => setView(view as View)}>

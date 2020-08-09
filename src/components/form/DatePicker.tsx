@@ -101,7 +101,8 @@ export const DatePicker: FunctionalComponent<Props> = props => {
                         <button data-selected={selected}
                                 data-indirect={indirect}
                                 key={elements.length}
-                                onClick={handler(di)}>{di.date()}</button>
+                                onClick={handler(di)}
+                                type="button">{di.date()}</button>
                     );
 
                     di = di.add(1, 'day');
@@ -119,7 +120,8 @@ export const DatePicker: FunctionalComponent<Props> = props => {
                     .map((v, index) =>
                         <button key={index}
                                 data-selected={date.month() === index}
-                                onClick={handler(date.set('month', index))}>{v}</button>
+                                onClick={handler(date.set('month', index))}
+                                type="button">{v}</button>
                     );
             }
             case 'year': {
@@ -136,7 +138,8 @@ export const DatePicker: FunctionalComponent<Props> = props => {
                     elements.push(
                         <button data-selected={di.year() === date.year()}
                                 key={elements.length}
-                                onClick={handler(di)}>{di.year()}</button>
+                                onClick={handler(di)}
+                                type="button">{di.year()}</button>
                     );
 
                     di = di.add(1, 'year');
@@ -160,6 +163,7 @@ export const DatePicker: FunctionalComponent<Props> = props => {
                                 <button className={styles.clear}
                                         aria-label="Clear"
                                         onClickCapture={reset}
+                                        type="button"
                                         data-visible={!!(props.nullable && props.value)}>
                                     <bc-tooltip content="Reset"/>
                                     <bc-icon name="delete"/>
@@ -170,14 +174,15 @@ export const DatePicker: FunctionalComponent<Props> = props => {
                 <div className={styles.datePicker}>
 
                     <div className={styles.controls}>
-                        <button onClick={double(-1)}>«</button>
-                        <button onClick={single(-1)}>‹</button>
+                        <button onClick={double(-1)} type="button">«</button>
+                        <button onClick={single(-1)} type="button">‹</button>
 
                         <button className={styles.title}
+                                type="button"
                                 onClick={toggleView}>{getTitle()}</button>
 
-                        <button onClick={single(1)}>›</button>
-                        <button onClick={double(1)}>»</button>
+                        <button onClick={single(1)} type="button">›</button>
+                        <button onClick={double(1)} type="button">»</button>
                     </div>
 
                     <div className={styles.view}

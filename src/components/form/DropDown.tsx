@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {cn} from '@utils/preact-utils';
 import {createRef, FunctionalComponent, h} from 'preact';
-import styles from './DropDown.module.scss';
 import {Popper} from '../Popper';
+import styles from './DropDown.module.scss';
 
 type Props = {
     ariaLabel?: string;
@@ -45,7 +45,8 @@ export const DropDown: FunctionalComponent<Props> = props => {
             buttons.push(
                 <button key={key}
                         onClick={select(key)}
-                        aria-label={value}>
+                        aria-label={value}
+                        type="button">
                     {value}
                 </button>
             );
@@ -57,12 +58,11 @@ export const DropDown: FunctionalComponent<Props> = props => {
     return (
         <Popper ref={popper}
                 disabled={props.disabled}
-                button={open =>
+                button={() =>
                     <button className={cn(styles.button, {
-                        [styles.open]: open,
                         [styles.empty]: !buttons.length,
                         [styles.disabled]: !!props.disabled
-                    })} aria-label={props.ariaLabel || 'Open context menu'}>
+                    })} type="button" aria-label={props.ariaLabel || 'Open context menu'}>
                         {props.icon && <bc-icon name={props.icon}/>}
 
                         <p style={`min-width: calc(${maxTextWidth} * 0.6em)`}>

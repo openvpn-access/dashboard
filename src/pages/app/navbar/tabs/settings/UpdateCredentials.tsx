@@ -103,7 +103,8 @@ export const UpdateCredentials: FunctionalComponent = () => {
                 <div className={styles.actionBar}>
                     {!changePassword && <button className={styles.changePasswordBtn}
                                                 onClick={() => setChangePassword(true)}
-                                                aria-label="Change password too">
+                                                aria-label="Change password too"
+                                                type="button">
                         Change password?
                     </button>}
 

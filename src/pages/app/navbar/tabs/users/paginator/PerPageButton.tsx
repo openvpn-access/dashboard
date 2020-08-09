@@ -28,6 +28,7 @@ export const PerPageButton: FunctionalComponent = () => {
         .map((v, i) =>
             <button key={i}
                     onClick={setPageSize(v)}
+                    type="button"
                     aria-label={`Show ${v} users per page`}>
                 {v}
             </button>
@@ -54,6 +55,7 @@ export const PerPageButton: FunctionalComponent = () => {
             </div>
 
             <button className={styles.btn}
+                    type="button"
                     onClick={() => setShowPages(!showPages)}
                     aria-label="Change amount of users per page">
                 {per_page}

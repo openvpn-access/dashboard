@@ -50,7 +50,8 @@ export const NavBar: FunctionalComponent = () => {
                     data-active={name === activeTab}
                     aria-selected={name === activeTab}
                     aria-label={`Switch to ${name} tab`}
-                    onClick={changeTabTo(name as View)}>
+                    onClick={changeTabTo(name as View)}
+                    type="button">
                 <bc-icon name={icon}/>
                 <span>{name}</span>
             </button>
@@ -71,7 +72,8 @@ export const NavBar: FunctionalComponent = () => {
 
                 <button className={cn(styles.tabButton, styles.logout)}
                         aria-label="Logout"
-                        onClick={logout}>
+                        onClick={logout}
+                        type="button">
                     <bc-icon name="logout"/>
                     <span>Logout</span>
                 </button>

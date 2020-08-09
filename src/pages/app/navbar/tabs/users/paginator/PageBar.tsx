@@ -56,6 +56,7 @@ export const PageBar: FunctionalComponent = () => {
     return (
         <div className={styles.pageBar}>
             <button className={styles.first}
+                    type="button"
                     aria-label="Jump to first page"
                     disabled={page === 1}
                     onClick={jumpTo(1)}>
@@ -65,7 +66,7 @@ export const PageBar: FunctionalComponent = () => {
             <div className={styles.spinner}>
                 <div className={styles.fake}>
                     {buttons.slice(PPAD, -PPAD).map((value, index) =>
-                        <button key={index} className={styles.number}>
+                        <button key={index} className={styles.number} type="button">
                             {String(value).padStart(pad, '0')}
                         </button>
                     )}
@@ -75,6 +76,7 @@ export const PageBar: FunctionalComponent = () => {
                      ref={spinner}>
                     {buttons.map((value, index) =>
                         <button key={index}
+                                type="button"
                                 aria-label={`Jump to page ${index}`}
                                 onClick={jumpTo(value)}
                                 data-invisible={value <= 0 || value > totalPages}
@@ -87,6 +89,7 @@ export const PageBar: FunctionalComponent = () => {
             </div>
 
             <button className={styles.last}
+                    type="button"
                     aria-label="Jump to last page"
                     disabled={page === totalPages}
                     onClick={jumpTo(totalPages)}>

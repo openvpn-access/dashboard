@@ -52,6 +52,7 @@ export const PinField: FunctionalComponent<Props> = props => {
                                 data-errored={!!props.error}
                                 key={index}
                                 onKeyDown={keydown}
+                                type="button"
                                 aria-label={`Pin number ${index + 1}`}
                                 ref={instance => instance && (refs[index] = instance)}>
                             <span>{digit}</span>

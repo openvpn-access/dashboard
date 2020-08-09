@@ -37,6 +37,7 @@ export const User: FunctionalComponent<Props> = ({user}) => (
             <p role="cell">{dayjs(user.updated_at).format(DATE_FORMAT)}</p>
 
             <button className={styles.edit}
+                    type="button"
                     aria-label={`Edit user ${user.id} with username ${user.username}`}
                     onClick={() => showPopover('user-editor', {user})}>
                 <bc-icon name="edit"/>
