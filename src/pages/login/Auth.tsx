@@ -28,7 +28,7 @@ export const Auth: FunctionalComponent = () => {
         })).then(() => {
             route('/');
             login.state.reset();
-            form.clearValues();
+            form.resetValues();
         }).catch(err => {
             switch (err.code) {
                 case ErrorCode.INVALID_PASSWORD:

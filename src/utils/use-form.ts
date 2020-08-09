@@ -64,16 +64,25 @@ export const useForm = <T extends Record<string, any>>(base: T) => {
                 }
 
                 const value = val[0];
-                if (opt.required && !value.length) {
+                let fieldValid = true;
+
+                if (opt.required && !value?.length) {
                     err[1]('Required');
-                    ok = false;
+                    fieldValid = false;
                 } else if (opt.validate) {
                     for (const [fn, msg] of opt.validate) {
                         if (!fn(value)) {
                             err[1](msg);
-                            ok = false;
+                            fieldValid = false;
+                            break;
                         }
                     }
+                }
+
+                if (fieldValid) {
+                    err[1](null);
+                } else {
+                    ok = false;
                 }
             }
 
@@ -121,11 +130,11 @@ export const useForm = <T extends Record<string, any>>(base: T) => {
 
         clearError(...names: Array<keyof T>): void {
             for (const name of names) {
-                stateMap.get(name)?.err[1]('');
+                stateMap.get(name)?.err[1](null);
             }
         },
 
-        clearValue(...names: Array<keyof T>): void {
+        resetValue(...names: Array<keyof T>): void {
             for (const name of names) {
                 stateMap.get(name)?.val[1](base[name]);
             }
@@ -137,9 +146,16 @@ export const useForm = <T extends Record<string, any>>(base: T) => {
             }
         },
 
-        clearValues(): void {
-            for (const {val} of stateMap.values()) {
-                val[1]('');
+        resetValues(): void {
+            for (const [name, {val}] of stateMap.entries()) {
+                val[1](base[name]);
+            }
+        },
+
+        reset(): void {
+            for (const [name, {val, err}] of stateMap.entries()) {
+                val[1](base[name]);
+                err[1](null);
             }
         },
 

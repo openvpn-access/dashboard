@@ -50,10 +50,10 @@ registerPopover<Props>('user-editor', {
             transfer_limit_bytes: user.transfer_limit_bytes
         });
 
-        const submit = () => {
+        const submit = form.onSubmit(values => {
             setApplyLoading(true);
             const data = {
-                ...form.values(),
+                ...values,
                 ...(!restricted && {
                     transfer_limit_period: null,
                     transfer_limit_start: null,
@@ -77,8 +77,11 @@ registerPopover<Props>('user-editor', {
                     case ErrorCode.DUPLICATE_USERNAME:
                         return form.setError('username', 'This username is already in use.');
                 }
-            }).finally(() => setApplyLoading(false));
-        };
+            }).finally(() => {
+                setApplyLoading(false);
+                form.reset();
+            });
+        });
 
         const deleteUser = () => {
             if (!confirmDelete) {
@@ -100,7 +103,9 @@ registerPopover<Props>('user-editor', {
         }, [user]);
 
         return (
-            <div className={styles.userEditor}>
+            <form aria-label={newUser ? 'Create a new user' : 'Edit user'}
+                  className={styles.userEditor}
+                  onSubmit={submit}>
 
                 {/* TODO: Add un-block button? */}
                 <p className={styles.accountLocked}
@@ -188,9 +193,9 @@ registerPopover<Props>('user-editor', {
                             ariaLabel={newUser ? 'Add user' : 'Save changes'}
                             loading={applyLoading}
                             disabled={deleteLoading}
-                            onClick={form.onSubmit(submit)}/>
+                            submit={true}/>
                 </div>
-            </div>
+            </form>
         );
     }
 });

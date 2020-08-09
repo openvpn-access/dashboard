@@ -44,7 +44,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
             route: `/users/${session.store.getState().user?.id}`,
             data
         })).then(() => {
-            form.clearValue('current_password', 'password');
+            form.resetValue('current_password', 'password');
             setChangePassword(false);
         }).catch(err => {
             switch (err.code) {
