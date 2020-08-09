@@ -5,7 +5,7 @@
 
 .verified,
 .errored {
-    @include flex(column, stretch);
+    @include flex(column, center);
     @include width(50%, 10em, 20em);
 
     .msg {
@@ -39,16 +39,6 @@
         small {
             display: inline-block;
             margin-top: 0.5em;
-        }
-    }
-
-    > a {
-        @include font(600, 12px);
-        text-align: center;
-        margin-top: 1em;
-
-        &:hover {
-            text-decoration: underline;
         }
     }
 }
