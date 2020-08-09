@@ -1,6 +1,7 @@
 import {api} from '@api/index';
 import {DBUser} from '@api/types';
 import {linkTable} from '@state/models/Table';
+import {Unit} from 'effector';
 
 type Item = DBUser;
 
@@ -36,6 +37,14 @@ export const users = linkTable<Item, Filters, Stats>('/users', {
     stats: {
         total_users_count: -1
     }
+});
+
+users.items.state.on([
+    users.items.delete.doneData,
+    users.items.insert.doneData
+] as unknown as Unit<unknown>, () => {
+    void users.items.refresh();
+    void users.stats.refresh();
 });
 
 export const isUserAccountLocked = async (username: string): Promise<boolean> => {

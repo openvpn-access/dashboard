@@ -1,19 +1,16 @@
 import {FieldValidator} from '@utils/use-form';
 
 const validateEmail = (() => {
-    const LOCAL_DOMAIN_REGEXP = /\.[^@]+$/;
     const input = document.createElement('input');
     input.type = 'email';
     input.required = true;
 
     return (s: string) => {
         input.value = s;
-
-        // TODO: Some emails do not pass server-side validation, see https://github.com/sideway/joi/issues/2439
-        // Remove LOCAL_DOMAIN_REGEXP after fix.
-        return input.checkValidity() && LOCAL_DOMAIN_REGEXP.test(s);
+        return input.checkValidity();
     };
 })();
+
 export const validation = {
     user: {
         username: [

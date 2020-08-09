@@ -93,9 +93,6 @@ export function linkTable<Item extends ListStoreItem, Filters extends ListStoreF
     };
 
     items.state
-        .on(items.insert.done, (state, payload) => {
-            return [...state, payload.result];
-        })
         .on(items.update.done, (state, payload) => {
             return state.map(value => {
                 return value.id === payload.result.id ? payload.result : value;

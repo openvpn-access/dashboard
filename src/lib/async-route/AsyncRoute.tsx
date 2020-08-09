@@ -9,7 +9,6 @@ type Props = {
     loading?: () => JSXInternal.Element;
 };
 
-
 export const AsyncRoute: FunctionalComponent<Props> = ({getComponent, loading}) => {
     const [component, setComponent] = useState<JSXInternal.Element | null>(loading?.() || null);
 
@@ -17,7 +16,10 @@ export const AsyncRoute: FunctionalComponent<Props> = ({getComponent, loading}) 
         const loadPage = () => getComponent().then(module => {
             const Component = module.default;
             setComponent(<Component/>);
-        }).catch(() => {
+        }).catch(e => {
+
+            /* eslint-disable no-console */
+            console.error('[ASYNC-ROUTE] Error:', e);
             setComponent(<ErrorPage retry={loadPage}/>);
         });
 

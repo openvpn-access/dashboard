@@ -23,14 +23,14 @@ export const UserList: FunctionalComponent<Props> = props => {
 
     // Update list whenever the user changes filters
     useEffect(() => {
-        users.items.state.watch(state => {
+        return users.items.state.watch(state => {
             setHide(true);
 
             setTimeout(() => {
                 setList(state);
                 setHide(false);
             }, 250);
-        });
+        }).unsubscribe;
     }, []);
 
     // Infinite scroll implementation
@@ -62,7 +62,7 @@ export const UserList: FunctionalComponent<Props> = props => {
     return (
         <div className={styles.userList}
              data-empty={items.length === 0}
-             data-hide={hide && !setNextPageLoading}
+             data-hide={hide && !nextPageLoading}
              ref={listEl}>
             {items}
 
