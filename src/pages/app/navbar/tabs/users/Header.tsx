@@ -1,13 +1,11 @@
-import {FunctionalComponent, h} from 'preact';
 import {HelpCard} from '@components/HelpCard';
+import {FunctionalComponent, h} from 'preact';
 import styles from './Header.module.scss';
 
 // TODO: Make this whole table thing a component!
 export const Header: FunctionalComponent = () => (
     <div className={styles.header}>
-        <p className={styles.id}>
-            #
-        </p>
+        <p className={styles.id}>#</p>
 
         <div className={styles.type}>
             <HelpCard className={styles.userHelp}

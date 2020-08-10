@@ -1,12 +1,8 @@
-.container {
-    @include flex(column);
-    border-bottom: 1px solid var(--c-background-secondary);
-}
-
 .user {
     padding: 0.5em;
     display: grid;
     grid-template-columns: var(--grid-columns);
+    border-bottom: 1px solid var(--c-background-secondary);
     grid-gap: 0.5em;
     align-items: center;
     user-select: text;
