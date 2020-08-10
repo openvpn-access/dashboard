@@ -95,8 +95,8 @@ registerPopover<Props>('user-editor', {
         };
 
         useEffect(() => {
-            if (user?.username) {
-                isUserAccountLocked(user.username)
+            if (user?.id) {
+                isUserAccountLocked(user.id)
                     .then(setAccountLocked)
                     .catch(() => null);
             }

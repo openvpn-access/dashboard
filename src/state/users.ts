@@ -47,15 +47,15 @@ users.items.state.on([
     void users.stats.refresh();
 });
 
-export const isUserAccountLocked = async (username: string): Promise<boolean> => {
+export const isUserAccountLocked = async (user_id: string): Promise<boolean> => {
     return api<Array<{created_at: number}>>({
         route: '/login-attempts/web',
         query: {
             sort: 'created_at',
             sort_dir: 'desc',
             state: 'fail',
-            username,
-            per_page: 5
+            per_page: 5,
+            user_id
         }
     }).then(value => {
 
