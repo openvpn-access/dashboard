@@ -99,7 +99,7 @@ export const PopoverContainer: FunctionalComponent<{className?: string}> = props
                 </div>
 
                 <div className={styles.content} ref={container}>
-                    <Component hidePopover={hidePopover} {...props}/>
+                    <Component hidePopover={hidePopover} {...props} key={Math.random()}/>
                 </div>
             </div>
         );
