@@ -37,6 +37,7 @@ export const Settings: FunctionalComponent = () => {
             </div>
 
             <Portal className={styles.portal}
+                    keepAlive={true}
                     show={currentView}
                     views={{
                         'account': (
