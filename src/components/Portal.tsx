@@ -36,7 +36,7 @@ export const Portal = <T extends Record<string, JSXInternal.Element>>(props: Pro
             Object.entries(props.views).map(([name, com]) => (
                 <div className={cn(styles.portal, props.className)}
                      data-fadeout={fadeout}
-                     hidden={name !== activeView}
+                     data-hidden={name !== activeView}
                      key={name}>
                     {com}
                 </div>

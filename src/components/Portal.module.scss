@@ -5,6 +5,10 @@
         opacity: 0;
     }
 
+    &[data-hidden] {
+        display: none;
+    }
+
     @include animate('0.15s') {
         from {
             opacity: 0;
