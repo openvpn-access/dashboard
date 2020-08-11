@@ -45,12 +45,12 @@ export const InfoBar: FunctionalComponent = () => {
                 <div className={styles.status}
                      data-status="error"
                      role="alert">
-                    <span>Please verify your Email address by clicking the link we&apos;ve send you!</span>
+                    <span>Please verify your email address by clicking the link we&apos;ve send you!</span>
                 </div>
 
                 <div className={styles.requestNewVerificationEmail}>
                     {
-                        state === 'idle' ? <p>Didn&apos;t get an Email? Request a new one!</p> :
+                        state === 'idle' ? <p>Didn&apos;t get an email? Request a new one!</p> :
                             state === 'sending' ? <p>Sending...</p> : <p>Check your inbox!</p>
                     }
 

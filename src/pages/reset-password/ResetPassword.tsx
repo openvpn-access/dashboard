@@ -83,7 +83,7 @@ export default () => {
                             <div className={styles.errored}>
                                 <div className={styles.msg} role="heading">
                                     <p>An error occured.</p>
-                                    <small>Try requesting a new Email to reset your password.</small>
+                                    <small>Try requesting a new email to reset your password.</small>
                                 </div>
                                 <Link href="/login" aria-label="Go back to login page">Back to login</Link>
                             </div>

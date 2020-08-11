@@ -46,10 +46,10 @@
     &[data-active] {
         color: var(--c-text-primary);
         border-color: var(--c-primary);
+        cursor: default;
     }
 
     &:not([data-active]):hover {
-        background: var(--c-background-secondary);
         color: var(--c-text-primary);
     }
 
