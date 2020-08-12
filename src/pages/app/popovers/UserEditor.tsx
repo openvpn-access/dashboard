@@ -170,7 +170,9 @@ registerPopover<Props>('user-editor', {
 
                             <DatePicker placeholder="End date"
                                         nullable={true}
-                                        {...form.register('transfer_limit_end')}/>
+                                        {...form.register('transfer_limit_end', {
+                                            validate: validation.user.transfer_limit_end(form.getValue('transfer_limit_start'))
+                                        })}/>
 
                             <BytePicker placeholder="Unlimited"
                                         nullable={true}
