@@ -9,18 +9,19 @@ import styles from './InfoBar.module.scss';
 
 export const InfoBar: FunctionalComponent = () => {
     const user = session.store.getState().user as DBUser;
-    const [state, setState] = useState<'idle' | 'sending' | 'sended'>('idle');
+    const [state, setState] = useState<'idle' | 'sending' | 'errored' | 'sended'>('idle');
 
     const resendVerficiationEmail = () => {
         setState('sending');
 
-        // TODO: This can fail!!!
         delayPromise(1000, api({
             route: '/users/email/verify/send',
             method: 'POST',
             data: {email: user.email}
-        })).finally(() => {
+        })).then(() => {
             setState('sended');
+        }).catch(() => {
+            setState('errored');
         });
     };
 
@@ -51,7 +52,8 @@ export const InfoBar: FunctionalComponent = () => {
                 <div className={styles.requestNewVerificationEmail}>
                     {
                         state === 'idle' ? <p>Didn&apos;t get an email? Request a new one!</p> :
-                            state === 'sending' ? <p>Sending...</p> : <p>Check your inbox!</p>
+                            state === 'sending' ? <p>Sending...</p> :
+                                state === 'errored' ? <p>Failed to send email. Please check if your email address is valid.</p> : <p>Check your inbox!</p>
                     }
 
                     {['idle', 'sending'].includes(state) && <Button text="Resend"
