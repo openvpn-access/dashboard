@@ -55,9 +55,9 @@ export const UserList: FunctionalComponent<Props> = props => {
         }
     }, [props.infiniteScroll]);
 
-    const items = list.map((value, index) => (
-        value.id !== currentUser.user?.id && <User user={value} key={index}/>
-    ));
+    const items = list
+        .filter(user => user.id !== currentUser.user?.id) // Filter out current user
+        .map((user, index) => <User user={user} key={index}/>);
 
     return (
         <div className={styles.userList}
