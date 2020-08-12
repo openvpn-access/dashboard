@@ -164,7 +164,6 @@ registerPopover<Props>('user-editor', {
                         </div>
 
                         <div className={cn(styles.options, styles.fields)} data-visible={restricted}>
-                            {/* TODO: Timezone issues - how to switch to GMT?? */}
                             <DatePicker placeholder="Start date"
                                         nullable={true}
                                         {...form.register('transfer_limit_start')}/>

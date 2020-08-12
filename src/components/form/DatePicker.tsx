@@ -5,6 +5,7 @@ import {FunctionalComponent, h} from 'preact';
 import {useRef, useState} from 'preact/hooks';
 import {JSXInternal} from 'preact/src/jsx';
 import styles from './DatePicker.module.scss';
+import 'dayjs/plugin/utc';
 
 type Falsish = null | false | undefined;
 
@@ -17,7 +18,7 @@ type Props = {
 };
 
 export const DatePicker: FunctionalComponent<Props> = props => {
-    const currentDate = day(props.value || Date.now());
+    const currentDate = day.utc(props.value || Date.now());
     const popper = useRef<Popper>();
 
     const [view, setView] = useState<'day' | 'month' | 'year'>('day');
