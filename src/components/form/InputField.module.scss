@@ -1,17 +1,12 @@
 .inputField {
-    @include flex(column);
-    flex-shrink: 1;
-    width: 100%;
-}
-
-.main {
     @include flex(row, center);
     @include size(100%, 2.5em);
     border-radius: 0.25em;
     transition: all 0.3s;
     border: 2px solid var(--com-color);
     position: relative;
-    flex-shrink: 0;
+    width: 100%;
+    flex-shrink: 1;
     --com-color: var(--c-background-secondary-accent);
     --com-color-focus: var(--c-primary-focus);
     --com-color-hover: var(--c-background-secondary-hover);
@@ -68,16 +63,6 @@
             color: var(--com-color-hover);
         }
     }
-}
-
-.errorMessage {
-    @include font(600, 12px);
-    line-height: 16px;
-    margin-top: 0.2em;
-    color: var(--c-red);
-    white-space: pre-wrap;
-    word-break: break-word;
-    max-width: inherit;
 }
 
 .passwordQualityMeter {

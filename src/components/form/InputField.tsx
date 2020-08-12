@@ -1,3 +1,4 @@
+import {Errorable} from '@components/form/Errorable';
 import {cn} from '@utils/preact-utils';
 import {createRef, FunctionalComponent, h} from 'preact';
 import {useEffect} from 'preact/hooks';
@@ -69,34 +70,28 @@ export const InputField: FunctionalComponent<Props> = props => {
     }
 
     return (
-        <div className={cn(styles.inputField, props.className)}
-             onClick={typeof props.onClick === 'function' ? props.onClick : undefined}>
+        <Errorable className={cn(styles.inputField, props.className, {
+            [styles.button]: !!props.onClick,
+            [styles.errored]: !!props.error,
+            [styles.disabled]: !!props.disabled
+        })} onClick={typeof props.onClick === 'function' ? props.onClick : undefined} error={props.error}>
+            {props.icon && <bc-icon name={props.icon}/>}
 
-            <div className={cn(styles.main, {
-                [styles.button]: !!props.onClick,
-                [styles.errored]: !!props.error,
-                [styles.disabled]: !!props.disabled
-            })}>
-                {props.icon && <bc-icon name={props.icon}/>}
+            <input type={props.type === 'password' ? 'password' : 'text'}
+                   ref={inputField}
+                   readOnly={props.readonly || !!props.onClick}
+                   placeholder={props.placeholder}
+                   aria-label={props.ariaLabel || props.placeholder}
+                   value={props.value || ''}
+                   onInput={onChange}/>
 
-                <input type={props.type === 'password' ? 'password' : 'text'}
-                       ref={inputField}
-                       readOnly={props.readonly || !!props.onClick}
-                       placeholder={props.placeholder}
-                       aria-label={props.ariaLabel || props.placeholder}
-                       value={props.value || ''}
-                       onInput={onChange}/>
+            {
+                props.type === 'password' && props.passwordMeter &&
+                    <div className={styles.passwordQualityMeter}
+                         style={`--pwd-entropy: ${Math.min(entropy(props.value || '') / 200, 1)};`}/>
+            }
 
-                {
-                    props.type === 'password' && props.passwordMeter &&
-                        <div className={styles.passwordQualityMeter}
-                             style={`--pwd-entropy: ${Math.min(entropy(props.value || '') / 200, 1)};`}/>
-                }
-
-                {props.afterInput}
-            </div>
-
-            {props.error && <p className={styles.errorMessage}>{props.error}</p>}
-        </div>
+            {props.afterInput}
+        </Errorable>
     );
 };
