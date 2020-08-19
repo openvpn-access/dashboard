@@ -1,13 +1,14 @@
 import {eventPath} from '@utils/event-path';
 import {EventBindingArgs, off, on} from '@utils/events';
 import {bind, cn} from '@utils/preact-utils';
-import {NanoPop} from 'nanopop';
+import {createPopper, NanoPop, NanoPopPosition} from 'nanopop';
 import {Component, createRef, h} from 'preact';
 import {JSXInternal} from 'preact/src/jsx';
 import styles from './Popper.module.scss';
 
 type Props = {
     className?: string;
+    position?: NanoPopPosition;
     style?: string;
     disabled?: boolean;
     content: JSXInternal.Element;
@@ -24,18 +25,6 @@ export class Popper extends Component<Props, State> {
     private eventBindings: Array<EventBindingArgs> = [];
     private nanoPop: NanoPop | null = null;
 
-    private static resolveFirstScrollableParent(entry: HTMLElement): HTMLElement | null {
-        let el: HTMLElement | null = entry;
-
-        // This is slow as hell but that's the only way it worked.
-        // I failed myself, again.
-        while (el && !/scroll|auto/.exec(getComputedStyle(el).overflow)) {
-            el = el.parentElement;
-        }
-
-        return el;
-    }
-
     readonly state = {
         open: false
     };
@@ -45,7 +34,9 @@ export class Popper extends Component<Props, State> {
         const con = this.container.current;
 
         if (ref && con) {
-            this.nanoPop = new NanoPop(ref, con);
+            this.nanoPop = createPopper(ref, con, {
+                position: this.props.position || 'bottom'
+            });
 
             this.eventBindings = [
                 on(window, ['resize', 'scroll'], () => {
@@ -76,16 +67,7 @@ export class Popper extends Component<Props, State> {
     }
 
     updatePopperPosition() {
-        const {reference, nanoPop} = this;
-
-        if (nanoPop && reference.current) {
-            const nc = Popper.resolveFirstScrollableParent(reference.current) || document.documentElement;
-
-            nanoPop.update({
-                position: 'bottom-end',
-                container: nc.getBoundingClientRect()
-            });
-        }
+        this.nanoPop?.update();
     }
 
     @bind

@@ -152,45 +152,45 @@ export const DatePicker: FunctionalComponent<Props> = props => {
     };
 
     return (
-        <Popper
-            ref={popper}
-            button={
-                <InputField value={props.value ? currentDate.format('DD.MM.YYYY') : undefined}
-                            placeholder={props.placeholder}
-                            error={props.error}
-                            icon="calendar"
-                            onClick={true}
-                            afterInput={
-                                <button className={styles.clear}
-                                        aria-label="Clear"
-                                        onClickCapture={reset}
-                                        type="button"
-                                        data-visible={!!(props.nullable && props.value)}>
-                                    <bc-tooltip content="Reset"/>
-                                    <bc-icon name="delete"/>
-                                </button>
-                            }/>
-            }
-            content={
-                <div className={styles.datePicker}>
+        <Popper position="bottom-end"
+                ref={popper}
+                button={
+                    <InputField value={props.value ? currentDate.format('DD.MM.YYYY') : undefined}
+                                placeholder={props.placeholder}
+                                error={props.error}
+                                icon="calendar"
+                                onClick={true}
+                                afterInput={
+                                    <button className={styles.clear}
+                                            aria-label="Clear"
+                                            onClickCapture={reset}
+                                            type="button"
+                                            data-visible={!!(props.nullable && props.value)}>
+                                        <bc-tooltip content="Reset"/>
+                                        <bc-icon name="delete"/>
+                                    </button>
+                                }/>
+                }
+                content={
+                    <div className={styles.datePicker}>
 
-                    <div className={styles.controls}>
-                        <button onClick={double(-1)} type="button">«</button>
-                        <button onClick={single(-1)} type="button">‹</button>
+                        <div className={styles.controls}>
+                            <button onClick={double(-1)} type="button">«</button>
+                            <button onClick={single(-1)} type="button">‹</button>
 
-                        <button className={styles.title}
-                                type="button"
-                                onClick={toggleView}>{getTitle()}</button>
+                            <button className={styles.title}
+                                    type="button"
+                                    onClick={toggleView}>{getTitle()}</button>
 
-                        <button onClick={single(1)} type="button">›</button>
-                        <button onClick={double(1)} type="button">»</button>
+                            <button onClick={single(1)} type="button">›</button>
+                            <button onClick={double(1)} type="button">»</button>
+                        </div>
+
+                        <div className={styles.view}
+                             data-type={view}>
+                            {viewEl()}
+                        </div>
                     </div>
-
-                    <div className={styles.view}
-                         data-type={view}>
-                        {viewEl()}
-                    </div>
-                </div>
-            }/>
+                }/>
     );
 };

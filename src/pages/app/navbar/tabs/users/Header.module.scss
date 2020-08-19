@@ -31,7 +31,7 @@
     align-items: center;
 
     > p {
-        @include font(600, 14px);
+        @include font(400, 14px);
     }
 }
 
@@ -42,6 +42,6 @@
     align-items: center;
 
     > p {
-        @include font(600, 14px);
+        @include font(400, 14px);
     }
 }

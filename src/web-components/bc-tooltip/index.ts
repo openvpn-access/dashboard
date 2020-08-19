@@ -1,5 +1,5 @@
 import {EventBindingArgs, off, on} from '@utils/events';
-import {NanoPop, NanoPopPosition} from 'nanopop';
+import {NanoPopPosition, reposition} from 'nanopop';
 import {isMobile} from '../../pages/app/browserenv';
 import styles from './tooltip.module.scss';
 
@@ -7,10 +7,9 @@ const REFLECTED_ATTRIBUTES = ['content', 'pos'];
 
 class BeamCafeTooltip extends HTMLElement {
     private static readonly PADDING = 8;
+    private readonly _toolTip: HTMLParagraphElement;
     private _triggerEventListener: EventBindingArgs | null = null;
     private _hideEventListener: EventBindingArgs | null = null;
-    private _toolTip: HTMLParagraphElement;
-    private _nanoPop: NanoPop;
     private _visible = false;
     private _connected = false;
 
@@ -18,7 +17,6 @@ class BeamCafeTooltip extends HTMLElement {
         super();
         this._toolTip = document.createElement('p');
         this._toolTip.classList.add(styles.tooltip);
-        this._nanoPop = new NanoPop(document.body, this._toolTip);
     }
 
     static get observedAttributes(): Array<string> {
@@ -30,11 +28,10 @@ class BeamCafeTooltip extends HTMLElement {
     }
 
     private updatePosition(reference?: HTMLElement): string | null {
-        return this._nanoPop.update({
+        return reference ? reposition(reference, this._toolTip, {
             container: document.body.getBoundingClientRect(),
-            position: (this.getAttribute('pos') || 'bottom-middle') as NanoPopPosition,
-            reference
-        });
+            position: (this.getAttribute('pos') || 'bottom-middle') as NanoPopPosition
+        }) : null;
     }
 
     private hide(): void {

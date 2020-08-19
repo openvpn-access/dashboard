@@ -56,7 +56,8 @@ export const DropDown: FunctionalComponent<Props> = props => {
     }
 
     return (
-        <Popper ref={popper}
+        <Popper position="bottom-end"
+                ref={popper}
                 disabled={props.disabled}
                 button={() =>
                     <button className={cn(styles.button, {

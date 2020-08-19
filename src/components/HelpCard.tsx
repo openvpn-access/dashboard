@@ -9,9 +9,11 @@ type Props = {
 }
 
 export const HelpCard: FunctionalComponent<Props> = props => (
-    <Popper button={open => <bc-icon name="help"
+    <Popper position="bottom-end"
+            button={open => <bc-icon name="help"
                                      class={styles.btn}
-                                     data-active={open}/>}
+                                     data-active={open}/>
+            }
             content={
                 <div className={cn(styles.content, props.className)}>
                     {props.children}
