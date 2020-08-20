@@ -55,9 +55,20 @@ module.exports = {
                 }
             },
             {
-                enforce: 'pre',
-                test: /\.s[ac]ss$/,
+                test: /\.(scss|sass|css)$/,
                 use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                            importLoaders: 1,
+                            modules: {
+                                auto: true,
+                                localIdentName: '[local]__[name]'
+                            }
+                        }
+                    },
                     'postcss-loader',
                     {
                         loader: 'sass-loader',
@@ -69,28 +80,6 @@ module.exports = {
                             }
                         }
                     }
-                ]
-            },
-            {
-                test: /\.module\.(sc|sa|c)ss$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            importLoaders: 1,
-                            modules: {
-                                localIdentName: '[hash:base64:5]'
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                test: /(?<!.module)\.(scss|sass|css)$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader'
                 ]
             },
             {

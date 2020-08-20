@@ -69,9 +69,20 @@ module.exports = {
                 loader: 'file-loader'
             },
             {
-                enforce: 'pre',
-                test: /\.s[ac]ss$/,
+                test: /\.(scss|sass|css)$/,
                 use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                            importLoaders: 1,
+                            modules: {
+                                auto: true,
+                                localIdentName: '[local]__[name]'
+                            }
+                        }
+                    },
                     'postcss-loader',
                     {
                         loader: 'sass-loader',
@@ -81,35 +92,6 @@ module.exports = {
                             sassOptions: {
                                 includePaths: [globalSCSS]
                             }
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.module\.(scss|sass|css)$/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true,
-                            importLoaders: 1,
-                            modules: {
-                                localIdentName: '[local]__[name]'
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                test: /(?<!.module)\.(scss|sass|css)$/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            importLoaders: 1,
-                            sourceMap: true
                         }
                     }
                 ]
