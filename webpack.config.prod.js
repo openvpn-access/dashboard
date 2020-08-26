@@ -1,4 +1,3 @@
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const resolveAppVersion = require('./scripts/resolveAppVersion');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -154,7 +153,6 @@ module.exports = {
         }),
 
         // new BundleAnalyzerPlugin(),
-        new ProgressBarPlugin(),
         new CleanWebpackPlugin()
     ]
 };
