@@ -3,13 +3,16 @@ const path = require('path');
 const fs = require('fs');
 
 module.exports.resolveConfigFile = () => {
+    const mode = process.env.NODE_ENV;
     const defaultConfig = require('../config/default.json');
-    const localConfigPath = path.resolve(__dirname, '../config/local.json');
-    let config = defaultConfig;
 
-    if (fs.existsSync(localConfigPath)) {
-        config = merge(defaultConfig, require('../config/local.json'));
-    }
+    // Merge config file with default
+    const sourceConfig = `../config/${mode === 'production' ? 'production' : 'development'}.json`;
 
-    return config;
+    // Merge if custom config exists, use default as fallback
+    return fs.existsSync(path.resolve(__dirname, sourceConfig)) ? merge(
+        defaultConfig,
+        require(sourceConfig),
+        {arrayMerge: (destinationArray, sourceArray) => sourceArray}
+    ) : defaultConfig;
 };

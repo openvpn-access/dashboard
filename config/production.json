@@ -1,0 +1,5 @@
+{
+    "server": {
+        "restEndpoint": "/api/v1"
+    }
+}
