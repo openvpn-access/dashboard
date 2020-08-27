@@ -39,6 +39,7 @@
 
 .portal {
     @include flex(column, center);
+    width: 100%;
 }
 
 .divider {

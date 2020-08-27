@@ -41,7 +41,6 @@
 
 .requestNewVerificationEmail {
     @include flex(row, flex-start, space-between);
-    margin-bottom: 0.75em;
 
     > p {
         @include font(600, 12px);
