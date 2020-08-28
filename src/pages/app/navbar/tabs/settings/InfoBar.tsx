@@ -56,10 +56,10 @@ export const InfoBar: FunctionalComponent = () => {
                                 state === 'errored' ? <p>Failed to send email. Please check if your email address is valid.</p> : <p>Check your inbox!</p>
                     }
 
-                    {['idle', 'sending'].includes(state) && <Button text="Resend"
-                                                                    ariaLabel="Request new verification email"
-                                                                    loading={state === 'sending'}
-                                                                    onClick={resendVerficiationEmail}/>}
+                    <Button text="Resend"
+                            ariaLabel="Request new verification email"
+                            loading={state === 'sending'}
+                            onClick={resendVerficiationEmail}/>
                 </div>
             </Fragment>
             }
