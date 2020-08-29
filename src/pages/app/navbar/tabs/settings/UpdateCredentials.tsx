@@ -31,7 +31,7 @@ export const UpdateCredentials: FunctionalComponent = () => {
     }, []);
 
     const submit = form.onSubmit(() => {
-        const data = form.values();
+        const data = form.values() as {password?: string}; // TODO: Ugly fix for TS2790: The operand of a 'delete' operator must be optional.
         form.clearErrors();
 
         if (!changePassword) {
