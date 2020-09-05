@@ -27,15 +27,20 @@
         }
     }
 
-    > article {
+    > p {
+        @include font(600, 13px);
+    }
+
+    > h3 {
+        margin: 0.5em 0;
+    }
+
+    article {
         @include font(300, 13px);
         line-height: 1.45em;
         margin-top: 0.5em;
     }
 
-    > p {
-        @include font(600, 13px);
-    }
 
     .secret {
         margin-bottom: 1em;
@@ -58,6 +63,32 @@
         > path:last-child {
             stroke: var(--c-text-primary);
         }
+    }
+}
+
+.backupCodes {
+    .list {
+        display: grid;
+        grid-gap: 0.5em;
+        grid-template: 1fr 1fr 1fr /  1fr 1fr;
+        margin-top: 0.5em;
+        align-items: center;
+        justify-items: center;
+
+        .code {
+            @include font(600, 13px);
+            font-family: monospace;
+            background: var(--c-background-primary-accent);
+            padding: 0.35em 0.75em;
+            border-radius: 0.15em;
+            color: var(--c-text-primary);
+            user-select: text;
+        }
+    }
+
+    .buttonBar {
+        @include flex(row, center, space-between);
+        margin-top: 1em;
     }
 }
 

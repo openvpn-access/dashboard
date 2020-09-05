@@ -2,6 +2,8 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 dayjs.extend(utc);
 
+// TODO: Custom error pages!
+
 /* eslint-disable */
 if (env.NODE_ENV === 'development') {
 
@@ -14,8 +16,15 @@ if (env.NODE_ENV === 'development') {
     }
 
     // See https://github.com/facebook/react/issues/16604#issuecomment-528663101
-    window.$RefreshReg$ = () => {};
+    window.$RefreshReg$ = () => {
+    };
     window.$RefreshSig$ = () => type => type;
+
+    // Inject state into window
+    window.state = {
+        ...require('./state/session'),
+        ...require('./state/users')
+    };
 } else if (env.NODE_ENV === 'production') {
 
     // Print user warning and cool message
