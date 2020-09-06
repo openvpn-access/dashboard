@@ -14,9 +14,11 @@ import {login} from './state';
 export const Auth: FunctionalComponent = () => {
     const {login_id, mfa_required} = login.state.getState();
     const [loading, setLoading] = useState(false);
+    const [useBackupCode, setUseBackupCode] = useState(false);
     const form = useForm({
         password: '',
-        mfa_code: undefined
+        mfa_code: undefined,
+        backup_code: undefined
     });
 
     const submit = form.onSubmit(values => {
@@ -37,6 +39,8 @@ export const Auth: FunctionalComponent = () => {
                     return form.setError('password', 'Account is locked. Try again later.');
                 case ErrorCode.INVALID_MFA_CODE:
                     return form.setError('mfa_code', 'Invalid code.');
+                case ErrorCode.INVALID_BACKUP_CODE:
+                    return form.setError('backup_code', 'Invalid backup code.');
             }
         }).finally(() => setLoading(false));
     });
@@ -52,10 +56,27 @@ export const Auth: FunctionalComponent = () => {
                         {...form.register('password')}/>
 
             {mfa_required && <Fragment>
-                <p>Please enter the code from your authenticator:</p>
-                <PinField length={6}
-                          ariaLabel="Your Authenticator code"
-                          {...form.register('mfa_code')}/>
+                {useBackupCode ? <Fragment>
+                    <p>Please enter one of your 8-digit backup codes:</p>
+                    <InputField type="number"
+                                ariaLabel="Your backup code"
+                                icon="lock"
+                                {...form.register('backup_code')}/>
+                </Fragment> : <Fragment>
+                    <p>Please enter the code from your authenticator:</p>
+                    <PinField length={6} {...form.register('mfa_code')}/>
+                </Fragment>
+                }
+
+
+                {useBackupCode ?
+                    <span onClick={() => setUseBackupCode(false)} className={styles.linkButton}>Use MFA code instead.</span> :
+                    <p>
+                        In case you don&apos;t have access to your MFA device anymore you can
+                        <span onClick={() => setUseBackupCode(true)} className={styles.linkButton}>deactivate MFA</span>
+                        and login using one of your 8-digit backup codes.
+                    </p>
+                }
             </Fragment>}
 
             <div className={styles.btnBar}>
@@ -65,7 +86,7 @@ export const Auth: FunctionalComponent = () => {
                         ariaLabel="Submit login credentials"
                         submit={true}
                         loading={loading}
-                        disabled={mfa_required ? form.empty() : form.empty('password')}/>
+                        disabled={!form.getValue('password') && (!form.getValue('mfa_code') || !form.getValue('backup_code'))}/>
             </div>
         </form>
     );

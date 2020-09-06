@@ -22,14 +22,7 @@ export const MFASetup: FunctionalComponent = () => {
     const user = session.store.getState().user as DBUser;
     const [loading, setLoading] = useState(false);
     const [mfaCode, setMfaCode] = useState<MFAResponse | null>(null);
-    const [mfaBackupCodes, setMfaBackupCodes] = useState<Array<string> | null>([
-            '24313726', '92941176',
-            '21176471', '85882353',
-            '76078431', '59607843',
-            '92156862', '67450980',
-            '05098040', '55686274'
-        ]
-    );
+    const [mfaBackupCodes, setMfaBackupCodes] = useState<Array<string> | null>(null);
 
     const form = useForm({code: ''});
 
@@ -78,7 +71,7 @@ If you're running into problems, contact your system administrator.
                 code: values.code
             }
         }).then(response => {
-            setMfaBackupCodes(activate ? (response as {backupCodes: Array<string>}).backupCodes : null);
+            setMfaBackupCodes(activate ? (response as {backup_codes: Array<string>}).backup_codes : null);
 
             // Update local user
             session.updateUser({mfa_activated: activate});
@@ -113,7 +106,7 @@ If you're running into problems, contact your system administrator.
             </article>
 
             {
-                mfaBackupCodes && <div className={styles.backupCodes}>
+                user.mfa_activated && mfaBackupCodes && <div className={styles.backupCodes}>
                     <article>Keep these backup codes somewhere safe but accessible. In case you lose access to your device you can use them to reset MFA!
                     </article>
                     <div className={styles.list}>

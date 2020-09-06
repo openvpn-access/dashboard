@@ -8,7 +8,20 @@
 
     > p {
         @include font(600, 12px);
+        line-height: 1.35em;
         align-self: flex-start;
+    }
+}
+
+.linkButton {
+    @include font(600, 12px);
+    padding: 0.25em;
+    color: var(--c-primary);
+    transition: all;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--c-primary-accent);
     }
 }
 
