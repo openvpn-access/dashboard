@@ -65,6 +65,17 @@ export const InputField: FunctionalComponent<Props> = props => {
         }
     };
 
+    const onPaste = (event: ClipboardEvent) => {
+        let data = (event.clipboardData?.getData('text') || '');
+
+        if (props.type === 'number') {
+            data = data.replace(/[^\d]*/g, '');
+        }
+
+        props.onChange?.(data);
+        event.preventDefault();
+    };
+
     if (props.autoFocus) {
         useEffect(() => inputField.current?.focus(), [props.autoFocus]);
     }
@@ -83,6 +94,7 @@ export const InputField: FunctionalComponent<Props> = props => {
                    placeholder={props.placeholder}
                    aria-label={props.ariaLabel || props.placeholder}
                    value={props.value || ''}
+                   onPaste={onPaste}
                    onInput={onChange}/>
 
             {
