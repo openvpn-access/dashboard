@@ -30,7 +30,7 @@ export const validation = {
             [validateEmail, 'Please enter a valid email-address.']
         ] as Array<FieldValidator>,
         transfer_limit_end: (start_date: string): Array<FieldValidator> => [
-            [(e: Date) => e.getTime() > new Date(start_date).getTime(), 'Must be greater than the start date.']
+            [(e?: Date) => !e || e.getTime() > new Date(start_date).getTime(), 'Must be greater than the start date.']
         ]
     }
 };

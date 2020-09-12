@@ -68,6 +68,8 @@ registerPopover<Props>('user-editor', {
             delayPromise(500, promise).then(() => {
                 setApplyLoading(false);
                 hidePopover();
+            }).then(() => {
+                form.reset();
             }).catch(err => {
                 switch (err.code) {
                     case ErrorCode.LOCKED_USERNAME:
@@ -79,7 +81,6 @@ registerPopover<Props>('user-editor', {
                 }
             }).finally(() => {
                 setApplyLoading(false);
-                form.reset();
             });
         });
 
