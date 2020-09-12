@@ -76,6 +76,8 @@ registerPopover<Props>('user-editor', {
                         return form.setError('username', 'This user cannot change its username');
                     case ErrorCode.DUPLICATE_EMAIL:
                         return form.setError('email', 'This email is already in use.');
+                    case ErrorCode.PASSWORD_EQUALS_PASSWORD:
+                        return form.setError('password', 'Password cannot equal your email.');
                     case ErrorCode.DUPLICATE_USERNAME:
                         return form.setError('username', 'This username is already in use.');
                 }
